@@ -33,14 +33,14 @@ func Max(counter []int) int{
 
 func NumOfDivs(x int) int{
 	var counter int = 0
-	var upper int = int(math.Sqrt(float64(n)))+1
+	var upper int = int(math.Sqrt(float64(x)))+1
 	for factor:=1; factor<upper; factor++{
 		if x%factor==0{
 			counter += 1
 		}
 	}
 	counter *= 2
-	if float64(x)==math.Sqrt(float(64)){
+	if int((upper-1)*(upper-1))==x{
 		counter -= 1
 	}
 	return counter
