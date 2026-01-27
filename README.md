@@ -6,27 +6,27 @@ A library of common Golang functions which either are often used or are likely t
 
 
 
-##Contents
+## Contents
 
 There is a `common.go` file which contains the list of functions thus far.
 
-###IsPalendrome
+### IsPalendrome
 
 This takes an `int` and retrns a `bool`. It determines if writing the number backwards is the same as forwards. _Consequently this uses the `Reverse()` function defined also in this file._
 
-###IsPrime
+### IsPrime
 
 This takes an `int` and returns a `bool`. It determines if the only factors of the number are the number itself and 1.
 
-###Max
+### Max
 
 This takes an array of `int`s and returns an `int` value from this list. It determines which of these `int`s are most positive.
 
-###NumOfDivs
+### NumOfDivs
 
 This takes an `int` and returns an `int`. It determines how many values between 1 and the given value divide into the give value.
 
-###Reverse
+### Reverse
 
 This takes a `string` and returns a `string`. It flips the string to reverse order.
 
