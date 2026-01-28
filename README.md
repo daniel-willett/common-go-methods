@@ -34,6 +34,10 @@ This takes an `int` and returns a `bool`. It determines if the only factors of t
 
 This takes an array of `int`s and returns an `int` value from this list. It determines which of these `int`s are most positive.
 
+### Max
+
+This takes an array of `int`s and returns an `int` value from this list. It determines which of these `int`s are least positive.
+
 ### NumOfDivs
 
 This takes an `int` and returns an `int`. It determines how many values between 1 and the given value divide into the give value.

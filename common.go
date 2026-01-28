@@ -58,13 +58,23 @@ func IsPrime(n int) bool{
 }
 
 func Max(arr []int) int{
-	var largest int = 0
+	var largest int = arr[0]
 	for _, val := range arr{
 		if val>largest{
 			largest=val
 		}
 	}
 	return largest
+}
+
+func Min(arr []int) int{
+	var smallest int = arr[0]
+	for _, val := range arr{
+		if val<smallest{
+			smallest=val
+		}
+	}
+	return smallest
 }
 
 func NumOfDivs(x int) int{
