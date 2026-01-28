@@ -9,6 +9,24 @@ func Abs(n float64) float64{
 	return n
 }
 
+func All(arr []bool) bool{
+	for _, val := range arr{
+		if val==false{
+			return false
+		}
+	}
+	return true
+}
+
+func Any(arr []bool) bool{
+	for _, val := range arr{
+		if val==true{
+			return true
+		}
+	}
+	return false
+}
+
 //DEPENDS ON: Reverse
 func IsPalendrome(n int) bool{
 	var nstr string = strconv.Itoa(n)
@@ -28,9 +46,9 @@ func IsPrime(n int) bool{
 	return true
 }
 
-func Max(counter []int) int{
+func Max(arr []int) int{
 	var largest int = 0
-	for _, val := range counter{
+	for _, val := range arr{
 		if val>largest{
 			largest=val
 		}
