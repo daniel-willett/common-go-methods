@@ -10,6 +10,9 @@ A library of common Golang functions which either are often used or are likely t
 
 There is a `common.go` file which contains the list of functions thus far.
 
+### Abs
+This takes a `float64` and returns a `float64`. It determines the absolute value of the input which means either returning the positive version of the input, if it isn't already positive.
+
 ### IsPalendrome
 
 This takes an `int` and retrns a `bool`. It determines if writing the number backwards is the same as forwards. _Consequently this uses the `Reverse()` function defined also in this file._
