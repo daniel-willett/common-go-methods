@@ -13,6 +13,12 @@ There is a `common.go` file which contains the list of functions thus far.
 ### Abs
 This takes a `float64` and returns a `float64`. It determines the absolute value of the input which means either returning the positive version of the input, if it isn't already positive.
 
+### All
+This takes an array of `bool`s and returns a `bool`. It determines if the array is all `true`, and returns false if any value is `false`.
+
+### Any
+This takes an array of `bool`s and returns a `bool`. It determines if any part of the array is `true`, and returns false if the whole array is `false`.
+
 ### IsPalendrome
 
 This takes an `int` and retrns a `bool`. It determines if writing the number backwards is the same as forwards. _Consequently this uses the `Reverse()` function defined also in this file._
