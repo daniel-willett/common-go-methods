@@ -19,6 +19,9 @@ This takes an array of `bool`s and returns a `bool`. It determines if the array 
 ### Any
 This takes an array of `bool`s and returns a `bool`. It determines if any part of the array is `true`, and returns false if the whole array is `false`.
 
+### GetIndexOf
+This takes a `string` and returns an `[]int`. It determines all the occurances of a pattern within a string and gives an empty slice if no such pattern exists.
+
 ### IsPalendrome
 
 This takes an `int` and retrns a `bool`. It determines if writing the number backwards is the same as forwards. _Consequently this uses the `Reverse()` function defined also in this file._
