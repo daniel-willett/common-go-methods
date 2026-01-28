@@ -27,6 +27,17 @@ func Any(arr []bool) bool{
 	return false
 }
 
+func GetIndexOf(text string, pattern string) []int{
+	var length int = len(pattern)
+	var positions = []int{}
+	for counter:=0; counter<=len(text)-length; counter++{
+		if string(text[counter:counter+length])==pattern{
+			positions = append(positions, counter)
+		}
+	}
+	return positions
+}
+
 //DEPENDS ON: Reverse
 func IsPalendrome(n int) bool{
 	var nstr string = strconv.Itoa(n)
