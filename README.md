@@ -42,6 +42,10 @@ This takes an array of `int`s and returns an `int` value from this list. It dete
 
 This takes an `int` and returns an `int`. It determines how many values between 1 and the given value divide into the give value.
 
+### Replace
+
+This takes three `string`s and returns a `string`. It determines the occurances of a pattern within a given text and replaces those patterns with a new pattern.
+
 ### Reverse
 
 This takes a `string` and returns a `string`. It flips the string to reverse order.

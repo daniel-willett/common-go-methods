@@ -92,6 +92,23 @@ func NumOfDivs(x int) int{
 	return counter
 }
 
+//DEPENDS ON: GetIndexOf
+func Replace(text string, pattern string, newPattern string) string{
+	positions := GetIndexOf(text, pattern)
+	var result string = ""
+	var counter int = 0
+	for _, val := range positions{
+		result += string(text[counter:val])
+		result += newPattern
+		counter = val + len(pattern)
+	}
+	if counter!=len(text){
+		result += string(text[counter:len(text)])
+	}
+	return result
+
+}
+
 func Reverse(nstr string) string{
 	var result string = ""
 	for counter := len(nstr)-1; counter>=0; counter--{
