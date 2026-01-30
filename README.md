@@ -19,6 +19,9 @@ This takes an array of `bool`s and returns a `bool`. It determines if the array 
 ### Any
 This takes an array of `bool`s and returns a `bool`. It determines if any part of the array is `true`, and returns false if the whole array is `false`.
 
+### Gcd
+This takes two `int`s and returns an `int`. It determines the the largest positive integer which will divide into both given `int`s. It does this by Euclid's Algorithm.
+
 ### GetIndexOf
 This takes a `string` and returns an `[]int`. It determines all the occurances of a pattern within a string and gives an empty slice if no such pattern exists.
 
@@ -30,11 +33,15 @@ This takes an `int` and retrns a `bool`. It determines if writing the number bac
 
 This takes an `int` and returns a `bool`. It determines if the only factors of the number are the number itself and 1.
 
+### Lcm
+
+This takes two `int`s and returns an `int`. It determines the largest positive integer which the two given `int`s divide into. It does this through using `Gcd()`.
+
 ### Max
 
 This takes an array of `int`s and returns an `int` value from this list. It determines which of these `int`s are most positive.
 
-### Max
+### Min
 
 This takes an array of `int`s and returns an `int` value from this list. It determines which of these `int`s are least positive.
 
