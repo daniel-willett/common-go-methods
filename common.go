@@ -27,7 +27,23 @@ func Any(arr []bool) bool{
 	return false
 }
 
+//DEPENDS ON: Abs
 func Gcd(a int, b int) int{
+	var larger, smaller int = 0, 0
+	if a>b {
+		larger = a
+		smaller = b
+	} else {
+		larger = b
+		smaller = a
+	}
+	var temp int = 0
+	for smaller!=0 {
+		temp = smaller
+		smaller = larger % smaller
+		larger = temp
+	}
+	return int(Abs(float64(larger)))
 }
 
 func GetIndexOf(text string, pattern string) []int{
@@ -61,9 +77,12 @@ func IsPrime(n int) bool{
 	return true
 }
 
-//DEPENDS ON: Gcd
+//DEPENDS ON: Gcd, Abs
 func Lcm(a int, b int) int{
-	return a*b/Gcd(a,b)
+	if a==b && a==0 {
+		return 0
+	}
+	return int(Abs(float64(a*b/Gcd(a,b))))
 }
 
 func Max(arr []int) int{
