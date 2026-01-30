@@ -33,6 +33,7 @@ func GetIndexOf(text string, pattern string) []int{
 	for counter:=0; counter<=len(text)-length; counter++{
 		if string(text[counter:counter+length])==pattern{
 			positions = append(positions, counter)
+			counter += length-1
 		}
 	}
 	return positions
