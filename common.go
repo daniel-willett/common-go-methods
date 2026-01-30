@@ -27,6 +27,9 @@ func Any(arr []bool) bool{
 	return false
 }
 
+func Gcd(a int, b int) int{
+}
+
 func GetIndexOf(text string, pattern string) []int{
 	var length int = len(pattern)
 	var positions = []int{}
@@ -56,6 +59,11 @@ func IsPrime(n int) bool{
 		}
 	}
 	return true
+}
+
+//DEPENDS ON: Gcd
+func Lcm(a int, b int) int{
+	return a*b/Gcd(a,b)
 }
 
 func Max(arr []int) int{
