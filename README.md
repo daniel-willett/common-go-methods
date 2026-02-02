@@ -57,6 +57,6 @@ This takes three `string`s and returns a `string`. It determines the occurances 
 
 This takes a `string` and returns a `string`. It flips the string to reverse order.
 
+### Split
 
-
-
+This takes two `string`s and returns an `[]string`. It determines the positions of a pattern within a given text and splits the text accross a slice along those pattern matches.
