@@ -77,6 +77,12 @@ func IsPrime(n int) bool{
 	return true
 }
 
+func IsValidIPv4(ip string) bool{
+}
+
+func IsValidIPv6(ip string) bool{
+}
+
 //DEPENDS ON: Gcd, Abs
 func Lcm(a int, b int) int{
 	if a==b && a==0 {
@@ -141,6 +147,23 @@ func Reverse(nstr string) string{
 	var result string = ""
 	for counter := len(nstr)-1; counter>=0; counter--{
 		result += string(nstr[counter])
+	}
+	return result
+}
+
+//DEPENDS ON: GetIndexOf
+func Split(text string, pattern string) []string{
+	positions := GetIndexOf(text, pattern)
+	result := []string{}
+	var counter int = 0
+	for _, val := range positions{
+		result = append(result, string(text[counter:val]))
+		counter = val +len(pattern)
+	}
+	if counter!=len(text){
+		result = append(result, string(text[counter:len(text)]))
+	} else {
+		result = append(result, "")
 	}
 	return result
 }
