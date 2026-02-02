@@ -77,7 +77,21 @@ func IsPrime(n int) bool{
 	return true
 }
 
+//DEPENDS ON: Split
 func IsValidIPv4(ip string) bool{
+	octets := Split(ip, ".")
+	if len(octets)!=4{
+		return false
+	}
+	for _, val := range octets{
+		if isValidDigit(val)==False{
+			return false
+		}
+	}
+	return true
+
+	func isValidDigit(x string) bool{
+	}
 }
 
 func IsValidIPv6(ip string) bool{
@@ -153,6 +167,9 @@ func Reverse(nstr string) string{
 
 //DEPENDS ON: GetIndexOf
 func Split(text string, pattern string) []string{
+	if pattern==""{
+		return []string{}
+	}
 	positions := GetIndexOf(text, pattern)
 	result := []string{}
 	var counter int = 0
