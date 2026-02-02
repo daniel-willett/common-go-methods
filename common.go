@@ -79,24 +79,26 @@ func IsPrime(n int) bool{
 
 //DEPENDS ON: Split
 func IsValidIPv4(ip string) bool{
+	isValidOctet := func(x string) bool{
+		_, err := strconv.ParseUint(x,10,8) //Note the use of 8 here because we want values 0-255
+		return err==nil
+	}
+
 	octets := Split(ip, ".")
 	if len(octets)!=4{
 		return false
 	}
 	for _, val := range octets{
-		if isValidDigit(val)==False{
+		if isValidOctet(val)==false{
 			return false
 		}
 	}
 	return true
-
-	func isValidDigit(x string) bool{
-	}
 }
-
+/*
 func IsValidIPv6(ip string) bool{
 }
-
+*/
 //DEPENDS ON: Gcd, Abs
 func Lcm(a int, b int) int{
 	if a==b && a==0 {
