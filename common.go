@@ -77,6 +77,90 @@ func IsPrime(n int) bool{
 	return true
 }
 
+//DEPENDS ON: Split, Replace
+func IsValidIPv4(ip string) bool{
+	isValidOctet := func(x string) bool{
+		_, err := strconv.ParseUint(x,10,8) //Note the use of 8 here because we want values 0-255
+		return err==nil
+	}
+	
+	ip = Replace(ip, " ", "")
+	octets := Split(ip, ".")
+	if len(octets)!=4{
+		return false
+	}
+	for _, val := range octets{
+		if isValidOctet(val)==false{
+			return false
+		}
+	}
+	return true
+}
+
+//DEPENDS ON: Split, GetIndexOf, Replace
+func IsValidIPv6(ip string) bool{
+	testBlocks := func(blocks []string, n int) bool{
+		edgeCase := func(slice []string) bool{
+			for _, val := range slice{
+				if val != ""{
+					return false
+				}
+			}
+			return true
+		}
+
+		is16BitNumber := func(x string) bool{
+			_, err := strconv.ParseUint(x,16,16) //Note the use of 8 here because we want values 0-FFFF
+			return err==nil
+		}
+
+		if len(blocks)==3 && edgeCase(blocks){//if blocks==['','','']
+			return true
+		}
+		var numberOfEmpty int = 0
+		var index int = 0
+		for _, segment := range blocks{
+			if segment==""{
+				if ((numberOfEmpty==1 && blocks[index-1]!="") || numberOfEmpty>1){
+					return false
+				}
+				numberOfEmpty += 1
+			} else {
+				if is16BitNumber(segment)==false{
+					return false
+				}
+			}
+			index +=1
+		}
+		if numberOfEmpty==0 && len(blocks)!=n{
+			return false
+		} else {
+			return true
+		}
+	}
+	
+	
+	
+	ip = Replace(ip, " ", "")
+	blocks := Split(ip, ":")
+	if len(blocks)<3 || len(blocks)>9{ 
+		//Smallest possible "::"
+		//Largest possible "1:2:3:4:5:6:7::"
+		return false
+	}
+	lastBlock := blocks[len(blocks)-1]
+	if len(GetIndexOf(lastBlock, ".")) != 0 { //IPv4 embedded
+		ipv6Start := blocks[0:len(blocks)-1]
+		if len(ipv6Start)>6{
+			return false
+		} else {
+			return IsValidIPv4(lastBlock) && testBlocks(ipv6Start,6)
+		}
+	} else { //IPv4 not embedded
+		return testBlocks(blocks,8)
+	}
+}
+
 //DEPENDS ON: Gcd, Abs
 func Lcm(a int, b int) int{
 	if a==b && a==0 {
@@ -141,6 +225,26 @@ func Reverse(nstr string) string{
 	var result string = ""
 	for counter := len(nstr)-1; counter>=0; counter--{
 		result += string(nstr[counter])
+	}
+	return result
+}
+
+//DEPENDS ON: GetIndexOf
+func Split(text string, pattern string) []string{
+	if pattern==""{
+		return []string{}
+	}
+	positions := GetIndexOf(text, pattern)
+	result := []string{}
+	var counter int = 0
+	for _, val := range positions{
+		result = append(result, string(text[counter:val]))
+		counter = val +len(pattern)
+	}
+	if counter!=len(text){
+		result = append(result, string(text[counter:len(text)]))
+	} else {
+		result = append(result, "")
 	}
 	return result
 }
