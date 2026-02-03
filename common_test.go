@@ -8,8 +8,11 @@ func TestAbs(t *testing.T){
 		input		float64
 		expected	float64
 	}{
-		//Normal cases
 		{"Integer", 5, 5},
+		{"Integer", -10, 10},
+		{"Integer", 0, 0},
+		{"Integer", 123.532,123.532},
+		{"Integer", -43.000001, 43.000001},
 	}
 
 	for _, tt := range tests{
