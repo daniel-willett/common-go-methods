@@ -128,7 +128,27 @@ func TestGetIndexOf(t *testing.T){
         }
 }
 
+func TestIsPalendrome(t *testing.T){
+        tests := []struct{
+                name            string
+                input		int	
+                expected        bool
+        }{
+                //Normal cases
+		{"Success", 1221, true},
+		{"Failure", 1245, false},
+		{"One Char", 1, true},
+        }
 
+        for _, tt := range tests{
+                t.Run(tt.name, func(t *testing.T){
+                        result := IsPalendrome(tt.input)
+                        if result != tt.expected{
+                                t.Errorf("IsPalendrome(%v) = %v; want %v", tt.input, result, tt.expected)
+                        }
+                })
+        }
+}
 
 
 
