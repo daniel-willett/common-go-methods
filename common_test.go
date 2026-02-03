@@ -1,6 +1,6 @@
 package main
 
-import "testing"
+import ("testing";"reflect")
 
 func TestAbs(t *testing.T){
 	tests := []struct{
@@ -99,7 +99,34 @@ func TestGcd(t *testing.T){
         }
 }
 
+func TestGetIndexOf(t *testing.T){
+        tests := []struct{
+                name            string
+                text            string
+                pattern        	string
+                expected        []int
+        }{
+                //Normal cases
+		{"One Character", "Hello World", "o", []int{4, 7}},
+		{"Two Character", "Hello World", "ll", []int{2}},
+		{"No Match", "Hello World", "cat", []int{}},
+		{"Space", "Hello World", " ", []int{5}},
 
+		//Edge cases
+		{"Empty Text", "", "pattern", []int{}},
+		{"Empty Pattern", "Hello World", "", []int{}},
+		{"Regex-Style Response", "aaaaa", "aa", []int{0,2}},
+        }
+
+        for _, tt := range tests{
+                t.Run(tt.name, func(t *testing.T){
+                        result := GetIndexOf(tt.text, tt.pattern)
+                        if !reflect.DeepEqual(result, tt.expected){
+                                t.Errorf("GetIndexOf(%v, %v) = %v; want %v", tt.text, tt.pattern, result, tt.expected)
+                        }
+                })
+        }
+}
 
 
 
