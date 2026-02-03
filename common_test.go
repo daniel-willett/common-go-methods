@@ -173,6 +173,33 @@ func TestIsPrime(t *testing.T){
         }
 }
 
+func TestIsValidIPv4(t *testing.T){
+        tests := []struct{
+                name            string
+                input		string	
+                expected        bool
+        }{
+                //True cases
+		{"Smallest", "0.0.0.0", true},
+		{"Standard", "19.24.62.12", true},
+		{"Largest", "255.255.255.255", true},
+		//False cases
+		{"Too Large Octet", "1000.0.0.1", false},
+		{"Too Few Octets", "1.1.1", false},
+		{"Invalid Octet", "1.1.A.1", false},
+		{"Too Many Octets", "1.1.1.1.1", false},
+		{"Unrelated", "Hello", false},
+        }
+
+        for _, tt := range tests{
+                t.Run(tt.name, func(t *testing.T){
+                        result := IsValidIPv4(tt.input)
+                        if result != tt.expected{
+                                t.Errorf("IsValidIPv4(%v) = %v; want %v", tt.input, result, tt.expected)
+                        }
+                })
+        }
+}
 
 
 
