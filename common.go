@@ -73,6 +73,9 @@ func IsPalendrome(n uint) bool{
 }
 
 func IsPrime(n int) bool{
+	if n<2{
+		return false
+	}
 	var upper int = int(math.Sqrt(float64(n)))+1
 	for factor:=2; factor<upper; factor++{
 		if n%factor==0{

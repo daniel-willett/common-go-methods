@@ -150,6 +150,28 @@ func TestIsPalendrome(t *testing.T){
         }
 }
 
+func TestIsPrime(t *testing.T){
+        tests := []struct{
+                name            string
+                input		int	
+                expected        bool
+        }{
+                //Normal cases
+		{"Success", 13, true},
+		{"Failure", 12, false},
+		{"One", 1, false},
+		{"Zero", 0, false},
+        }
+
+        for _, tt := range tests{
+                t.Run(tt.name, func(t *testing.T){
+                        result := IsPrime(tt.input)
+                        if result != tt.expected{
+                                t.Errorf("IsPrime(%v) = %v; want %v", tt.input, result, tt.expected)
+                        }
+                })
+        }
+}
 
 
 
