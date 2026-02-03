@@ -27,11 +27,17 @@ This takes a `string` and returns an `[]int`. It determines all the occurances o
 
 ### IsPalendrome
 
-This takes an `int` and retrns a `bool`. It determines if writing the number backwards is the same as forwards. _Consequently this uses the `Reverse()` function defined also in this file._
+This takes an `int` and retrns a `bool`. It determines if writing the number backwards is the same as forwards.
 
 ### IsPrime
 
 This takes an `int` and returns a `bool`. It determines if the only factors of the number are the number itself and 1.
+
+### IsValidIPv4
+This takes a `string` and returns a `bool`. It determines if the given string is a valid IPv4 address. Currently this is just a crude checker and doesn't currently do more complex cases of IPv4 formatting.
+
+### IsValidIPv6
+This takes a `string` and returns a `bool`. It determines if the given string is a valid IPv4 address. This does allow for IPv4 embedding and thus relies on the `IsValidIPv4()` function.
 
 ### Lcm
 
