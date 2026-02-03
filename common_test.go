@@ -69,3 +69,58 @@ func TestAny(t *testing.T){
         }
 }
 
+func TestGcd(t *testing.T){
+        tests := []struct{
+                name            string
+                a        	int
+		b		int
+                expected        int
+        }{
+		//Normal cases
+                {"Two Positive", 20, 15, 5},
+                {"One Negative", -20, 15, 5},
+		{"Two Negative", -20, -15, 5},
+		{"Coprime", 7, 13, 1},
+
+		//Edge cases
+		{"One 0", 3, 0, 3},
+		{"Two 0", 0, 0, 0},
+		{"One 1", 3, 1, 1},
+		{"Two 1", 1, 1, 1},
+        }
+
+        for _, tt := range tests{
+                t.Run(tt.name, func(t *testing.T){
+                        result := Gcd(tt.a, tt.b)
+                        if result != tt.expected{
+                                t.Errorf("Gcd(%v, %v) = %v; want %v", tt.a, tt.b, result, tt.expected)
+                        }
+                })
+        }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
