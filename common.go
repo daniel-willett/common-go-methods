@@ -64,8 +64,8 @@ func GetIndexOf(text string, pattern string) []int{
 }
 
 //DEPENDS ON: Reverse
-func IsPalendrome(n int) bool{
-	var nstr string = strconv.Itoa(n)
+func IsPalendrome(n uint) bool{
+	var nstr string = strconv.Itoa(int(n))
 	if Reverse(nstr)==nstr{
 		return true
 	}

@@ -131,7 +131,7 @@ func TestGetIndexOf(t *testing.T){
 func TestIsPalendrome(t *testing.T){
         tests := []struct{
                 name            string
-                input		int	
+                input		uint	
                 expected        bool
         }{
                 //Normal cases
@@ -149,8 +149,6 @@ func TestIsPalendrome(t *testing.T){
                 })
         }
 }
-
-
 
 
 
