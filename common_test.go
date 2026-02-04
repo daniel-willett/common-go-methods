@@ -31,10 +31,10 @@ func TestAll(t *testing.T){
                 input           []bool
                 expected        bool
         }{
-                {"3 Trues", []bool{true,true,true}, true},
-                {"3 Falses", []bool{false,false,false}, false},
+                {"3 Trues", []bool{true, true, true}, true},
+                {"3 Falses", []bool{false, false, false}, false},
                 {"Empty", []bool{}, true}, //The empty intersection is the whole space so thus true here
-                {"One Of Each", []bool{true, false},false},
+                {"One Of Each", []bool{true, false}, false},
         }
 
         for _, tt := range tests{
@@ -53,10 +53,10 @@ func TestAny(t *testing.T){
                 input           []bool
                 expected        bool
         }{
-                {"3 Trues", []bool{true,true,true}, true},
-                {"3 Falses", []bool{false,false,false}, false},
+                {"3 Trues", []bool{true, true, true}, true},
+                {"3 Falses", []bool{false, false, false}, false},
                 {"Empty", []bool{}, false}, //The empty union is the empty set so thus false here
-                {"One Of Each", []bool{true, false},true},
+                {"One Of Each", []bool{true, false}, true},
         }
 
         for _, tt := range tests{
@@ -188,7 +188,7 @@ func TestIsValidIPv4(t *testing.T){
 		{"Too Few Octets", "1.1.1", false},
 		{"Invalid Octet", "1.1.A.1", false},
 		{"Too Many Octets", "1.1.1.1.1", false},
-		{"Unrelated", "Hello", false},
+		{"Random Chatacters", "Hello", false},
         }
 
         for _, tt := range tests{
@@ -201,7 +201,43 @@ func TestIsValidIPv4(t *testing.T){
         }
 }
 
+func TestIsValidIPv6(t *testing.T){
+        tests := []struct{
+                name            string
+                input           string
+                expected        bool
+        }{
+		//True cases
+		{"Small", "0:0:0:0:0:0:0:1", true},
+		{"Small Compact", "::1", true},
+		{"Reverse Small Compact", "1::", true},
+		{"Zeros Compact", "::", true},
+		{"Largest", "FFFF:FFFF:FFFF:FFFF:FFFF:FFFF:FFFF:FFFF", true},
+		{"Standard Compact", "98a:329:adae::23:0:0:1", true},
+		{"Standard", "1f5e:8fbe:e550:7a07:4679:14fc:1.2.3.4", true},
+		{"IPv4 Embedded Compact Zeros", "::1.2.3.4", true},
+		{"IPv4 Embedded Compact", "1::1:1.2.3.4", true},
+		{"IPv4 Zeros Embedded Compact","132::0.0.0.0", true},
 
+		//False cases
+		{"Too Few Blocks", "0", false},
+		{"Random Characters", "dasjkhdj", false},
+		{"Too Many Blocks", "0:0:0:0:0:0:0:0:0", false},
+		{"Too Many Blocks IPv4 Embedded", "0:0:0:0:0:0:0:1.2.3.4", false},
+		{"Too Many Octets IPv4 Embedded", "0:0:0:0:0:0:1.2.3.4.5", false},
+		{"Too Few Blocks IPv4 Embedded", "12:12.12.32.4", false},
+		{"Too Large Block", "10000:0:0:0:0:0:0:0", false},
+        }
+
+        for _, tt := range tests{
+                t.Run(tt.name, func(t *testing.T){
+                        result := IsValidIPv6(tt.input)
+                        if result != tt.expected{
+                                t.Errorf("IsValidIPv6(%v) = %v; want %v", tt.input, result, tt.expected)
+                        }
+                })
+        }
+}
 
 
 
