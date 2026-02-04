@@ -313,7 +313,27 @@ func TestMin(t *testing.T){
         }
 }
 
+func TestNumOfDivs(t *testing.T){
+        tests := []struct{
+                name            string
+                input           int
+                expected        int
+        }{
+		{"Composite", 20, 6}, //1,2,4,5,10,20
+		{"Prime", 13, 2},
+		{"One", 1, 1},
+		{"Zero", 0, 1},
+        }
 
+        for _, tt := range tests{
+                t.Run(tt.name, func(t *testing.T){
+                        result := NumOfDivs(tt.input)
+                        if result != tt.expected{
+                                t.Errorf("NumOfDivs(%v) = %v; want %v", tt.input, result, tt.expected)
+                        }
+                })
+        }
+}
 
 
 

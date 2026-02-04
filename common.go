@@ -198,6 +198,9 @@ func Min(arr []int) int{
 }
 
 func NumOfDivs(x int) int{
+	if x==0 {
+		return 1
+	}
 	var counter int = 0
 	var upper int = int(math.Sqrt(float64(x)))+1
 	for factor:=1; factor<upper; factor++{
