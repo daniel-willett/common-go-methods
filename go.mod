@@ -1,3 +1,3 @@
 module github.com/daniel-willett/common-go-methods
 
-go 1.25
+go 1.22
