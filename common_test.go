@@ -385,6 +385,25 @@ func TestReverse(t *testing.T){
         }
 }
 
+func TestSplit(t *testing.T){
+        tests := []struct{
+                name            string
+                text            string
+                pattern         string
+                expected        []string
+        }{
+		{"Standard", "Hello World", "o W", []string{"Hell", "orld"}},
+		{"No Match", "Hello World", "Cats", []string{"Hello World"}},
+		{"Empty Text", "", "Cats", []string{""}},
+		{"Empty Pattern", "Hello World", "", []string{"Hello World"}},
+        }
 
-
-
+        for _, tt := range tests{
+                t.Run(tt.name, func(t *testing.T){
+                        result := Split(tt.text, tt.pattern)
+                        if !reflect.DeepEqual(result, tt.expected){
+                                t.Errorf("Split(%v, %v) = %v; want %v", tt.text, tt.pattern, result, tt.expected)
+                        }
+                })
+        }
+}

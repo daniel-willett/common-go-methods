@@ -242,9 +242,6 @@ func Reverse(nstr string) string{
 
 //DEPENDS ON: GetIndexOf
 func Split(text string, pattern string) []string{
-	if pattern==""{
-		return []string{}
-	}
 	positions := GetIndexOf(text, pattern)
 	result := []string{}
 	var counter int = 0
