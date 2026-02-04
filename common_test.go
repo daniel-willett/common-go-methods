@@ -269,7 +269,27 @@ func TestLcm(t *testing.T){
         }
 }
 
+func TestMax(t *testing.T){
+        tests := []struct{
+                name            string
+                input           []int
+                expected        int
+        }{
+		{"Signleton", []int{5}, 5},
+		{"Positive Values", []int{1,2,3,4,5}, 5},
+		{"Negative Values", []int{-1,-2,-3,-4,-5}, -1},
+		{"Positive & Negative Values", []int{1,-1,2,-2,3,-3}, 3},
+        }
 
+        for _, tt := range tests{
+                t.Run(tt.name, func(t *testing.T){
+                        result := Max(tt.input)
+                        if result != tt.expected{
+                                t.Errorf("Max(%v) = %v; want %v", tt.input, result, tt.expected)
+                        }
+                })
+        }
+}
 
 
 
