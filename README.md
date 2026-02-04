@@ -4,7 +4,9 @@ A library of common Golang functions which either are often used or are likely t
 - https://docs.python.org/3/library/functions.html
 - https://www.w3schools.com/python/python_ref_functions.asp
 
+## Go version
 
+This project is using Go 1.22. The CI will use 1.22, the `go.mod` should say 1.22.
 
 ## Contents
 

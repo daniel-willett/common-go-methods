@@ -49,6 +49,11 @@ func Gcd(a int, b int) int{
 func GetIndexOf(text string, pattern string) []int{
 	var length int = len(pattern)
 	var positions = []int{}
+
+	if length==0{
+		return positions
+	}
+
 	for counter:=0; counter<=len(text)-length; counter++{
 		if string(text[counter:counter+length])==pattern{
 			positions = append(positions, counter)
@@ -59,8 +64,8 @@ func GetIndexOf(text string, pattern string) []int{
 }
 
 //DEPENDS ON: Reverse
-func IsPalendrome(n int) bool{
-	var nstr string = strconv.Itoa(n)
+func IsPalendrome(n uint) bool{
+	var nstr string = strconv.Itoa(int(n))
 	if Reverse(nstr)==nstr{
 		return true
 	}
@@ -68,6 +73,9 @@ func IsPalendrome(n int) bool{
 }
 
 func IsPrime(n int) bool{
+	if n<2{
+		return false
+	}
 	var upper int = int(math.Sqrt(float64(n)))+1
 	for factor:=2; factor<upper; factor++{
 		if n%factor==0{
@@ -190,6 +198,9 @@ func Min(arr []int) int{
 }
 
 func NumOfDivs(x int) int{
+	if x==0 {
+		return 1
+	}
 	var counter int = 0
 	var upper int = int(math.Sqrt(float64(x)))+1
 	for factor:=1; factor<upper; factor++{
@@ -231,9 +242,6 @@ func Reverse(nstr string) string{
 
 //DEPENDS ON: GetIndexOf
 func Split(text string, pattern string) []string{
-	if pattern==""{
-		return []string{}
-	}
 	positions := GetIndexOf(text, pattern)
 	result := []string{}
 	var counter int = 0
