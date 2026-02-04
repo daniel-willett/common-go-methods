@@ -291,7 +291,27 @@ func TestMax(t *testing.T){
         }
 }
 
+func TestMin(t *testing.T){
+        tests := []struct{
+                name            string
+                input           []int
+                expected        int
+        }{
+                {"Signleton", []int{5}, 5},
+                {"Positive Values", []int{1,2,3,4,5}, 1},
+                {"Negative Values", []int{-1,-2,-3,-4,-5}, -5},
+                {"Positive & Negative Values", []int{1,-1,2,-2,3,-3}, -3},
+        }
 
+        for _, tt := range tests{
+                t.Run(tt.name, func(t *testing.T){
+                        result := Min(tt.input)
+                        if result != tt.expected{
+                                t.Errorf("Min(%v) = %v; want %v", tt.input, result, tt.expected)
+                        }
+                })
+        }
+}
 
 
 
