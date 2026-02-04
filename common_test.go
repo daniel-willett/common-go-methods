@@ -239,7 +239,35 @@ func TestIsValidIPv6(t *testing.T){
         }
 }
 
+func TestLcm(t *testing.T){
+        tests := []struct{
+                name            string
+                a               int
+                b               int
+                expected        int
+        }{
+                //Normal cases
+                {"Two Positive", 20, 15, 60},
+                {"One Negative", -20, 15, 60},
+                {"Two Negative", -20, -15, 60},
+                {"Coprime", 7, 13, 91},
 
+                //Edge cases
+                {"One 0", 3, 0, 0},
+                {"Two 0", 0, 0, 0},
+                {"One 1", 3, 1, 3},
+                {"Two 1", 1, 1, 1},
+        }
+
+        for _, tt := range tests{
+                t.Run(tt.name, func(t *testing.T){
+                        result := Lcm(tt.a, tt.b)
+                        if result != tt.expected{
+                                t.Errorf("Lcm(%v, %v) = %v; want %v", tt.a, tt.b, result, tt.expected)
+                        }
+                })
+        }
+}
 
 
 
