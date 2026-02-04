@@ -335,7 +335,34 @@ func TestNumOfDivs(t *testing.T){
         }
 }
 
+func TestReplace(t *testing.T){
+        tests := []struct{
+                name            string
+		text		string
+		pattern		string
+		newPattern	string
+                expected        string
+        }{
+		//Normal cases
+		{"Standard", "Hello World", "World", "Dogs", "Hello Dogs"},
+		{"Same length", "Hello Cats", "Cats", "Dogs", "Hello Dogs"},
+		{"Spaces", "Hello World", " ", "", "HelloWorld"},
+		{"No match", "Hello World", "Cats", "Dogs", "Hello World"},
+		//Edge Cases
+		{"Empty Text", "", "Cats", "Dogs", ""},
+		{"Empty Pattern", "Hello World", "", "Dogs", "Hello World"},
+		{"Regex-Style Matching", "aaaaa", "aa", "b", "bba"},
+        }
 
+        for _, tt := range tests{
+                t.Run(tt.name, func(t *testing.T){
+                        result := Replace(tt.text, tt.pattern, tt.newPattern)
+                        if result != tt.expected{
+                                t.Errorf("Replace(%v, %v, %v) = %v; want %v", tt.text, tt.pattern, tt.newPattern, result, tt.expected)
+                        }
+                })
+        }
+}
 
 
 
