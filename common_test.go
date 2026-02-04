@@ -364,7 +364,26 @@ func TestReplace(t *testing.T){
         }
 }
 
+func TestReverse(t *testing.T){
+        tests := []struct{
+                name            string
+                input           string
+                expected        string
+        }{
+        	{"Standard", "Hello World", "dlroW olleH"},
+		{"Singleton", "A", "A"},
+		{"Empty", "", ""},
+	}
 
+        for _, tt := range tests{
+                t.Run(tt.name, func(t *testing.T){
+                        result := Reverse(tt.input)
+                        if result != tt.expected{
+                                t.Errorf("Reverse(%v) = %v; want %v", tt.input, result, tt.expected)
+                        }
+                })
+        }
+}
 
 
 
