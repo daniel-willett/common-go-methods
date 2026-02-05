@@ -27,6 +27,9 @@ func Any(arr []bool) bool{
 	return false
 }
 
+func BubbleSort(arr []int) []int{
+}
+
 //DEPENDS ON: Abs
 func Gcd(a int, b int) int{
 	var larger, smaller int = 0, 0

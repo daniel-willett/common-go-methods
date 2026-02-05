@@ -69,6 +69,30 @@ func TestAny(t *testing.T){
         }
 }
 
+func TestAny(t *testing.T){
+        tests := []struct{
+                name            string
+                input           []int
+                expected        []int
+        }{
+		{"Normal", []int{9,2,5,4,3,6,8,7,1}, []int{1,2,3,4,5,6,7,8,9}},
+		{"Singleton", []int{1}, []int{1}},
+		{"Empty", []int{}, []int{}},
+        }
+
+        for _, tt := range tests{
+                t.Run(tt.name, func(t *testing.T){
+                        result := BubbleSort(tt.input)
+                        if !reflect.DeepEqual(result, tt.expected){
+                                t.Errorf("BubbleSort(%v) = %v; want %v", tt.input, result, tt.expected)
+                        }
+                })
+        }
+}
+
+
+
+
 func TestGcd(t *testing.T){
         tests := []struct{
                 name            string
