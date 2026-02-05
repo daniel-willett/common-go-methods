@@ -28,6 +28,20 @@ func Any(arr []bool) bool{
 }
 
 func BubbleSort(arr []int) []int{
+	var length int = len(arr)
+	var changesMade bool = true
+	for changesMade==true{
+		changesMade = false
+		for index:=0; index<length-1; index++{
+			if arr[index+1]<arr[index]{
+				changesMade = true
+				temp := arr[index]
+				arr[index] = arr[index+1]
+				arr[index+1] = temp
+			}
+		}
+	}
+	return arr
 }
 
 //DEPENDS ON: Abs
