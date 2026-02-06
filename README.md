@@ -71,6 +71,10 @@ This takes an array of `int`s and returns an `int` value from this list. It dete
 
 This takes an `int` and returns an `int`. It determines how many values between 1 and the given value divide into the give value.
 
+### QuickSort
+
+This takes an array of `int`s and returns an array of `int`s. It determines the numerically ascending order of the elements with the largest at the end of the array and the smallest at the front.
+
 ### Replace
 
 This takes three `string`s and returns a `string`. It determines the occurances of a pattern within a given text and replaces those patterns with a new pattern.
