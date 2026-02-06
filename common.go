@@ -44,6 +44,13 @@ func BubbleSort(arr []int) []int{
 	return arr
 }
 
+func Extend(result []int, add []int) []int{
+	for i:=0; i<len(add); i++{
+		result = append(result, add[i])
+	}
+	return result
+}
+
 //DEPENDS ON: Abs
 func Gcd(a int, b int) int{
 	var larger, smaller int = 0, 0
@@ -219,6 +226,44 @@ func Max(arr []int) int{
 		}
 	}
 	return largest
+}
+
+//DEPENDS ON: Extend
+func MergeSort(arr []int) []int{
+	merge := func(left []int, right []int) []int{
+		result := []int{}
+		var i, j int = 0, 0
+
+		for i<len(left) && j<len(right){
+			if left[i]<right[j]{
+				result = append(result, left[i])
+				i += 1
+			} else {
+				result = append(result, right[j])
+				j += 1
+			}
+		}
+
+		result = Extend(result, left[i:len(left)])
+		result = Extend(result, right[j:len(right)])
+
+		return result
+	}
+
+
+
+	if len(arr)<=1{
+		return arr
+	}
+
+	var mid int = len(arr)/2 //Integer division
+	leftHalf := arr[0:mid]
+	rightHalf := arr[mid:len(arr)]
+
+	sortedLeft := MergeSort(leftHalf)
+	sortedRight := MergeSort(rightHalf)
+
+	return merge(sortedLeft, sortedRight)
 }
 
 func Min(arr []int) int{

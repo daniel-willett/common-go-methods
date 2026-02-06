@@ -69,6 +69,31 @@ func TestAny(t *testing.T){
         }
 }
 
+func TestExtend(t *testing.T){
+	tests := []struct{
+                name            string
+                input		[]int
+		add		[]int
+                expected        []int
+        }{
+		{"Standard", []int{1,2,3,4,5}, []int{6,7,8}, []int{1,2,3,4,5,6,7,8}},
+		{"Empty Start", []int{}, []int{6,7,8}, []int{6,7,8}},
+		{"Empty Add", []int{1,2,3,4,5}, []int{}, []int{1,2,3,4,5}},
+		{"Both Empty", []int{}, []int{}, []int{}},
+        }
+
+        for _, tt := range tests{
+                t.Run(tt.name, func(t *testing.T){
+                        result := Extend(tt.input, tt.add)
+                        if !reflect.DeepEqual(result, tt.expected){
+                                t.Errorf("Extend(%v, %v) = %v; want %v", tt.input, tt.add, result, tt.expected)
+                        }
+                })
+        }
+}
+
+
+
 func TestGcd(t *testing.T){
         tests := []struct{
                 name            string
@@ -409,6 +434,12 @@ func TestSorting(t *testing.T){
                         result := InsertionSort(tt.input)
 			if !reflect.DeepEqual(result, tt.expected){
                                 t.Errorf("InsertionSort(%v) = %v; want %v", tt.input, result, tt.expected)
+                        }
+                })
+		t.Run("MergeSort: " + tt.name, func(t *testing.T){
+                        result := InsertionSort(tt.input)
+                        if !reflect.DeepEqual(result, tt.expected){
+                                t.Errorf("MergeSort(%v) = %v; want %v", tt.input, result, tt.expected)
                         }
                 })
         }
