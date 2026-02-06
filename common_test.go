@@ -437,9 +437,15 @@ func TestSorting(t *testing.T){
                         }
                 })
 		t.Run("MergeSort: " + tt.name, func(t *testing.T){
-                        result := InsertionSort(tt.input)
+                        result := MergeSort(tt.input)
                         if !reflect.DeepEqual(result, tt.expected){
                                 t.Errorf("MergeSort(%v) = %v; want %v", tt.input, result, tt.expected)
+                        }
+                })
+		t.Run("QuickSort: " + tt.name, func(t *testing.T){
+                        result := QuickSort(tt.input)
+                        if !reflect.DeepEqual(result, tt.expected){
+                                t.Errorf("QuickSort(%v) = %v; want %v", tt.input, result, tt.expected)
                         }
                 })
         }
