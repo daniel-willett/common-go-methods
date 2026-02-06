@@ -21,6 +21,10 @@ This takes an array of `bool`s and returns a `bool`. It determines if the array 
 ### Any
 This takes an array of `bool`s and returns a `bool`. It determines if any part of the array is `true`, and returns false if the whole array is `false`.
 
+### BubbleSort
+
+This takes an array of `int`s and returns an array of `int`s. It determines the numerically ascending order of the elements with the largest at the end of the array and the smallest at the front.
+
 ### Gcd
 This takes two `int`s and returns an `int`. It determines the the largest positive integer which will divide into both given `int`s. It does this by Euclid's Algorithm.
 
