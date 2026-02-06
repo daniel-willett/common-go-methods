@@ -80,6 +80,23 @@ func GetIndexOf(text string, pattern string) []int{
 	return positions
 }
 
+func InsertionSort(arr []int) []int{
+	var i int = 1
+	var length int = len(arr)
+	for i < length{
+		var j int = i
+		for j>0 && arr[j-1]>arr[j]{
+			var temp int = arr[j]
+			arr[j] = arr[j-1]
+			arr[j-1] = temp
+
+			j -= 1
+		}
+		i += 1
+	}
+	return arr
+}
+
 //DEPENDS ON: Reverse
 func IsPalendrome(n uint) bool{
 	var nstr string = strconv.Itoa(int(n))
