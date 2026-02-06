@@ -31,6 +31,10 @@ This takes two `int`s and returns an `int`. It determines the the largest positi
 ### GetIndexOf
 This takes a `string` and returns an `[]int`. It determines all the occurances of a pattern within a string and gives an empty slice if no such pattern exists.
 
+### InsertionSort
+
+This takes an array of `int`s and returns an array of `int`s. It determines the numerically ascending order of the elements with the largest at the end of the array and the smallest at the front.
+
 ### IsPalendrome
 
 This takes an `int` and retrns a `bool`. It determines if writing the number backwards is the same as forwards.
