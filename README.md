@@ -21,11 +21,22 @@ This takes an array of `bool`s and returns a `bool`. It determines if the array 
 ### Any
 This takes an array of `bool`s and returns a `bool`. It determines if any part of the array is `true`, and returns false if the whole array is `false`.
 
+### BubbleSort
+
+This takes an array of `int`s and returns an array of `int`s. It determines the numerically ascending order of the elements with the largest at the end of the array and the smallest at the front.
+
+### Extend
+This takes two arrys of `int`s and returns an array of `int`s. It adds the second array to the end of the first by element-wise appending.
+
 ### Gcd
 This takes two `int`s and returns an `int`. It determines the the largest positive integer which will divide into both given `int`s. It does this by Euclid's Algorithm.
 
 ### GetIndexOf
 This takes a `string` and returns an `[]int`. It determines all the occurances of a pattern within a string and gives an empty slice if no such pattern exists.
+
+### InsertionSort
+
+This takes an array of `int`s and returns an array of `int`s. It determines the numerically ascending order of the elements with the largest at the end of the array and the smallest at the front.
 
 ### IsPalendrome
 
@@ -49,6 +60,9 @@ This takes two `int`s and returns an `int`. It determines the largest positive i
 
 This takes an array of `int`s and returns an `int` value from this list. It determines which of these `int`s are most positive.
 
+### MergeSort
+This takes an array of `int`s and returns an array of `int`s. It determines the numerically ascending order of the elements with the largest at the end of the array and the smallest at the front.
+
 ### Min
 
 This takes an array of `int`s and returns an `int` value from this list. It determines which of these `int`s are least positive.
@@ -56,6 +70,10 @@ This takes an array of `int`s and returns an `int` value from this list. It dete
 ### NumOfDivs
 
 This takes an `int` and returns an `int`. It determines how many values between 1 and the given value divide into the give value.
+
+### QuickSort
+
+This takes an array of `int`s and returns an array of `int`s. It determines the numerically ascending order of the elements with the largest at the end of the array and the smallest at the front.
 
 ### Replace
 

@@ -69,6 +69,31 @@ func TestAny(t *testing.T){
         }
 }
 
+func TestExtend(t *testing.T){
+	tests := []struct{
+                name            string
+                input		[]int
+		add		[]int
+                expected        []int
+        }{
+		{"Standard", []int{1,2,3,4,5}, []int{6,7,8}, []int{1,2,3,4,5,6,7,8}},
+		{"Empty Start", []int{}, []int{6,7,8}, []int{6,7,8}},
+		{"Empty Add", []int{1,2,3,4,5}, []int{}, []int{1,2,3,4,5}},
+		{"Both Empty", []int{}, []int{}, []int{}},
+        }
+
+        for _, tt := range tests{
+                t.Run(tt.name, func(t *testing.T){
+                        result := Extend(tt.input, tt.add)
+                        if !reflect.DeepEqual(result, tt.expected){
+                                t.Errorf("Extend(%v, %v) = %v; want %v", tt.input, tt.add, result, tt.expected)
+                        }
+                })
+        }
+}
+
+
+
 func TestGcd(t *testing.T){
         tests := []struct{
                 name            string
@@ -380,6 +405,47 @@ func TestReverse(t *testing.T){
                         result := Reverse(tt.input)
                         if result != tt.expected{
                                 t.Errorf("Reverse(%v) = %v; want %v", tt.input, result, tt.expected)
+                        }
+                })
+        }
+}
+
+func TestSorting(t *testing.T){
+        tests := []struct{
+                name            string
+                input           []int
+                expected        []int
+        }{
+                {"Normal", []int{9,2,5,4,3,6,8,7,1}, []int{1,2,3,4,5,6,7,8,9}},
+                {"Singleton", []int{1}, []int{1}},
+                {"Empty", []int{}, []int{}},
+                {"Negatives", []int{-9,-2,-5,-4,-3,-6,-8,-7,-1}, []int{-9,-8,-7,-6,-5,-4,-3,-2,-1}},
+                {"Positives and Negatives", []int{1,2,3,0,-1,-2,-3}, []int{-3,-2,-1,0,1,2,3}},
+        }
+
+        for _, tt := range tests{
+		t.Run("BubbelSort: " + tt.name, func(t *testing.T){
+                        result := BubbleSort(tt.input)
+                        if !reflect.DeepEqual(result, tt.expected){
+                                t.Errorf("BubbleSort(%v) = %v; want %v", tt.input, result, tt.expected)
+                        }
+                })
+		t.Run("InsertionSort: " + tt.name, func(t *testing.T){
+                        result := InsertionSort(tt.input)
+			if !reflect.DeepEqual(result, tt.expected){
+                                t.Errorf("InsertionSort(%v) = %v; want %v", tt.input, result, tt.expected)
+                        }
+                })
+		t.Run("MergeSort: " + tt.name, func(t *testing.T){
+                        result := MergeSort(tt.input)
+                        if !reflect.DeepEqual(result, tt.expected){
+                                t.Errorf("MergeSort(%v) = %v; want %v", tt.input, result, tt.expected)
+                        }
+                })
+		t.Run("QuickSort: " + tt.name, func(t *testing.T){
+                        result := QuickSort(tt.input)
+                        if !reflect.DeepEqual(result, tt.expected){
+                                t.Errorf("QuickSort(%v) = %v; want %v", tt.input, result, tt.expected)
                         }
                 })
         }

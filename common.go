@@ -27,6 +27,30 @@ func Any(arr []bool) bool{
 	return false
 }
 
+func BubbleSort(arr []int) []int{
+	var length int = len(arr)
+	var changesMade bool = true
+	for changesMade==true{
+		changesMade = false
+		for index:=0; index<length-1; index++{
+			if arr[index+1]<arr[index]{
+				changesMade = true
+				temp := arr[index]
+				arr[index] = arr[index+1]
+				arr[index+1] = temp
+			}
+		}
+	}
+	return arr
+}
+
+func Extend(result []int, add []int) []int{
+	for i:=0; i<len(add); i++{
+		result = append(result, add[i])
+	}
+	return result
+}
+
 //DEPENDS ON: Abs
 func Gcd(a int, b int) int{
 	var larger, smaller int = 0, 0
@@ -61,6 +85,23 @@ func GetIndexOf(text string, pattern string) []int{
 		}
 	}
 	return positions
+}
+
+func InsertionSort(arr []int) []int{
+	var i int = 1
+	var length int = len(arr)
+	for i < length{
+		var j int = i
+		for j>0 && arr[j-1]>arr[j]{
+			var temp int = arr[j]
+			arr[j] = arr[j-1]
+			arr[j-1] = temp
+
+			j -= 1
+		}
+		i += 1
+	}
+	return arr
 }
 
 //DEPENDS ON: Reverse
@@ -187,6 +228,44 @@ func Max(arr []int) int{
 	return largest
 }
 
+//DEPENDS ON: Extend
+func MergeSort(arr []int) []int{
+	merge := func(left []int, right []int) []int{
+		result := []int{}
+		var i, j int = 0, 0
+
+		for i<len(left) && j<len(right){
+			if left[i]<right[j]{
+				result = append(result, left[i])
+				i += 1
+			} else {
+				result = append(result, right[j])
+				j += 1
+			}
+		}
+
+		result = Extend(result, left[i:len(left)])
+		result = Extend(result, right[j:len(right)])
+
+		return result
+	}
+
+
+
+	if len(arr)<=1{
+		return arr
+	}
+
+	var mid int = len(arr)/2 //Integer division
+	leftHalf := arr[0:mid]
+	rightHalf := arr[mid:len(arr)]
+
+	sortedLeft := MergeSort(leftHalf)
+	sortedRight := MergeSort(rightHalf)
+
+	return merge(sortedLeft, sortedRight)
+}
+
 func Min(arr []int) int{
 	var smallest int = arr[0]
 	for _, val := range arr{
@@ -213,6 +292,40 @@ func NumOfDivs(x int) int{
 		counter -= 1
 	}
 	return counter
+}
+
+func QuickSort(arr []int) []int{
+	partition := func(arr []int, low int, high int) int{
+		var pivot int = arr[high]
+		var i int = low-1
+		
+		var temp int = 0
+		for j:=low; j<high; j++{
+			if arr[j]<=pivot{
+				i+=1
+				temp = arr[i]
+				arr[i] = arr[j]
+				arr[j] = temp
+			}
+		}
+		temp = arr[i+1]
+		arr[i+1] = arr[high]
+		arr[high] = temp
+		return i+1
+	}
+
+	var quicksort func(arr []int, low int, high int)
+	quicksort = func(arr []int, low int, high int){
+		if low<high{
+			pivotIndex := partition(arr, low, high)
+			quicksort(arr, low, pivotIndex-1)
+			quicksort(arr, pivotIndex+1, high)
+		}
+	}
+
+	quicksort(arr, 0, len(arr)-1)
+
+	return arr
 }
 
 //DEPENDS ON: GetIndexOf
