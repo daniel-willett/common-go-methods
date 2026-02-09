@@ -228,6 +228,18 @@ func Max(arr []int) int{
 	return largest
 }
 
+func Lower(text string) string{
+        var result string = ""
+        for _, char := range text{
+                if char<=90 && char>=65{
+                        result += string(char+32)
+                } else {
+                        result += string(char)
+                }
+        }
+        return result
+}
+
 //DEPENDS ON: Extend
 func MergeSort(arr []int) []int{
 	merge := func(left []int, right []int) []int{
@@ -366,6 +378,18 @@ func Split(text string, pattern string) []string{
 		result = append(result, string(text[counter:len(text)]))
 	} else {
 		result = append(result, "")
+	}
+	return result
+}
+
+func Upper(text string) string{
+	var result string = ""
+	for _, char := range text{
+		if char<=122 && char>=97{
+			result += string(char-32)
+		} else {
+			result += string(char)
+		}
 	}
 	return result
 }
