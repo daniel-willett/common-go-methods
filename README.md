@@ -103,6 +103,10 @@ This takes a `string` and returns a `string`. It flips the string to reverse ord
 
 This takes two `string`s and returns an `[]string`. It determines the positions of a pattern within a given text and splits the text accross a slice along those pattern matches.
 
+### SwapCase
+
+This takes a `string` and returns a `string`. It determines if characters within a string are upper case or lower case and swaps them to the other casing.
+
 ### Upper
 
 This takes a `string` and returns a `string`. It determines the ASCII value each character of the string and shifts it appro
