@@ -518,6 +518,27 @@ func TestSplit(t *testing.T){
         }
 }
 
+func TestSwapCase(t *testing.T){
+        tests := []struct{
+                name            string
+                input           string
+                expected        string
+        }{
+                {"Standard", "Hello World", "hELLO wORLD"},
+                {"Digit", "1", "1"},
+                {"Empty", "", ""},
+        }
+
+        for _, tt := range tests{
+                t.Run(tt.name, func(t *testing.T){
+                        result := SwapCase(tt.input)
+                        if result != tt.expected{
+                                t.Errorf("SwapCase(%v) = %v; want %v", tt.input, result, tt.expected)
+                        }
+                })
+        }
+}
+
 func TestUpper(t *testing.T){
         tests := []struct{
                 name            string
