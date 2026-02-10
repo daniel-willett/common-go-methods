@@ -210,12 +210,38 @@ func IsValidIPv6(ip string) bool{
 	}
 }
 
+func Join(arr []string, delim string) string{
+	var result string = ""
+	var n int = len(arr)
+	if n==0{
+		return ""
+	}
+	for index:=0; index<n-1; index++{
+		result += arr[index]
+		result += delim
+	}
+	result += arr[n-1]
+	return result
+}
+
 //DEPENDS ON: Gcd, Abs
 func Lcm(a int, b int) int{
 	if a==b && a==0 {
 		return 0
 	}
 	return int(Abs(float64(a*b/Gcd(a,b))))
+}
+
+func Lower(text string) string{
+        var result string = ""
+        for _, char := range text{
+                if char<=90 && char>=65{
+                        result += string(char+32)
+                } else {
+                        result += string(char)
+                }
+        }
+        return result
 }
 
 func Max(arr []int) int{
@@ -366,6 +392,31 @@ func Split(text string, pattern string) []string{
 		result = append(result, string(text[counter:len(text)]))
 	} else {
 		result = append(result, "")
+	}
+	return result
+}
+
+//DEPENDS ON: Upper, Lower
+func SwapCase(text string) string{
+	//normal XOR upper XOR lower = swapcase
+	upper := []rune(Upper(text))
+	lower := []rune(Lower(text))
+	start := []rune(text)
+	var result string = ""
+	for index, _ := range start{
+		result += string(upper[index] ^ lower[index] ^ start[index])
+	}
+	return result
+}
+
+func Upper(text string) string{
+	var result string = ""
+	for _, char := range text{
+		if char<=122 && char>=97{
+			result += string(char-32)
+		} else {
+			result += string(char)
+		}
 	}
 	return result
 }

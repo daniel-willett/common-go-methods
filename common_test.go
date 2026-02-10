@@ -264,6 +264,29 @@ func TestIsValidIPv6(t *testing.T){
         }
 }
 
+func TestJoin(t *testing.T){
+        tests := []struct{
+                name            string
+                arr		[]string
+		delim		string
+                expected        string
+        }{
+		{"Standard", []string{"Hello", "World"}, " ", "Hello World"},
+		{"Empty Array", []string{}, "A", ""},
+		{"Empty Pattern", []string{"Hello", "World"}, "", "HelloWorld"},
+		{"Empty Array Values", []string{"","","",""}, "Hi", "HiHiHi"},
+        }
+
+        for _, tt := range tests{
+                t.Run(tt.name, func(t *testing.T){
+                        result := Join(tt.arr, tt.delim)
+                        if result != tt.expected{
+                                t.Errorf("Join(%v, %v) = %v; want %v", tt.arr, tt.delim, result, tt.expected)
+                        }
+                })
+        }
+}
+
 func TestLcm(t *testing.T){
         tests := []struct{
                 name            string
@@ -289,6 +312,27 @@ func TestLcm(t *testing.T){
                         result := Lcm(tt.a, tt.b)
                         if result != tt.expected{
                                 t.Errorf("Lcm(%v, %v) = %v; want %v", tt.a, tt.b, result, tt.expected)
+                        }
+                })
+        }
+}
+
+func TestLower(t *testing.T){
+        tests := []struct{
+                name            string
+                input           string
+                expected        string
+        }{
+                {"Standard", "HELLO WORLD", "hello world"},
+                {"Digit", "1", "1"},
+                {"Empty", "", ""},
+        }
+
+        for _, tt := range tests{
+                t.Run(tt.name, func(t *testing.T){
+                        result := Lower(tt.input)
+                        if result != tt.expected{
+                                t.Errorf("Lower(%v) = %v; want %v", tt.input, result, tt.expected)
                         }
                 })
         }
@@ -469,6 +513,48 @@ func TestSplit(t *testing.T){
                         result := Split(tt.text, tt.pattern)
                         if !reflect.DeepEqual(result, tt.expected){
                                 t.Errorf("Split(%v, %v) = %v; want %v", tt.text, tt.pattern, result, tt.expected)
+                        }
+                })
+        }
+}
+
+func TestSwapCase(t *testing.T){
+        tests := []struct{
+                name            string
+                input           string
+                expected        string
+        }{
+                {"Standard", "Hello World", "hELLO wORLD"},
+                {"Digit", "1", "1"},
+                {"Empty", "", ""},
+        }
+
+        for _, tt := range tests{
+                t.Run(tt.name, func(t *testing.T){
+                        result := SwapCase(tt.input)
+                        if result != tt.expected{
+                                t.Errorf("SwapCase(%v) = %v; want %v", tt.input, result, tt.expected)
+                        }
+                })
+        }
+}
+
+func TestUpper(t *testing.T){
+        tests := []struct{
+                name            string
+                input           string
+                expected        string
+        }{
+                {"Standard", "hello world", "HELLO WORLD"},
+                {"Digit", "1", "1"},
+                {"Empty", "", ""},
+        }
+
+        for _, tt := range tests{
+                t.Run(tt.name, func(t *testing.T){
+                        result := Upper(tt.input)
+                        if result != tt.expected{
+                                t.Errorf("Upper(%v) = %v; want %v", tt.input, result, tt.expected)
                         }
                 })
         }
