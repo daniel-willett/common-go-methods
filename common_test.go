@@ -264,6 +264,29 @@ func TestIsValidIPv6(t *testing.T){
         }
 }
 
+func TestJoin(t *testing.T){
+        tests := []struct{
+                name            string
+                arr		[]string
+		delim		string
+                expected        string
+        }{
+		{"Standard", []string{"Hello", "World"}, " ", "Hello World"},
+		{"Empty Array", []string{}, "A", ""},
+		{"Empty Pattern", []string{"Hello", "World"}, "", "HelloWorld"},
+		{"Empty Array Values", []string{"","","",""}, "Hi", "HiHiHi"},
+        }
+
+        for _, tt := range tests{
+                t.Run(tt.name, func(t *testing.T){
+                        result := Join(tt.arr, tt.delim)
+                        if result != tt.expected{
+                                t.Errorf("Join(%v, %v) = %v; want %v", tt.arr, tt.delim, result, tt.expected)
+                        }
+                })
+        }
+}
+
 func TestLcm(t *testing.T){
         tests := []struct{
                 name            string
