@@ -218,16 +218,6 @@ func Lcm(a int, b int) int{
 	return int(Abs(float64(a*b/Gcd(a,b))))
 }
 
-func Max(arr []int) int{
-	var largest int = arr[0]
-	for _, val := range arr{
-		if val>largest{
-			largest=val
-		}
-	}
-	return largest
-}
-
 func Lower(text string) string{
         var result string = ""
         for _, char := range text{
@@ -238,6 +228,16 @@ func Lower(text string) string{
                 }
         }
         return result
+}
+
+func Max(arr []int) int{
+	var largest int = arr[0]
+	for _, val := range arr{
+		if val>largest{
+			largest=val
+		}
+	}
+	return largest
 }
 
 //DEPENDS ON: Extend

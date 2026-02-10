@@ -56,6 +56,10 @@ This takes a `string` and returns a `bool`. It determines if the given string is
 
 This takes two `int`s and returns an `int`. It determines the largest positive integer which the two given `int`s divide into. It does this through using `Gcd()`.
 
+### Lower
+
+This takes a `string` and returns a `string`. It determines the ASCII value each character of the string and shifts it appropriately when needed to make the result lower case.
+
 ### Max
 
 This takes an array of `int`s and returns an `int` value from this list. It determines which of these `int`s are most positive.
@@ -86,3 +90,8 @@ This takes a `string` and returns a `string`. It flips the string to reverse ord
 ### Split
 
 This takes two `string`s and returns an `[]string`. It determines the positions of a pattern within a given text and splits the text accross a slice along those pattern matches.
+
+### Upper
+
+This takes a `string` and returns a `string`. It determines the ASCII value each character of the string and shifts it appro
+priately when needed to make the result upper case.

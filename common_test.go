@@ -294,6 +294,27 @@ func TestLcm(t *testing.T){
         }
 }
 
+func TestLower(t *testing.T){
+        tests := []struct{
+                name            string
+                input           string
+                expected        string
+        }{
+                {"Standard", "HELLO WORLD", "hello world"},
+                {"Digit", "1", "1"},
+                {"Empty", "", ""},
+        }
+
+        for _, tt := range tests{
+                t.Run(tt.name, func(t *testing.T){
+                        result := Lower(tt.input)
+                        if result != tt.expected{
+                                t.Errorf("Lower(%v) = %v; want %v", tt.input, result, tt.expected)
+                        }
+                })
+        }
+}
+
 func TestMax(t *testing.T){
         tests := []struct{
                 name            string
@@ -333,27 +354,6 @@ func TestMin(t *testing.T){
                         result := Min(tt.input)
                         if result != tt.expected{
                                 t.Errorf("Min(%v) = %v; want %v", tt.input, result, tt.expected)
-                        }
-                })
-        }
-}
-
-func TestLower(t *testing.T){
-        tests := []struct{
-                name            string
-                input           string
-                expected        string
-        }{
-                {"Standard", "HELLO WORLD", "hello world"},
-                {"Digit", "1", "1"},
-                {"Empty", "", ""},
-        }
-
-        for _, tt := range tests{
-                t.Run(tt.name, func(t *testing.T){
-                        result := Lower(tt.input)
-                        if result != tt.expected{
-                                t.Errorf("Lower(%v) = %v; want %v", tt.input, result, tt.expected)
                         }
                 })
         }
