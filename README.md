@@ -13,12 +13,15 @@ This project is using Go 1.22. The CI will use 1.22, the `go.mod` should say 1.2
 There is a `common.go` file which contains the list of functions thus far.
 
 ### Abs
+
 This takes a `float64` and returns a `float64`. It determines the absolute value of the input which means either returning the positive version of the input, if it isn't already positive.
 
 ### All
+
 This takes an array of `bool`s and returns a `bool`. It determines if the array is all `true`, and returns false if any value is `false`.
 
 ### Any
+
 This takes an array of `bool`s and returns a `bool`. It determines if any part of the array is `true`, and returns false if the whole array is `false`.
 
 ### BubbleSort
@@ -26,12 +29,15 @@ This takes an array of `bool`s and returns a `bool`. It determines if any part o
 This takes an array of `int`s and returns an array of `int`s. It determines the numerically ascending order of the elements with the largest at the end of the array and the smallest at the front.
 
 ### Extend
+
 This takes two arrys of `int`s and returns an array of `int`s. It adds the second array to the end of the first by element-wise appending.
 
 ### Gcd
+
 This takes two `int`s and returns an `int`. It determines the the largest positive integer which will divide into both given `int`s. It does this by Euclid's Algorithm.
 
 ### GetIndexOf
+
 This takes a `string` and returns an `[]int`. It determines all the occurances of a pattern within a string and gives an empty slice if no such pattern exists.
 
 ### InsertionSort
@@ -47,10 +53,16 @@ This takes an `int` and retrns a `bool`. It determines if writing the number bac
 This takes an `int` and returns a `bool`. It determines if the only factors of the number are the number itself and 1.
 
 ### IsValidIPv4
+
 This takes a `string` and returns a `bool`. It determines if the given string is a valid IPv4 address. Currently this is just a crude checker and doesn't currently do more complex cases of IPv4 formatting.
 
 ### IsValidIPv6
+
 This takes a `string` and returns a `bool`. It determines if the given string is a valid IPv4 address. This does allow for IPv4 embedding and thus relies on the `IsValidIPv4()` function.
+
+### Join
+
+This takes a `[]string` and a `string` and returns a `string`. Elemtns of the array are connected together with the second `string` used as a delimiter between them. This is in essence the opposite of `Split()`.
 
 ### Lcm
 
