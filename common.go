@@ -396,6 +396,19 @@ func Split(text string, pattern string) []string{
 	return result
 }
 
+func SwapCase(text string) string{
+	//normal XOR upper XOR lower = swapcase
+	upper := []rune(Upper(text))
+	lower := []rune(Lower(text))
+	start := []rune(text)
+	var result string = ""
+	for index, _ := range start{
+		result += string(upper[index] ^ lower[index] ^ start[index])
+	}
+	return result
+}
+
+//DEPENDS ON: Upper, Lower
 func Upper(text string) string{
 	var result string = ""
 	for _, char := range text{
