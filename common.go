@@ -210,6 +210,20 @@ func IsValidIPv6(ip string) bool{
 	}
 }
 
+func Join(arr []string, delim string) string{
+	var result string = ""
+	var n int = len(arr)
+	if n==0{
+		return ""
+	}
+	for index:=0; index<n-1; index++{
+		result += arr[index]
+		result += delim
+	}
+	result += arr[n-1]
+	return result
+}
+
 //DEPENDS ON: Gcd, Abs
 func Lcm(a int, b int) int{
 	if a==b && a==0 {
