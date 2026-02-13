@@ -141,6 +141,7 @@ func TestGetIndexOf(t *testing.T){
 		{"Empty Text", "", "pattern", []int{}},
 		{"Empty Pattern", "Hello World", "", []int{}},
 		{"Regex-Style Response", "aaaaa", "aa", []int{0,2}},
+		{"Emojis", "😊", "😊", []int{0}},
         }
 
         for _, tt := range tests{
@@ -214,6 +215,7 @@ func TestIsValidIPv4(t *testing.T){
 		{"Invalid Octet", "1.1.A.1", false},
 		{"Too Many Octets", "1.1.1.1.1", false},
 		{"Random Chatacters", "Hello", false},
+		{"Emoji", "1.1.1.😊", false},
         }
 
         for _, tt := range tests{
@@ -252,6 +254,7 @@ func TestIsValidIPv6(t *testing.T){
 		{"Too Many Octets IPv4 Embedded", "0:0:0:0:0:0:1.2.3.4.5", false},
 		{"Too Few Blocks IPv4 Embedded", "12:12.12.32.4", false},
 		{"Too Large Block", "10000:0:0:0:0:0:0:0", false},
+		{"Emoji", "1::1:😊", false},
         }
 
         for _, tt := range tests{
@@ -275,6 +278,7 @@ func TestJoin(t *testing.T){
 		{"Empty Array", []string{}, "A", ""},
 		{"Empty Pattern", []string{"Hello", "World"}, "", "HelloWorld"},
 		{"Empty Array Values", []string{"","","",""}, "Hi", "HiHiHi"},
+		{"Emojis", []string{"😊","😊","😊"}, "👻", "😊👻😊👻😊"},
         }
 
         for _, tt := range tests{
@@ -326,6 +330,7 @@ func TestLower(t *testing.T){
                 {"Standard", "HELLO WORLD", "hello world"},
                 {"Digit", "1", "1"},
                 {"Empty", "", ""},
+		{"Emoji", "Hello😊World", "hello😊world"},
         }
 
         for _, tt := range tests{
@@ -421,6 +426,9 @@ func TestReplace(t *testing.T){
 		{"Empty Text", "", "Cats", "Dogs", ""},
 		{"Empty Pattern", "Hello World", "", "Dogs", "Hello World"},
 		{"Regex-Style Matching", "aaaaa", "aa", "b", "bba"},
+		{"Emoji Text", "😊😊👻👻😭😭😂😂🤣🤣❤️❤️😍😍😒😒👌👌😘😘💕💕😁😁", "128513", "a", "😊😊👻👻😭😭😂😂🤣🤣❤️❤️😍😍😒😒👌👌😘😘💕💕😁😁"},
+		{"Emoji Text & Pattern", "😊😊👻👻😭😭", "😊😊", "emoji", "emoji👻👻😭😭"},
+		{"Emoji Text & Pattern & New Pattern", "😊😊👻👻😭😭", "😊😊", "👻👻", "👻👻👻👻😭😭"},
         }
 
         for _, tt := range tests{
@@ -442,6 +450,7 @@ func TestReverse(t *testing.T){
         	{"Standard", "Hello World", "dlroW olleH"},
 		{"Singleton", "A", "A"},
 		{"Empty", "", ""},
+		{"Emoji", "😁", "😁"},
 	}
 
         for _, tt := range tests{
@@ -506,6 +515,8 @@ func TestSplit(t *testing.T){
 		{"No Match", "Hello World", "Cats", []string{"Hello World"}},
 		{"Empty Text", "", "Cats", []string{""}},
 		{"Empty Pattern", "Hello World", "", []string{"Hello World"}},
+		{"Match at the end", "Hello World", "d", []string{"Hello Worl", ""}},
+		{"Emojis", "😁😁👻😁😁", "👻", []string{"😁😁","😁😁"}},
         }
 
         for _, tt := range tests{
@@ -527,6 +538,7 @@ func TestSwapCase(t *testing.T){
                 {"Standard", "Hello World", "hELLO wORLD"},
                 {"Digit", "1", "1"},
                 {"Empty", "", ""},
+		{"Emoji", "Hello😁World", "hELLO😁wORLD"},
         }
 
         for _, tt := range tests{
@@ -548,6 +560,7 @@ func TestUpper(t *testing.T){
                 {"Standard", "hello world", "HELLO WORLD"},
                 {"Digit", "1", "1"},
                 {"Empty", "", ""},
+		{"Emoji", "Hello😊World", "HELLO😊WORLD"},
         }
 
         for _, tt := range tests{
