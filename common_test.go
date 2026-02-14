@@ -451,6 +451,7 @@ func TestReverse(t *testing.T){
 		{"Singleton", "A", "A"},
 		{"Empty", "", ""},
 		{"Emoji", "😁", "😁"},
+		{"Emoji & Text", "Hello😁World", "dlroW😁olleH"},
 	}
 
         for _, tt := range tests{

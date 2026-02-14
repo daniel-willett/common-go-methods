@@ -371,10 +371,11 @@ func Replace(text string, pattern string, newPattern string) string{
 
 }
 
-func Reverse(nstr string) string{
+func Reverse(text string) string{
 	var result string = ""
-	for counter := len(nstr)-1; counter>=0; counter--{
-		result += string(nstr[counter])
+	runes := []rune(text)
+	for counter := len(runes)-1; counter>=0; counter--{
+		result += string(runes[counter])
 	}
 	return result
 }
