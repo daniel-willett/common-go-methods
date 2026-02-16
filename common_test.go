@@ -1,6 +1,6 @@
 package main
 
-import ("testing";"reflect")
+import ("testing"; "reflect"; "errors")
 
 func TestAbs(t *testing.T){
 	tests := []struct{
@@ -141,6 +141,7 @@ func TestGetIndexOf(t *testing.T){
 		{"Empty Text", "", "pattern", []int{}},
 		{"Empty Pattern", "Hello World", "", []int{}},
 		{"Regex-Style Response", "aaaaa", "aa", []int{0,2}},
+		{"Emojis", "😊", "😊", []int{0}},
         }
 
         for _, tt := range tests{
@@ -214,6 +215,7 @@ func TestIsValidIPv4(t *testing.T){
 		{"Invalid Octet", "1.1.A.1", false},
 		{"Too Many Octets", "1.1.1.1.1", false},
 		{"Random Chatacters", "Hello", false},
+		{"Emoji", "1.1.1.😊", false},
         }
 
         for _, tt := range tests{
@@ -252,6 +254,7 @@ func TestIsValidIPv6(t *testing.T){
 		{"Too Many Octets IPv4 Embedded", "0:0:0:0:0:0:1.2.3.4.5", false},
 		{"Too Few Blocks IPv4 Embedded", "12:12.12.32.4", false},
 		{"Too Large Block", "10000:0:0:0:0:0:0:0", false},
+		{"Emoji", "1::1:😊", false},
         }
 
         for _, tt := range tests{
@@ -275,6 +278,7 @@ func TestJoin(t *testing.T){
 		{"Empty Array", []string{}, "A", ""},
 		{"Empty Pattern", []string{"Hello", "World"}, "", "HelloWorld"},
 		{"Empty Array Values", []string{"","","",""}, "Hi", "HiHiHi"},
+		{"Emojis", []string{"😊","😊","😊"}, "👻", "😊👻😊👻😊"},
         }
 
         for _, tt := range tests{
@@ -326,6 +330,7 @@ func TestLower(t *testing.T){
                 {"Standard", "HELLO WORLD", "hello world"},
                 {"Digit", "1", "1"},
                 {"Empty", "", ""},
+		{"Emoji", "Hello😊World", "hello😊world"},
         }
 
         for _, tt := range tests{
@@ -342,20 +347,34 @@ func TestMax(t *testing.T){
         tests := []struct{
                 name            string
                 input           []int
-                expected        int
+                expectedVal     int
+		expectedErr	error
         }{
-		{"Signleton", []int{5}, 5},
-		{"Positive Values", []int{1,2,3,4,5}, 5},
-		{"Negative Values", []int{-1,-2,-3,-4,-5}, -1},
-		{"Positive & Negative Values", []int{1,-1,2,-2,3,-3}, 3},
-        }
+		{"Signleton", []int{5}, 5, nil},
+		{"Positive Values", []int{1,2,3,4,5}, 5, nil},
+		{"Negative Values", []int{-1,-2,-3,-4,-5}, -1, nil},
+		{"Positive & Negative Values", []int{1,-1,2,-2,3,-3}, 3, nil},
+		{"Empty", []int{}, 0, errors.New("Max: Cannot find maximum value of empty array/slice")},
+	}
 
         for _, tt := range tests{
                 t.Run(tt.name, func(t *testing.T){
-                        result := Max(tt.input)
-                        if result != tt.expected{
-                                t.Errorf("Max(%v) = %v; want %v", tt.input, result, tt.expected)
+                        result, err := Max(tt.input)
+			//We have a slight problem with nil vs non-nil errors.
+			//So first we check explicitly if they are equal in the nil sense
+			//Should that pass by then we check if they are equal in a non-nil sense
+			if (err==nil && tt.expectedErr!=nil) || (err!=nil && tt.expectedErr==nil){
+				t.Errorf("Max(%v) = %v, %v; want %v, %v",
+				tt.input, result, err, tt.expectedVal, tt.expectedErr)
+			} else if err!=nil && err.Error()!=tt.expectedErr.Error(){
+                                t.Errorf("Max(%v) = %v, %v; want %v, %v",
+				tt.input, result, err, tt.expectedVal, tt.expectedErr)
                         }
+			//Finally we check if the expected value is what we wanted
+			if result!=tt.expectedVal {
+				t.Errorf("Max(%v) = %v, %v; want %v, %v",
+				tt.input, result, err, tt.expectedVal, tt.expectedErr)
+			}
                 })
         }
 }
@@ -364,19 +383,33 @@ func TestMin(t *testing.T){
         tests := []struct{
                 name            string
                 input           []int
-                expected        int
+                expectedVal     int
+		expectedErr	error
         }{
-                {"Signleton", []int{5}, 5},
-                {"Positive Values", []int{1,2,3,4,5}, 1},
-                {"Negative Values", []int{-1,-2,-3,-4,-5}, -5},
-                {"Positive & Negative Values", []int{1,-1,2,-2,3,-3}, -3},
+                {"Signleton", []int{5}, 5, nil},
+                {"Positive Values", []int{1,2,3,4,5}, 1, nil},
+                {"Negative Values", []int{-1,-2,-3,-4,-5}, -5, nil},
+                {"Positive & Negative Values", []int{1,-1,2,-2,3,-3}, -3, nil},
+		{"Empty", []int{}, 0, errors.New("Min: Cannot find minimum value of empty array/slice")},
         }
 
         for _, tt := range tests{
                 t.Run(tt.name, func(t *testing.T){
-                        result := Min(tt.input)
-                        if result != tt.expected{
-                                t.Errorf("Min(%v) = %v; want %v", tt.input, result, tt.expected)
+                        result, err := Min(tt.input)
+			//We have a slight problem with nil vs non-nil errors.
+                        //So first we check explicitly if they are equal in the nil sense
+                        //Should that pass by then we check if they are equal in a non-nil sense
+                        if (err==nil && tt.expectedErr!=nil) || (err!=nil && tt.expectedErr==nil){
+                                t.Errorf("Max(%v) = %v, %v; want %v, %v",
+                                tt.input, result, err, tt.expectedVal, tt.expectedErr)
+                        } else if err!=nil && err.Error()!=tt.expectedErr.Error(){
+                                t.Errorf("Max(%v) = %v, %v; want %v, %v",
+                                tt.input, result, err, tt.expectedVal, tt.expectedErr)
+                        }
+                        //Finally we check if the expected value is what we wanted
+                        if result!=tt.expectedVal {
+                                t.Errorf("Max(%v) = %v, %v; want %v, %v",
+                                tt.input, result, err, tt.expectedVal, tt.expectedErr)
                         }
                 })
         }
@@ -421,6 +454,9 @@ func TestReplace(t *testing.T){
 		{"Empty Text", "", "Cats", "Dogs", ""},
 		{"Empty Pattern", "Hello World", "", "Dogs", "Hello World"},
 		{"Regex-Style Matching", "aaaaa", "aa", "b", "bba"},
+		{"Emoji Text", "😊😊👻👻😭😭😂😂🤣🤣❤️❤️😍😍😒😒👌👌😘😘💕💕😁😁", "128513", "a", "😊😊👻👻😭😭😂😂🤣🤣❤️❤️😍😍😒😒👌👌😘😘💕💕😁😁"},
+		{"Emoji Text & Pattern", "😊😊👻👻😭😭", "😊😊", "emoji", "emoji👻👻😭😭"},
+		{"Emoji Text & Pattern & New Pattern", "😊😊👻👻😭😭", "😊😊", "👻👻", "👻👻👻👻😭😭"},
         }
 
         for _, tt := range tests{
@@ -442,6 +478,8 @@ func TestReverse(t *testing.T){
         	{"Standard", "Hello World", "dlroW olleH"},
 		{"Singleton", "A", "A"},
 		{"Empty", "", ""},
+		{"Emoji", "😁", "😁"},
+		{"Emoji & Text", "Hello😁World", "dlroW😁olleH"},
 	}
 
         for _, tt := range tests{
@@ -506,6 +544,8 @@ func TestSplit(t *testing.T){
 		{"No Match", "Hello World", "Cats", []string{"Hello World"}},
 		{"Empty Text", "", "Cats", []string{""}},
 		{"Empty Pattern", "Hello World", "", []string{"Hello World"}},
+		{"Match at the end", "Hello World", "d", []string{"Hello Worl", ""}},
+		{"Emojis", "😁😁👻😁😁", "👻", []string{"😁😁","😁😁"}},
         }
 
         for _, tt := range tests{
@@ -527,6 +567,7 @@ func TestSwapCase(t *testing.T){
                 {"Standard", "Hello World", "hELLO wORLD"},
                 {"Digit", "1", "1"},
                 {"Empty", "", ""},
+		{"Emoji", "Hello😁World", "hELLO😁wORLD"},
         }
 
         for _, tt := range tests{
@@ -548,6 +589,7 @@ func TestUpper(t *testing.T){
                 {"Standard", "hello world", "HELLO WORLD"},
                 {"Digit", "1", "1"},
                 {"Empty", "", ""},
+		{"Emoji", "Hello😊World", "HELLO😊WORLD"},
         }
 
         for _, tt := range tests{
