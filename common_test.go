@@ -1,6 +1,6 @@
 package main
 
-import ("testing";"reflect")
+import ("testing"; "reflect"; "errors")
 
 func TestAbs(t *testing.T){
 	tests := []struct{
@@ -347,20 +347,34 @@ func TestMax(t *testing.T){
         tests := []struct{
                 name            string
                 input           []int
-                expected        int
+                expectedVal     int
+		expectedErr	error
         }{
-		{"Signleton", []int{5}, 5},
-		{"Positive Values", []int{1,2,3,4,5}, 5},
-		{"Negative Values", []int{-1,-2,-3,-4,-5}, -1},
-		{"Positive & Negative Values", []int{1,-1,2,-2,3,-3}, 3},
-        }
+		{"Signleton", []int{5}, 5, nil},
+		{"Positive Values", []int{1,2,3,4,5}, 5, nil},
+		{"Negative Values", []int{-1,-2,-3,-4,-5}, -1, nil},
+		{"Positive & Negative Values", []int{1,-1,2,-2,3,-3}, 3, nil},
+		{"Empty", []int{}, 0, errors.New("Max: Cannot find maximum value of empty array/slice")},
+	}
 
         for _, tt := range tests{
                 t.Run(tt.name, func(t *testing.T){
-                        result := Max(tt.input)
-                        if result != tt.expected{
-                                t.Errorf("Max(%v) = %v; want %v", tt.input, result, tt.expected)
+                        result, err := Max(tt.input)
+			//We have a slight problem with nil vs non-nil errors.
+			//So first we check explicitly if they are equal in the nil sense
+			//Should that pass by then we check if they are equal in a non-nil sense
+			if (err==nil && tt.expectedErr!=nil) || (err!=nil && tt.expectedErr==nil){
+				t.Errorf("Max(%v) = %v, %v; want %v, %v",
+				tt.input, result, err, tt.expectedVal, tt.expectedErr)
+			} else if err!=nil && err.Error()!=tt.expectedErr.Error(){
+                                t.Errorf("Max(%v) = %v, %v; want %v, %v",
+				tt.input, result, err, tt.expectedVal, tt.expectedErr)
                         }
+			//Finally we check if the expected value is what we wanted
+			if result!=tt.expectedVal {
+				t.Errorf("Max(%v) = %v, %v; want %v, %v",
+				tt.input, result, err, tt.expectedVal, tt.expectedErr)
+			}
                 })
         }
 }
@@ -369,19 +383,33 @@ func TestMin(t *testing.T){
         tests := []struct{
                 name            string
                 input           []int
-                expected        int
+                expectedVal     int
+		expectedErr	error
         }{
-                {"Signleton", []int{5}, 5},
-                {"Positive Values", []int{1,2,3,4,5}, 1},
-                {"Negative Values", []int{-1,-2,-3,-4,-5}, -5},
-                {"Positive & Negative Values", []int{1,-1,2,-2,3,-3}, -3},
+                {"Signleton", []int{5}, 5, nil},
+                {"Positive Values", []int{1,2,3,4,5}, 1, nil},
+                {"Negative Values", []int{-1,-2,-3,-4,-5}, -5, nil},
+                {"Positive & Negative Values", []int{1,-1,2,-2,3,-3}, -3, nil},
+		{"Empty", []int{}, 0, errors.New("Min: Cannot find minimum value of empty array/slice")},
         }
 
         for _, tt := range tests{
                 t.Run(tt.name, func(t *testing.T){
-                        result := Min(tt.input)
-                        if result != tt.expected{
-                                t.Errorf("Min(%v) = %v; want %v", tt.input, result, tt.expected)
+                        result, err := Min(tt.input)
+			//We have a slight problem with nil vs non-nil errors.
+                        //So first we check explicitly if they are equal in the nil sense
+                        //Should that pass by then we check if they are equal in a non-nil sense
+                        if (err==nil && tt.expectedErr!=nil) || (err!=nil && tt.expectedErr==nil){
+                                t.Errorf("Max(%v) = %v, %v; want %v, %v",
+                                tt.input, result, err, tt.expectedVal, tt.expectedErr)
+                        } else if err!=nil && err.Error()!=tt.expectedErr.Error(){
+                                t.Errorf("Max(%v) = %v, %v; want %v, %v",
+                                tt.input, result, err, tt.expectedVal, tt.expectedErr)
+                        }
+                        //Finally we check if the expected value is what we wanted
+                        if result!=tt.expectedVal {
+                                t.Errorf("Max(%v) = %v, %v; want %v, %v",
+                                tt.input, result, err, tt.expectedVal, tt.expectedErr)
                         }
                 })
         }

@@ -1,6 +1,6 @@
 package main
 
-import("math"; "strconv")
+import("math"; "strconv"; "errors")
 
 func Abs(n float64) float64{
 	if n<0{
@@ -244,14 +244,18 @@ func Lower(text string) string{
         return result
 }
 
-func Max(arr []int) int{
+func Max(arr []int) (int, error){
+	if len(arr)==0{
+                err := errors.New("Max: Cannot find maximum value of empty array/slice")
+                return 0, err
+	}
 	var largest int = arr[0]
 	for _, val := range arr{
 		if val>largest{
 			largest=val
 		}
 	}
-	return largest
+	return largest, nil
 }
 
 //DEPENDS ON: Extend
@@ -292,14 +296,18 @@ func MergeSort(arr []int) []int{
 	return merge(sortedLeft, sortedRight)
 }
 
-func Min(arr []int) int{
+func Min(arr []int) (int, error){
+	if len(arr)==0{
+		err := errors.New("Min: Cannot find minimum value of empty array/slice")
+		return 0, err
+	}
 	var smallest int = arr[0]
 	for _, val := range arr{
 		if val<smallest{
 			smallest=val
 		}
 	}
-	return smallest
+	return smallest, nil
 }
 
 func NumOfDivs(x int) int{
