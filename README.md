@@ -74,14 +74,14 @@ This takes a `string` and returns a `string`. It determines the ASCII value each
 
 ### Max
 
-This takes an array of `int`s and returns an `int` value from this list. It determines which of these `int`s are most positive.
+This takes an array of `int`s and returns an `int` value from this list and an `error`. It determines which of these `int`s are most positive. Should the input be irrelevant or produce an undefined result, then the `error` value will switch from `nil` to an error value.
 
 ### MergeSort
 This takes an array of `int`s and returns an array of `int`s. It determines the numerically ascending order of the elements with the largest at the end of the array and the smallest at the front.
 
 ### Min
 
-This takes an array of `int`s and returns an `int` value from this list. It determines which of these `int`s are least positive.
+This takes an array of `int`s and returns an `int` value from this list and an `error`. It determines which of these `int`s are least positive. Should the input be irrelevant or produce an undefined result, then the `error` value will switch from `nil` to an error value.
 
 ### NumOfDivs
 
