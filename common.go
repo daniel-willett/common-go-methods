@@ -44,6 +44,16 @@ func BubbleSort(arr []int) []int{
 	return arr
 }
 
+func Count(arr []int, countValue int) int{
+	var n int = 0
+	for _, val := range arr{
+		if val==countValue{
+			n+=1
+		}
+	}
+	return n
+}
+
 func Extend(result []int, add []int) []int{
 	for i:=0; i<len(add); i++{
 		result = append(result, add[i])

@@ -69,6 +69,27 @@ func TestAny(t *testing.T){
         }
 }
 
+func TestCount(t *testing.T){
+        tests := []struct{
+                name            string
+                arr	        []int
+		countValue	int
+                expected        int
+        }{
+		{"Standard", []int{1,1,1,1,2,2,3,3,4}, 1, 4},
+		{"Empty", []int{}, 10, 0},
+        }
+
+        for _, tt := range tests{
+                t.Run(tt.name, func(t *testing.T){
+                        result := Count(tt.arr, tt.countValue)
+                        if result != tt.expected{
+                                t.Errorf("Count(%v, %v) = %v; want %v", tt.arr, tt.countValue, result, tt.expected)
+                        }
+                })
+        }
+}
+
 func TestExtend(t *testing.T){
 	tests := []struct{
                 name            string
