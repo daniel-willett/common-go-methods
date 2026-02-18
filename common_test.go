@@ -175,6 +175,31 @@ func TestGetIndexOf(t *testing.T){
         }
 }
 
+func TestInsert(t *testing.T){
+	tests := []struct{
+                name            string
+                inputArr	[]string
+		inputPos	int
+		inputVal	string
+                expected        []string
+        }{
+                //Normal cases
+                {"Standard", []string{"a", "b", "c", "e", "f", "g"}, 3, "d", []string{"a", "b", "c", "d", "e", "f", "g"}},
+		{"Empty Array", []string{}, 5, "Hi", []string{"", "", "", "", "Hi"}},
+		{"Empty Value", []string{"a", "b", "c"}, 2, "", []string{"a", "b", "", "c"}},
+		{"Position too large", []string{"a", "b", "c"}, 5, "d", []string{"a", "b", "c", "", "", "d"}},
+        }
+
+        for _, tt := range tests{
+                t.Run(tt.name, func(t *testing.T){
+                        result := Insert(tt.inputArr, tt.inputPos, tt.inputVal)
+			if !reflect.DeepEqual(result, tt.expected){
+                                t.Errorf("Split(%v, %v, %v) = %v; want %v", tt.inputArr, tt.inputPos, tt.inputVal, result, tt.expected)
+                        }
+                })
+        }
+}
+
 func TestIsPalendrome(t *testing.T){
         tests := []struct{
                 name            string
