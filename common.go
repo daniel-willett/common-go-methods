@@ -97,6 +97,31 @@ func GetIndexOf(text string, pattern string) []int{
 	return positions
 }
 
+func Insert(arr []string, pos int, val string) []string{
+	result := []string{}
+	var n int = len(arr)
+	if pos<0{
+		result = append(result, val)
+		for counter:=pos+1; counter<0; counter++{
+                        result = append(result, "")
+                }
+		result = append(result, arr...)
+	} else if n-1<pos{ //pos longer than arr length
+		result = append(result, arr...)
+		for counter:=n; counter<pos; counter++{
+			result = append(result, "")
+		}
+		result = append(result, val)
+	} else { //pos inside array length
+		result = append(result, arr[:pos]...)
+		result = append(result, val)
+		for counter:=pos+1; counter<=n; counter++{
+			result = append(result, arr[counter-1])
+		}
+	}
+	return result
+}
+
 func InsertionSort(arr []int) []int{
 	var i int = 1
 	var length int = len(arr)

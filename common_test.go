@@ -185,9 +185,11 @@ func TestInsert(t *testing.T){
         }{
                 //Normal cases
                 {"Standard", []string{"a", "b", "c", "e", "f", "g"}, 3, "d", []string{"a", "b", "c", "d", "e", "f", "g"}},
-		{"Empty Array", []string{}, 5, "Hi", []string{"", "", "", "", "Hi"}},
+		{"Empty Array", []string{}, 5, "Hi", []string{"", "", "", "", "", "Hi"}},
+		{"Empty Array & 0 Position", []string{}, 0, "a", []string{"a"}},
 		{"Empty Value", []string{"a", "b", "c"}, 2, "", []string{"a", "b", "", "c"}},
-		{"Position too large", []string{"a", "b", "c"}, 5, "d", []string{"a", "b", "c", "", "", "d"}},
+		{"Position too large", []string{"a", "b", "c"}, 5, "f", []string{"a", "b", "c", "", "", "f"}}, //abcdef
+		{"Position too small", []string{"a", "b", "c"}, -4, "w", []string{"w", "", "", "", "a", "b", "c"}}, //wxyzabc
         }
 
         for _, tt := range tests{
