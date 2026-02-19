@@ -485,6 +485,30 @@ func TestNumOfDivs(t *testing.T){
         }
 }
 
+func TestPop(t *testing.T){
+	tests := []struct{
+                name            string
+		arr		[]string
+		pos		int
+                expectedArr     []string
+		expectedVal	string
+        }{
+		{"Standard", []string{"Apple", "Pear", "Banana", "Orange"}, 2, []string{"Apple", "Pear", "Orange"}, "Banana"},
+		{"Empty", []string{}, 5, []string{}, ""},
+		{"Position Too Large", []string{"Hello", "World"}, 5, []string{"Hello", "World"}, ""},
+	}
+
+	for _, tt := range tests{
+                t.Run(tt.name, func(t *testing.T){
+                        restultArr, resultVal := Pop(tt.arr, tt.pos)
+			if !reflect.DeepEqual(resultArr, tt.expectedArr) || resultVal!=tt.expectedVal{
+                                t.Errorf("Pop(%v, %v) = %v, %v; want %v, %v", 
+				tt.arr, tt.pos, resultArr, resultVal, expectedArr, expectedVal)
+                        }
+                })
+        }
+}
+
 func TestReplace(t *testing.T){
         tests := []struct{
                 name            string
