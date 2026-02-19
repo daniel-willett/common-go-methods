@@ -2,7 +2,15 @@ package main
 
 import("math"; "strconv"; "errors")
 
-func Abs[Num int | int8 | int16 | int32 | int64 | float32 | float64](n Num) Num{
+type SignedNum interface{
+	~int | ~int8 | ~int16 | ~int32 | ~int64 | ~float32 | ~float64
+}
+
+type UnsignedNum interface{
+	~uint | ~uint8 | ~uint16 | ~uint32 | ~uint64
+}
+
+func Abs[Num SignedNum](n Num) Num{
 	if n<0{
 		return (-1)*n
 	}
