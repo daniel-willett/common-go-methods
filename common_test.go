@@ -494,16 +494,17 @@ func TestPop(t *testing.T){
 		expectedVal	string
         }{
 		{"Standard", []string{"Apple", "Pear", "Banana", "Orange"}, 2, []string{"Apple", "Pear", "Orange"}, "Banana"},
-		{"Empty", []string{}, 5, []string{}, ""},
+		{"Empty", []string{}, 0, []string{}, ""},
 		{"Position Too Large", []string{"Hello", "World"}, 5, []string{"Hello", "World"}, ""},
+		{"Negative Position", []string{"Hello", "World"}, -5, []string{"Hello", "World"}, ""},
 	}
 
 	for _, tt := range tests{
                 t.Run(tt.name, func(t *testing.T){
-                        restultArr, resultVal := Pop(tt.arr, tt.pos)
+                        resultArr, resultVal := Pop(tt.arr, tt.pos)
 			if !reflect.DeepEqual(resultArr, tt.expectedArr) || resultVal!=tt.expectedVal{
                                 t.Errorf("Pop(%v, %v) = %v, %v; want %v, %v", 
-				tt.arr, tt.pos, resultArr, resultVal, expectedArr, expectedVal)
+				tt.arr, tt.pos, resultArr, resultVal, tt.expectedArr, tt.expectedVal)
                         }
                 })
         }
