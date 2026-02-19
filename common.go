@@ -363,6 +363,22 @@ func NumOfDivs(x int) int{
 	return counter
 }
 
+func Pop(arr []string, pos int) ([]string, string){
+	result := []string{}
+	var n int = len(arr)
+	var value string = ""
+	if pos<0 || pos>=n{
+		return arr, ""
+	} else {
+		result = append(result, arr[:pos]...)
+		value = arr[pos]
+		for counter:=pos+1; counter<n; counter++{
+			result = append(result, arr[counter])
+		}
+		return result, value
+	}
+}
+
 func QuickSort(arr []int) []int{
 	partition := func(arr []int, low int, high int) int{
 		var pivot int = arr[high]
