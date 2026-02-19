@@ -60,7 +60,7 @@ func BubbleSort(arr []int) []int{
 	return arr
 }
 
-func Count(arr []int, countValue int) int{
+func Count[G Generic](arr []G, countValue G) int{
 	var n int = 0
 	for _, val := range arr{
 		if val==countValue{
