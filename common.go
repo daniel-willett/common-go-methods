@@ -2,7 +2,7 @@ package main
 
 import("math"; "strconv"; "errors")
 
-func Abs(n float64) float64{
+func Abs[Num int | int8 | int16 | int32 | int64 | float32 | float64](n Num) Num{
 	if n<0{
 		return (-1)*n
 	}
