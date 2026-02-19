@@ -10,9 +10,17 @@ type UnsignedNum interface{
 	~uint | ~uint8 | ~uint16 | ~uint32 | ~uint64
 }
 
-func Abs[Num SignedNum](n Num) Num{
+type Number interface{
+	SignedNum | UnsignedNum
+}
+
+type Generic interface{
+	~string | ~bool | Number
+}
+
+func Abs[Num Number](n Num) Num{
 	if n<0{
-		return (-1)*n
+		return -n
 	}
 	return n
 }
