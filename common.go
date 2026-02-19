@@ -368,15 +368,16 @@ func Pop(arr []string, pos int) ([]string, string){
 	var n int = len(arr)
 	var value string = ""
 	if pos<0 || pos>=n{
-		return arr, ""
+		result = arr
+		value = ""
 	} else {
 		result = append(result, arr[:pos]...)
 		value = arr[pos]
 		for counter:=pos+1; counter<n; counter++{
 			result = append(result, arr[counter])
 		}
-		return result, value
 	}
+	return result, value
 }
 
 func QuickSort(arr []int) []int{
