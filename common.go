@@ -44,6 +44,16 @@ func BubbleSort(arr []int) []int{
 	return arr
 }
 
+func Count(arr []int, countValue int) int{
+	var n int = 0
+	for _, val := range arr{
+		if val==countValue{
+			n+=1
+		}
+	}
+	return n
+}
+
 func Extend(result []int, add []int) []int{
 	for i:=0; i<len(add); i++{
 		result = append(result, add[i])
@@ -85,6 +95,31 @@ func GetIndexOf(text string, pattern string) []int{
 		}
 	}
 	return positions
+}
+
+func Insert(arr []string, pos int, val string) []string{
+	result := []string{}
+	var n int = len(arr)
+	if pos<0{
+		result = append(result, val)
+		for counter:=pos+1; counter<0; counter++{
+                        result = append(result, "")
+                }
+		result = append(result, arr...)
+	} else if n-1<pos{ //pos longer than arr length
+		result = append(result, arr...)
+		for counter:=n; counter<pos; counter++{
+			result = append(result, "")
+		}
+		result = append(result, val)
+	} else { //pos inside array length
+		result = append(result, arr[:pos]...)
+		result = append(result, val)
+		for counter:=pos+1; counter<=n; counter++{
+			result = append(result, arr[counter-1])
+		}
+	}
+	return result
 }
 
 func InsertionSort(arr []int) []int{
@@ -326,6 +361,23 @@ func NumOfDivs(x int) int{
 		counter -= 1
 	}
 	return counter
+}
+
+func Pop(arr []string, pos int) ([]string, string){
+	result := []string{}
+	var n int = len(arr)
+	var value string = ""
+	if pos<0 || pos>=n{
+		result = arr
+		value = ""
+	} else {
+		result = append(result, arr[:pos]...)
+		value = arr[pos]
+		for counter:=pos+1; counter<n; counter++{
+			result = append(result, arr[counter])
+		}
+	}
+	return result, value
 }
 
 func QuickSort(arr []int) []int{

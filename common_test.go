@@ -69,6 +69,27 @@ func TestAny(t *testing.T){
         }
 }
 
+func TestCount(t *testing.T){
+        tests := []struct{
+                name            string
+                arr	        []int
+		countValue	int
+                expected        int
+        }{
+		{"Standard", []int{1,1,1,1,2,2,3,3,4}, 1, 4},
+		{"Empty", []int{}, 10, 0},
+        }
+
+        for _, tt := range tests{
+                t.Run(tt.name, func(t *testing.T){
+                        result := Count(tt.arr, tt.countValue)
+                        if result != tt.expected{
+                                t.Errorf("Count(%v, %v) = %v; want %v", tt.arr, tt.countValue, result, tt.expected)
+                        }
+                })
+        }
+}
+
 func TestExtend(t *testing.T){
 	tests := []struct{
                 name            string
@@ -149,6 +170,33 @@ func TestGetIndexOf(t *testing.T){
                         result := GetIndexOf(tt.text, tt.pattern)
                         if !reflect.DeepEqual(result, tt.expected){
                                 t.Errorf("GetIndexOf(%v, %v) = %v; want %v", tt.text, tt.pattern, result, tt.expected)
+                        }
+                })
+        }
+}
+
+func TestInsert(t *testing.T){
+	tests := []struct{
+                name            string
+                inputArr	[]string
+		inputPos	int
+		inputVal	string
+                expected        []string
+        }{
+                //Normal cases
+                {"Standard", []string{"a", "b", "c", "e", "f", "g"}, 3, "d", []string{"a", "b", "c", "d", "e", "f", "g"}},
+		{"Empty Array", []string{}, 5, "Hi", []string{"", "", "", "", "", "Hi"}},
+		{"Empty Array & 0 Position", []string{}, 0, "a", []string{"a"}},
+		{"Empty Value", []string{"a", "b", "c"}, 2, "", []string{"a", "b", "", "c"}},
+		{"Position too large", []string{"a", "b", "c"}, 5, "f", []string{"a", "b", "c", "", "", "f"}}, //abcdef
+		{"Position too small", []string{"a", "b", "c"}, -4, "w", []string{"w", "", "", "", "a", "b", "c"}}, //wxyzabc
+        }
+
+        for _, tt := range tests{
+                t.Run(tt.name, func(t *testing.T){
+                        result := Insert(tt.inputArr, tt.inputPos, tt.inputVal)
+			if !reflect.DeepEqual(result, tt.expected){
+                                t.Errorf("Split(%v, %v, %v) = %v; want %v", tt.inputArr, tt.inputPos, tt.inputVal, result, tt.expected)
                         }
                 })
         }
@@ -432,6 +480,31 @@ func TestNumOfDivs(t *testing.T){
                         result := NumOfDivs(tt.input)
                         if result != tt.expected{
                                 t.Errorf("NumOfDivs(%v) = %v; want %v", tt.input, result, tt.expected)
+                        }
+                })
+        }
+}
+
+func TestPop(t *testing.T){
+	tests := []struct{
+                name            string
+		arr		[]string
+		pos		int
+                expectedArr     []string
+		expectedVal	string
+        }{
+		{"Standard", []string{"Apple", "Pear", "Banana", "Orange"}, 2, []string{"Apple", "Pear", "Orange"}, "Banana"},
+		{"Empty", []string{}, 0, []string{}, ""},
+		{"Position Too Large", []string{"Hello", "World"}, 5, []string{"Hello", "World"}, ""},
+		{"Negative Position", []string{"Hello", "World"}, -5, []string{"Hello", "World"}, ""},
+	}
+
+	for _, tt := range tests{
+                t.Run(tt.name, func(t *testing.T){
+                        resultArr, resultVal := Pop(tt.arr, tt.pos)
+			if !reflect.DeepEqual(resultArr, tt.expectedArr) || resultVal!=tt.expectedVal{
+                                t.Errorf("Pop(%v, %v) = %v, %v; want %v, %v", 
+				tt.arr, tt.pos, resultArr, resultVal, tt.expectedArr, tt.expectedVal)
                         }
                 })
         }
