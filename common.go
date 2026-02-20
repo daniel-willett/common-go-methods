@@ -403,28 +403,27 @@ func Pop[G Generic](arr []G, pos int) ([]G, G){
 	return result, value
 }
 
-func QuickSort(arr []int) []int{
-	partition := func(arr []int, low int, high int) int{
-		var pivot int = arr[high]
+func QuickSort[N Number](arr []N) []N{
+	partition := func(arr []N, low int, high int) int{
+		pivot := arr[high]
 		var i int = low-1
 		
-		var temp int = 0
 		for j:=low; j<high; j++{
 			if arr[j]<=pivot{
 				i+=1
-				temp = arr[i]
+				temp := arr[i]
 				arr[i] = arr[j]
 				arr[j] = temp
 			}
 		}
-		temp = arr[i+1]
+		temp := arr[i+1]
 		arr[i+1] = arr[high]
 		arr[high] = temp
 		return i+1
 	}
 
-	var quicksort func(arr []int, low int, high int)
-	quicksort = func(arr []int, low int, high int){
+	var quicksort func(arr []N, low int, high int)
+	quicksort = func(arr []N, low int, high int){
 		if low<high{
 			pivotIndex := partition(arr, low, high)
 			quicksort(arr, low, pivotIndex-1)
