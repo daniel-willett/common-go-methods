@@ -70,7 +70,7 @@ func Count[G Generic](arr []G, countValue G) int{
 	return n
 }
 
-func Extend(result []int, add []int) []int{
+func Extend[G Generic](result []G, add []G) []G{
 	for i:=0; i<len(add); i++{
 		result = append(result, add[i])
 	}
