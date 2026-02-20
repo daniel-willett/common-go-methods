@@ -82,8 +82,8 @@ func Extend[G Generic](result []G, add []G) []G{
 }
 
 //DEPENDS ON: Abs
-func Gcd(a int, b int) int{
-	var larger, smaller int = 0, 0
+func Gcd[I Integer](a I, b I) I{
+	var larger, smaller I = 0, 0
 	if a>b {
 		larger = a
 		smaller = b
@@ -91,13 +91,13 @@ func Gcd(a int, b int) int{
 		larger = b
 		smaller = a
 	}
-	var temp int = 0
+	var temp I = 0
 	for smaller!=0 {
 		temp = smaller
 		smaller = larger % smaller
 		larger = temp
 	}
-	return int(Abs(float64(larger)))
+	return Abs(larger)
 }
 
 func GetIndexOf(text string, pattern string) []int{
@@ -282,11 +282,11 @@ func Join(arr []string, delim string) string{
 }
 
 //DEPENDS ON: Gcd, Abs
-func Lcm(a int, b int) int{
+func Lcm[I Integer](a I, b I) I{
 	if a==b && a==0 {
 		return 0
 	}
-	return int(Abs(float64(a*b/Gcd(a,b))))
+	return Abs(a*b/Gcd(a,b))
 }
 
 func Lower(text string) string{
