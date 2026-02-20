@@ -386,13 +386,13 @@ func NumOfDivs[I Integer](x I) int{
 	return counter
 }
 
-func Pop(arr []string, pos int) ([]string, string){
-	result := []string{}
+func Pop[G Generic](arr []G, pos int) ([]G, G){
+	result := []G{}
 	var n int = len(arr)
-	var value string = ""
+	var value G
 	if pos<0 || pos>=n{
 		result = arr
-		value = ""
+		//value takes default value
 	} else {
 		result = append(result, arr[:pos]...)
 		value = arr[pos]
