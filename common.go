@@ -353,12 +353,12 @@ func MergeSort(arr []int) []int{
 	return merge(sortedLeft, sortedRight)
 }
 
-func Min(arr []int) (int, error){
+func Min[N Number](arr []N) (N, error){
 	if len(arr)==0{
 		err := errors.New("Min: Cannot find minimum value of empty array/slice")
 		return 0, err
 	}
-	var smallest int = arr[0]
+	var smallest N = arr[0]
 	for _, val := range arr{
 		if val<smallest{
 			smallest=val
