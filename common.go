@@ -143,13 +143,13 @@ func Insert[G Generic](arr []G, pos int, val G) []G{
 	return result
 }
 
-func InsertionSort(arr []int) []int{
+func InsertionSort[N Number](arr []N) []N{
 	var i int = 1
 	var length int = len(arr)
 	for i < length{
 		var j int = i
 		for j>0 && arr[j-1]>arr[j]{
-			var temp int = arr[j]
+			temp := arr[j]
 			arr[j] = arr[j-1]
 			arr[j-1] = temp
 
