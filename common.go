@@ -301,12 +301,12 @@ func Lower(text string) string{
         return result
 }
 
-func Max(arr []int) (int, error){
+func Max[N Number](arr []N) (N, error){
 	if len(arr)==0{
                 err := errors.New("Max: Cannot find maximum value of empty array/slice")
                 return 0, err
 	}
-	var largest int = arr[0]
+	var largest N = arr[0]
 	for _, val := range arr{
 		if val>largest{
 			largest=val
