@@ -47,7 +47,7 @@ func Any(arr []bool) bool{
 	return false
 }
 
-func BubbleSort(arr []int) []int{
+func BubbleSort[N Number](arr []N) []N{
 	var length int = len(arr)
 	var changesMade bool = true
 	for changesMade==true{
