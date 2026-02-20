@@ -157,7 +157,7 @@ func InsertionSort(arr []int) []int{
 }
 
 //DEPENDS ON: Reverse
-func IsPalendrome(n uint) bool{
+func IsPalendrome[N Number](n N) bool{
 	var nstr string = strconv.Itoa(int(n))
 	if Reverse(nstr)==nstr{
 		return true
