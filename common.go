@@ -316,9 +316,9 @@ func Max[N Number](arr []N) (N, error){
 }
 
 //DEPENDS ON: Extend
-func MergeSort(arr []int) []int{
-	merge := func(left []int, right []int) []int{
-		result := []int{}
+func MergeSort[N Number](arr []N) []N{
+	merge := func(left []N, right []N) []N{
+		result := []N{}
 		var i, j int = 0, 0
 
 		for i<len(left) && j<len(right){
