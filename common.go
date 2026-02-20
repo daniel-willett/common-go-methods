@@ -18,6 +18,10 @@ type Generic interface{
 	~string | ~bool | Number
 }
 
+type Integer interface{
+	~int | ~int8 | ~int16 | ~int32 | ~int64 | ~uint | ~uint8 | ~uint16 | ~uint32 | ~uint64
+}
+
 func Abs[Num Number](n Num) Num{
 	if n<0{
 		return -n
@@ -165,12 +169,13 @@ func IsPalendrome[N Number](n N) bool{
 	return false
 }
 
-func IsPrime(n int) bool{
+func IsPrime[U Integer](n U) bool{
 	if n<2{
 		return false
 	}
-	var upper int = int(math.Sqrt(float64(n)))+1
-	for factor:=2; factor<upper; factor++{
+	var upper U = U(math.Sqrt(float64(n)))+1
+	var factor U
+	for factor = 2; factor<upper; factor++{
 		if n%factor==0{
 			return false
 		}
