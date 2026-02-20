@@ -367,19 +367,20 @@ func Min[N Number](arr []N) (N, error){
 	return smallest, nil
 }
 
-func NumOfDivs(x int) int{
+func NumOfDivs[I Integer](x I) int{
 	if x==0 {
 		return 1
 	}
 	var counter int = 0
-	var upper int = int(math.Sqrt(float64(x)))+1
-	for factor:=1; factor<upper; factor++{
+	var upper I = I(math.Sqrt(float64(x)))+1
+	var factor I
+	for factor=1; factor<upper; factor++{
 		if x%factor==0{
 			counter += 1
 		}
 	}
 	counter *= 2
-	if int((upper-1)*(upper-1))==x{
+	if I((upper-1)*(upper-1))==x{
 		counter -= 1
 	}
 	return counter
