@@ -113,19 +113,20 @@ func GetIndexOf(text string, pattern string) []int{
 	return positions
 }
 
-func Insert(arr []string, pos int, val string) []string{
-	result := []string{}
+func Insert[G Generic](arr []G, pos int, val G) []G{
+	result := []G{}
+	var defaultVal G //As we're using generics we need some way to have a 'default' value
 	var n int = len(arr)
 	if pos<0{
 		result = append(result, val)
 		for counter:=pos+1; counter<0; counter++{
-                        result = append(result, "")
+                        result = append(result, defaultVal)
                 }
 		result = append(result, arr...)
 	} else if n-1<pos{ //pos longer than arr length
 		result = append(result, arr...)
 		for counter:=n; counter<pos; counter++{
-			result = append(result, "")
+			result = append(result, defaultVal)
 		}
 		result = append(result, val)
 	} else { //pos inside array length
