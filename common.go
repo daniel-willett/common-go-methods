@@ -308,7 +308,6 @@ func Max[N Number](arr []N) (N, error){
 	return largest, nil
 }
 
-//DEPENDS ON: Extend
 func MergeSort[N Number](arr []N) []N{
 	merge := func(left []N, right []N) []N{
 		result := []N{}
@@ -324,8 +323,8 @@ func MergeSort[N Number](arr []N) []N{
 			}
 		}
 
-		result = Extend(result, left[i:len(left)])
-		result = Extend(result, right[j:len(right)])
+		result = append(result, left[i:len(left)]...)
+		result = append(result, right[j:len(right)]...)
 
 		return result
 	}
