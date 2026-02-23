@@ -2,9 +2,29 @@ package main
 
 import("math"; "strconv"; "errors")
 
-func Abs(n float64) float64{
+type SignedNum interface{
+	~int | ~int8 | ~int16 | ~int32 | ~int64 | ~float32 | ~float64
+}
+
+type UnsignedNum interface{
+	~uint | ~uint8 | ~uint16 | ~uint32 | ~uint64
+}
+
+type Number interface{
+	SignedNum | UnsignedNum
+}
+
+type Generic interface{
+	~string | ~bool | Number
+}
+
+type Integer interface{
+	~int | ~int8 | ~int16 | ~int32 | ~int64 | ~uint | ~uint8 | ~uint16 | ~uint32 | ~uint64
+}
+
+func Abs[Num Number](n Num) Num{
 	if n<0{
-		return (-1)*n
+		return -n
 	}
 	return n
 }
@@ -27,7 +47,7 @@ func Any(arr []bool) bool{
 	return false
 }
 
-func BubbleSort(arr []int) []int{
+func BubbleSort[N Number](arr []N) []N{
 	var length int = len(arr)
 	var changesMade bool = true
 	for changesMade==true{
@@ -44,7 +64,7 @@ func BubbleSort(arr []int) []int{
 	return arr
 }
 
-func Count(arr []int, countValue int) int{
+func Count[G Generic](arr []G, countValue G) int{
 	var n int = 0
 	for _, val := range arr{
 		if val==countValue{
@@ -54,16 +74,9 @@ func Count(arr []int, countValue int) int{
 	return n
 }
 
-func Extend(result []int, add []int) []int{
-	for i:=0; i<len(add); i++{
-		result = append(result, add[i])
-	}
-	return result
-}
-
 //DEPENDS ON: Abs
-func Gcd(a int, b int) int{
-	var larger, smaller int = 0, 0
+func Gcd[I Integer](a I, b I) I{
+	var larger, smaller I = 0, 0
 	if a>b {
 		larger = a
 		smaller = b
@@ -71,13 +84,13 @@ func Gcd(a int, b int) int{
 		larger = b
 		smaller = a
 	}
-	var temp int = 0
+	var temp I = 0
 	for smaller!=0 {
 		temp = smaller
 		smaller = larger % smaller
 		larger = temp
 	}
-	return int(Abs(float64(larger)))
+	return Abs(larger)
 }
 
 func GetIndexOf(text string, pattern string) []int{
@@ -97,19 +110,20 @@ func GetIndexOf(text string, pattern string) []int{
 	return positions
 }
 
-func Insert(arr []string, pos int, val string) []string{
-	result := []string{}
+func Insert[G Generic](arr []G, pos int, val G) []G{
+	result := []G{}
+	var defaultVal G //As we're using generics we need some way to have a 'default' value
 	var n int = len(arr)
 	if pos<0{
 		result = append(result, val)
 		for counter:=pos+1; counter<0; counter++{
-                        result = append(result, "")
+                        result = append(result, defaultVal)
                 }
 		result = append(result, arr...)
 	} else if n-1<pos{ //pos longer than arr length
 		result = append(result, arr...)
 		for counter:=n; counter<pos; counter++{
-			result = append(result, "")
+			result = append(result, defaultVal)
 		}
 		result = append(result, val)
 	} else { //pos inside array length
@@ -122,13 +136,13 @@ func Insert(arr []string, pos int, val string) []string{
 	return result
 }
 
-func InsertionSort(arr []int) []int{
+func InsertionSort[N Number](arr []N) []N{
 	var i int = 1
 	var length int = len(arr)
 	for i < length{
 		var j int = i
 		for j>0 && arr[j-1]>arr[j]{
-			var temp int = arr[j]
+			temp := arr[j]
 			arr[j] = arr[j-1]
 			arr[j-1] = temp
 
@@ -140,7 +154,7 @@ func InsertionSort(arr []int) []int{
 }
 
 //DEPENDS ON: Reverse
-func IsPalendrome(n uint) bool{
+func IsPalendrome[N Number](n N) bool{
 	var nstr string = strconv.Itoa(int(n))
 	if Reverse(nstr)==nstr{
 		return true
@@ -148,12 +162,13 @@ func IsPalendrome(n uint) bool{
 	return false
 }
 
-func IsPrime(n int) bool{
+func IsPrime[I Integer](n I) bool{
 	if n<2{
 		return false
 	}
-	var upper int = int(math.Sqrt(float64(n)))+1
-	for factor:=2; factor<upper; factor++{
+	var upper I = I(math.Sqrt(float64(n)))+1
+	var factor I
+	for factor = 2; factor<upper; factor++{
 		if n%factor==0{
 			return false
 		}
@@ -260,11 +275,11 @@ func Join(arr []string, delim string) string{
 }
 
 //DEPENDS ON: Gcd, Abs
-func Lcm(a int, b int) int{
+func Lcm[I Integer](a I, b I) I{
 	if a==b && a==0 {
 		return 0
 	}
-	return int(Abs(float64(a*b/Gcd(a,b))))
+	return Abs(a*b/Gcd(a,b))
 }
 
 func Lower(text string) string{
@@ -279,12 +294,12 @@ func Lower(text string) string{
         return result
 }
 
-func Max(arr []int) (int, error){
+func Max[N Number](arr []N) (N, error){
 	if len(arr)==0{
                 err := errors.New("Max: Cannot find maximum value of empty array/slice")
                 return 0, err
 	}
-	var largest int = arr[0]
+	var largest N = arr[0]
 	for _, val := range arr{
 		if val>largest{
 			largest=val
@@ -293,10 +308,9 @@ func Max(arr []int) (int, error){
 	return largest, nil
 }
 
-//DEPENDS ON: Extend
-func MergeSort(arr []int) []int{
-	merge := func(left []int, right []int) []int{
-		result := []int{}
+func MergeSort[N Number](arr []N) []N{
+	merge := func(left []N, right []N) []N{
+		result := []N{}
 		var i, j int = 0, 0
 
 		for i<len(left) && j<len(right){
@@ -309,8 +323,8 @@ func MergeSort(arr []int) []int{
 			}
 		}
 
-		result = Extend(result, left[i:len(left)])
-		result = Extend(result, right[j:len(right)])
+		result = append(result, left[i:len(left)]...)
+		result = append(result, right[j:len(right)]...)
 
 		return result
 	}
@@ -331,12 +345,12 @@ func MergeSort(arr []int) []int{
 	return merge(sortedLeft, sortedRight)
 }
 
-func Min(arr []int) (int, error){
+func Min[N Number](arr []N) (N, error){
 	if len(arr)==0{
 		err := errors.New("Min: Cannot find minimum value of empty array/slice")
 		return 0, err
 	}
-	var smallest int = arr[0]
+	var smallest N = arr[0]
 	for _, val := range arr{
 		if val<smallest{
 			smallest=val
@@ -345,31 +359,32 @@ func Min(arr []int) (int, error){
 	return smallest, nil
 }
 
-func NumOfDivs(x int) int{
+func NumOfDivs[I Integer](x I) int{
 	if x==0 {
 		return 1
 	}
 	var counter int = 0
-	var upper int = int(math.Sqrt(float64(x)))+1
-	for factor:=1; factor<upper; factor++{
+	var upper I = I(math.Sqrt(float64(x)))+1
+	var factor I
+	for factor=1; factor<upper; factor++{
 		if x%factor==0{
 			counter += 1
 		}
 	}
 	counter *= 2
-	if int((upper-1)*(upper-1))==x{
+	if I((upper-1)*(upper-1))==x{
 		counter -= 1
 	}
 	return counter
 }
 
-func Pop(arr []string, pos int) ([]string, string){
-	result := []string{}
+func Pop[G Generic](arr []G, pos int) ([]G, G){
+	result := []G{}
 	var n int = len(arr)
-	var value string = ""
+	var value G
 	if pos<0 || pos>=n{
 		result = arr
-		value = ""
+		//value takes default value
 	} else {
 		result = append(result, arr[:pos]...)
 		value = arr[pos]
@@ -380,28 +395,27 @@ func Pop(arr []string, pos int) ([]string, string){
 	return result, value
 }
 
-func QuickSort(arr []int) []int{
-	partition := func(arr []int, low int, high int) int{
-		var pivot int = arr[high]
+func QuickSort[N Number](arr []N) []N{
+	partition := func(arr []N, low int, high int) int{
+		pivot := arr[high]
 		var i int = low-1
 		
-		var temp int = 0
 		for j:=low; j<high; j++{
 			if arr[j]<=pivot{
 				i+=1
-				temp = arr[i]
+				temp := arr[i]
 				arr[i] = arr[j]
 				arr[j] = temp
 			}
 		}
-		temp = arr[i+1]
+		temp := arr[i+1]
 		arr[i+1] = arr[high]
 		arr[high] = temp
 		return i+1
 	}
 
-	var quicksort func(arr []int, low int, high int)
-	quicksort = func(arr []int, low int, high int){
+	var quicksort func(arr []N, low int, high int)
+	quicksort = func(arr []N, low int, high int){
 		if low<high{
 			pivotIndex := partition(arr, low, high)
 			quicksort(arr, low, pivotIndex-1)
