@@ -10,11 +10,11 @@ This project is using Go 1.22. The CI will use 1.22, the `go.mod` should say 1.2
 
 ## Contents
 
-There is a `common.go` file which contains the list of functions thus far.
+There is a `common.go` file which contains the list of functions thus far. This contains various type constraints to be used for generics in many of the functions. The generics we have are `SignedNum`, `UnsignedNum`, `Number`, `Generic`, and `Integer`.
 
 ### Abs
 
-This takes a `float64` and returns a `float64`. It determines the absolute value of the input which means either returning the positive version of the input, if it isn't already positive.
+This takes a `Number` and returns a `Number`. It determines the absolute value of the input which means returning the positive version of the input, if it isn't already positive.
 
 ### All
 
@@ -26,31 +26,34 @@ This takes an array of `bool`s and returns a `bool`. It determines if any part o
 
 ### BubbleSort
 
-This takes an array of `int`s and returns an array of `int`s. It determines the numerically ascending order of the elements with the largest at the end of the array and the smallest at the front.
+This takes an array of `Number`s and returns an array of `Numbers`s. It determines the numerically ascending order of the elements with the largest at the end of the array and the smallest at the front.
 
-### Extend
-
-This takes two arrys of `int`s and returns an array of `int`s. It adds the second array to the end of the first by element-wise appending.
+### Count
+This takes an array of `Genric`s & a `Generic` and returns an `int`. It counts how many times the single `Generic` value appears in the `Generic` array.
 
 ### Gcd
 
-This takes two `int`s and returns an `int`. It determines the the largest positive integer which will divide into both given `int`s. It does this by Euclid's Algorithm.
+This takes two `Integer`s and returns an `Integer`. It determines the the largest positive integer which will divide into both given `Integer`s. It does this by Euclid's Algorithm.
 
 ### GetIndexOf
 
 This takes a `string` and returns an `[]int`. It determines all the occurances of a pattern within a string and gives an empty slice if no such pattern exists.
 
+### Insert
+
+This takes an array of `Generic`s, an `int` & a `Generic` and returns an array of `Generic`s. It takes the `int` and this is the position in the `Generic` array it will insert the given `Generic` value based on indexing. If the index is negative, it works out the position going backwards and uses the default `Generic`'s value to backfill the empty positions.
+
 ### InsertionSort
 
-This takes an array of `int`s and returns an array of `int`s. It determines the numerically ascending order of the elements with the largest at the end of the array and the smallest at the front.
+This takes an array of `Number`s and returns an array of `Number`s. It determines the numerically ascending order of the elements with the largest at the end of the array and the smallest at the front.
 
 ### IsPalendrome
 
-This takes an `int` and retrns a `bool`. It determines if writing the number backwards is the same as forwards.
+This takes a `Number` and returns a `Number`. It determines if writing the number backwards is the same as forwards.
 
 ### IsPrime
 
-This takes an `int` and returns a `bool`. It determines if the only factors of the number are the number itself and 1.
+This takes an `Integer` and returns a `bool`. It determines if the only factors of the number are the number itself and 1.
 
 ### IsValidIPv4
 
@@ -62,11 +65,11 @@ This takes a `string` and returns a `bool`. It determines if the given string is
 
 ### Join
 
-This takes a `[]string` and a `string` and returns a `string`. Elemtns of the array are connected together with the second `string` used as a delimiter between them. This is in essence the opposite of `Split()`.
+This takes an array of `string`s and a `string` and returns a `string`. Elements of the array are connected together with the second `string` used as a delimiter between them. This is in essence the opposite of `Split()`.
 
 ### Lcm
 
-This takes two `int`s and returns an `int`. It determines the largest positive integer which the two given `int`s divide into. It does this through using `Gcd()`.
+This takes two `Integers`s and returns an `Integer`. It determines the largest positive integer which the two given `Integers`s divide into. It does this through using `Gcd()`.
 
 ### Lower
 
@@ -74,22 +77,25 @@ This takes a `string` and returns a `string`. It determines the ASCII value each
 
 ### Max
 
-This takes an array of `int`s and returns an `int` value from this list and an `error`. It determines which of these `int`s are most positive. Should the input be irrelevant or produce an undefined result, then the `error` value will switch from `nil` to an error value.
+This takes an array of `Number`s and returns a `Number` value from this list and an `error`. It determines which of these `Number`s are most positive. Should the input be irrelevant or produce an undefined result, then the `error` value will switch from `nil` to an error value.
 
 ### MergeSort
-This takes an array of `int`s and returns an array of `int`s. It determines the numerically ascending order of the elements with the largest at the end of the array and the smallest at the front.
+This takes an array of `Number`s and returns an array of `Number`s. It determines the numerically ascending order of the elements with the largest at the end of the array and the smallest at the front.
 
 ### Min
 
-This takes an array of `int`s and returns an `int` value from this list and an `error`. It determines which of these `int`s are least positive. Should the input be irrelevant or produce an undefined result, then the `error` value will switch from `nil` to an error value.
+This takes an array of `Number`s and returns a `Number` value from this list and an `error`. It determines which of these `Number`s are least positive. Should the input be irrelevant or produce an undefined result, then the `error` value will switch from `nil` to an error value.
 
 ### NumOfDivs
 
-This takes an `int` and returns an `int`. It determines how many values between 1 and the given value divide into the give value.
+This takes an `Integer` and returns an `int`. It determines how many values between 1 and the given value divide into the give value.
+
+### Pop
+This takes an array of `Generic`s & an `int` and returns an array of `Generic`s & a `Generic. It determines the index position of the `Generic` array to remove and return as the `Generic` value along side with the `Generic` array now reduced by 1 value.
 
 ### QuickSort
 
-This takes an array of `int`s and returns an array of `int`s. It determines the numerically ascending order of the elements with the largest at the end of the array and the smallest at the front.
+This takes an array of `Number`s and returns an array of `Number`s. It determines the numerically ascending order of the elements with the largest at the end of the array and the smallest at the front.
 
 ### Replace
 

@@ -74,13 +74,6 @@ func Count[G Generic](arr []G, countValue G) int{
 	return n
 }
 
-func Extend[G Generic](result []G, add []G) []G{
-	for i:=0; i<len(add); i++{
-		result = append(result, add[i])
-	}
-	return result
-}
-
 //DEPENDS ON: Abs
 func Gcd[I Integer](a I, b I) I{
 	var larger, smaller I = 0, 0
@@ -169,12 +162,12 @@ func IsPalendrome[N Number](n N) bool{
 	return false
 }
 
-func IsPrime[U Integer](n U) bool{
+func IsPrime[I Integer](n I) bool{
 	if n<2{
 		return false
 	}
-	var upper U = U(math.Sqrt(float64(n)))+1
-	var factor U
+	var upper I = I(math.Sqrt(float64(n)))+1
+	var factor I
 	for factor = 2; factor<upper; factor++{
 		if n%factor==0{
 			return false
