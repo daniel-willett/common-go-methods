@@ -196,7 +196,7 @@ func IsValidIPv4(ip string) bool{
 	return true
 }
 
-//DEPENDS ON: Split, GetIndexOf, Replace
+//DEPENDS ON: Split, GetIndexOf, Replace, IsValidIPv4
 func IsValidIPv6(ip string) bool{
 	testBlocks := func(blocks []string, n int) bool{
 		edgeCase := func(slice []string) bool{
