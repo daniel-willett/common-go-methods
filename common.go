@@ -217,8 +217,7 @@ func IsValidIPv6(ip string) bool{
 			return true
 		}
 		var numberOfEmpty int = 0
-		var index int = 0
-		for _, segment := range blocks{
+		for index, segment := range blocks{
 			if segment==""{
 				if ((numberOfEmpty==1 && blocks[index-1]!="") || numberOfEmpty>1){
 					return false
@@ -229,7 +228,6 @@ func IsValidIPv6(ip string) bool{
 					return false
 				}
 			}
-			index +=1
 		}
 		if numberOfEmpty==0 && len(blocks)!=n{
 			return false
