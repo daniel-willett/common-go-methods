@@ -271,12 +271,13 @@ func TestIsValidIPv6(t *testing.T){
 		{"IPv4 Zeros Embedded Compact","132::0.0.0.0", true},
 
 		//False cases
-		{"Too Few Blocks", "0", false},
 		{"Random Characters", "dasjkhdj", false},
+		{"Too Few Blocks", "0", false},
 		{"Too Many Blocks", "0:0:0:0:0:0:0:0:0", false},
+		{"Too Few Blocks IPv4 Embedded", "0:0:0:0:1.2.3.4", false},
 		{"Too Many Blocks IPv4 Embedded", "0:0:0:0:0:0:0:1.2.3.4", false},
+		{"Too Few Octets IPv4 Embedded", "0:0:0:0:0:0:1.2.3", false},
 		{"Too Many Octets IPv4 Embedded", "0:0:0:0:0:0:1.2.3.4.5", false},
-		{"Too Few Blocks IPv4 Embedded", "12:12.12.32.4", false},
 		{"Too Large Block", "10000:0:0:0:0:0:0:0", false},
 		{"Emoji", "1::1:😊", false},
         }

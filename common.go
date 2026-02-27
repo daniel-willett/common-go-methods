@@ -217,8 +217,7 @@ func IsValidIPv6(ip string) bool{
 			return true
 		}
 		var numberOfEmpty int = 0
-		var index int = 0
-		for _, segment := range blocks{
+		for index, segment := range blocks{
 			if segment==""{
 				if ((numberOfEmpty==1 && blocks[index-1]!="") || numberOfEmpty>1){
 					return false
@@ -229,7 +228,6 @@ func IsValidIPv6(ip string) bool{
 					return false
 				}
 			}
-			index +=1
 		}
 		if numberOfEmpty==0 && len(blocks)!=n{
 			return false
@@ -237,7 +235,23 @@ func IsValidIPv6(ip string) bool{
 			return true
 		}
 	}
-	
+	isValidIPv4Inv6 := func(block string) bool{
+		isValidOctet := func(x string) bool{
+			_, err := strconv.ParseUint(x,10,8) //Note the use of 8 here because we want values 0-255
+			return err==nil
+		}
+		
+		octets := Split(block, ".")
+		if len(octets)!=4{
+			return false
+		}
+		for _, val := range octets{
+			if isValidOctet(val)==false{
+				return false
+			}
+		}
+		return true
+	}
 	
 	
 	ip = Replace(ip, " ", "")
@@ -253,7 +267,7 @@ func IsValidIPv6(ip string) bool{
 		if len(ipv6Start)>6{
 			return false
 		} else {
-			return IsValidIPv4(lastBlock) && testBlocks(ipv6Start,6)
+			return isValidIPv4Inv6(lastBlock) && testBlocks(ipv6Start,6)
 		}
 	} else { //IPv4 not embedded
 		return testBlocks(blocks,8)
