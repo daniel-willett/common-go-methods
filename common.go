@@ -241,7 +241,6 @@ func IsValidIPv6(ip string) bool{
 			return err==nil
 		}
 		
-		block = Replace(block, " ", "")
 		octets := Split(block, ".")
 		if len(octets)!=4{
 			return false
