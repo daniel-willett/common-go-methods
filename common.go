@@ -29,6 +29,54 @@ func Abs[Num Number](n Num) Num{
 	return n
 }
 
+//DEPENDS ON: Reverse
+func Addition(num1 string, num2 string) string{
+	padding := func(smaller string, larger string) string{
+		var smallLen int = len(smaller)
+		var largeLen int = len(larger)
+		var result string = ""
+		for i:=1; i<=largeLen-smallLen; i++{
+			result += "0" //Padding of zeros
+		}
+		result += smaller //Append the orignal part to the pad
+		return result
+	}
+
+	if len(num1)>len(num2){
+		num2 = padding(num2,num1)
+	} else {
+		num1 = padding(num1,num2)
+	}
+	var result string = ""
+	var (
+		firstDigit = 0 
+		secondDigit = 0
+		carry = 0
+		units = 0
+		total = 0
+	)
+	for index := len(num1)-1; index>=0; index--{
+		firstDigit, _ = strconv.Atoi(string(num1[index]))
+		secondDigit, _ = strconv.Atoi(string(num2[index]))
+
+		total = firstDigit + secondDigit + carry
+
+		carry = total/10
+		units = total%10
+
+		result += strconv.Itoa(units)
+	}
+	if carry==1{
+		result += "1"
+	}
+
+	//At this point, `result` has been appended to in reverse order so we need to reverse this string
+
+	result = Reverse(result)
+
+	return result
+}
+
 func All(arr []bool) bool{
 	for _, val := range arr{
 		if val==false{

@@ -25,6 +25,30 @@ func TestAbs(t *testing.T){
 	}
 }
 
+func TestAddition(t *testing.T){
+	tests := []struct{
+		name		string
+		x		string
+		y		string
+		expected	string
+	}{
+		{"Small Integers", "1", "2", "3"},
+		{"Large Integer", "999999999999999999999999999999999999999999999999999999999999999999999999999999999", "1", "1000000000000000000000000000000000000000000000000000000000000000000000000000000000"},
+		{"Zero", "0", "0", "0"},
+		{"One Empty String", "", "1", "1"},
+		{"Two Empty String", "", "", ""},
+	}
+
+	for _, tt := range tests{
+		t.Run(tt.name, func(t *testing.T){
+			result := Addition(tt.x,tt.y)
+			if result != tt.expected{
+				t.Errorf("Addition(%v,%v) = %v; want %v", tt.x, tt.y, result, tt.expected)
+			}
+		})
+	}
+}
+
 func TestAll(t *testing.T){
         tests := []struct{
                 name            string
