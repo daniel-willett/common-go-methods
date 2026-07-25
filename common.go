@@ -421,6 +421,7 @@ func Min[N Number](arr []N) (N, error){
 	return smallest, nil
 }
 
+//DEPENDS ON: Addition, Reverse
 func Multiplication(num1 string, num2 string) string{
 	var result string = ""
 	var partial string = "" 
