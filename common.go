@@ -423,10 +423,6 @@ func Min[N Number](arr []N) (N, error){
 
 func Multiplication(num1 string, num2 string) string{
 	var result string = ""
-	if len(num1)<len(num2){
-		return Multiplication(num2,num1)
-	}
-	//Ensures we have Multiplication(bigger,smaller)
 	var partial string = "" 
 	var (
 		firstDigit = 0 
