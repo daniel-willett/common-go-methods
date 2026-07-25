@@ -427,35 +427,39 @@ func Multiplication(num1 string, num2 string) string{
 		return Multiplication(num2,num1)
 	}
 	//Ensures we have Multiplication(bigger,smaller)
-	var partial = make([]string, len(num2))
+	var partial string = "" 
+	var (
+		firstDigit = 0 
+		secondDigit = 0
+		carry = 0
+		units = 0
+		total = 0
+	)
 	for i:=len(num2)-1; i>=0; i--{
-		var (
-			firstDigit = 0 
-			secondDigit = 0
-			carry = 0
-			units = 0
-			total = 0
-		)
+		firstDigit = 0 
+		secondDigit = 0
+		carry = 0
+		units = 0
+		total = 0
+		partial = ""
 		firstDigit, _ = strconv.Atoi(string(num2[i]))
 		for k:=len(num2)-1-i; k>0; k--{
-			partial[i] += "0"
+			partial += "0"
 		}
 		for j:=len(num1)-1; j>=0; j--{
 			secondDigit, _ = strconv.Atoi(string(num1[j]))
 			total = (firstDigit*secondDigit)+carry
 			carry = total/10
 			units = total%10
-			partial[i] += strconv.Itoa(units)
+			partial += strconv.Itoa(units)
 
 		}
 		if carry!=0{
-			partial[i] += strconv.Itoa(carry)
+			partial += strconv.Itoa(carry)
 
 		}
-		partial[i] = Reverse(partial[i])
-	}
-	for counter:=0; counter<len(num2); counter++{
-		result = Addition(result, partial[counter])
+		partial = Reverse(partial)
+		result = Addition(result, partial)
 	}
 	return result
 	
