@@ -1,4 +1,4 @@
-package common
+package common 
 
 import("math"; "strconv"; "errors")
 
@@ -420,6 +420,49 @@ func Min[N Number](arr []N) (N, error){
 	}
 	return smallest, nil
 }
+
+func Multiplication(num1 string, num2 string) string{
+	var result string = ""
+	if len(num1)<len(num2){
+		return Multiplication(num2,num1)
+	}
+	//Ensures we have Multiplication(bigger,smaller)
+	var partial = make([]string, len(num2))
+	for i:=len(num2)-1; i>=0; i--{
+		var (
+			firstDigit = 0 
+			secondDigit = 0
+			carry = 0
+			units = 0
+			total = 0
+		)
+		firstDigit, _ = strconv.Atoi(string(num2[i]))
+		for k:=len(num2)-1-i; k>0; k--{
+			partial[i] += "0"
+		}
+		for j:=len(num1)-1; j>=0; j--{
+			secondDigit, _ = strconv.Atoi(string(num1[j]))
+			total = (firstDigit*secondDigit)+carry
+			carry = total/10
+			units = total%10
+			partial[i] += strconv.Itoa(units)
+
+		}
+		if carry!=0{
+			partial[i] += strconv.Itoa(carry)
+
+		}
+		partial[i] = Reverse(partial[i])
+	}
+	for counter:=0; counter<len(num2); counter++{
+		result = Addition(result, partial[counter])
+	}
+	return result
+	
+}
+
+
+
 
 func NumOfDivs[I Integer](x I) int{
 	if x==0 {
