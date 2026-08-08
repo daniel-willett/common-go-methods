@@ -93,6 +93,40 @@ func TestAny(t *testing.T){
         }
 }
 
+func TestCompareAMoreThanB(t *testing.T){
+        tests := []struct{
+                name            string
+                A	        string
+		B		string
+                expectedVal     bool
+		expectedErr	error
+        }{
+		{"Small Integers", "5", "60", false, nil},
+		{"Large Integers - Same Length", "1000000000000000000000000000000000000000000000000000000000000000000000000000000001", "1000000000000000000000000000000000000000000000000000000000000000000000000000000000", true, nil},
+		{"One Empty", "", "300", false, nil},
+		{"Both Empty", "", "", false, errors.New("CompareAMoreThanB: Cannot compare two empty strings")},
+		{"Non-Integers", "5A", "5", false, errors.New("strconv.Atoi: parsing \"A\": invalid syntax")},
+        }
+
+        for _, tt := range tests{
+                t.Run(tt.name, func(t *testing.T){
+			//Following the way we did it in `TestMin`...
+                        result, err := CompareAMoreThanB(tt.A, tt.B)
+			if (err==nil && tt.expectedErr!=nil) || (err!=nil && tt.expectedErr==nil){
+				t.Errorf("CompareAMoreThanB(%v, %v) = %v, %v; want %v,\n %v",
+				tt.A, tt.B, result, err, tt.expectedVal, tt.expectedErr)
+			} else if err!=nil && err.Error()!=tt.expectedErr.Error(){
+				t.Errorf("CompareAMoreThanB(%v, %v) = %v, %v; want %v,\n %v",
+				tt.A, tt.B, result, err, tt.expectedVal, tt.expectedErr)
+                        }
+                        if result != tt.expectedVal{
+				t.Errorf("CompareAMoreThanB(%v, %v) = %v, %v; want %v,\n %v",
+				tt.A, tt.B, result, err, tt.expectedVal, tt.expectedErr)
+                        }
+                })
+        }
+}
+
 func TestCount(t *testing.T){
         tests := []struct{
                 name            string
@@ -449,16 +483,40 @@ func TestMin(t *testing.T){
                         //So first we check explicitly if they are equal in the nil sense
                         //Should that pass by then we check if they are equal in a non-nil sense
                         if (err==nil && tt.expectedErr!=nil) || (err!=nil && tt.expectedErr==nil){
-                                t.Errorf("Max(%v) = %v, %v; want %v, %v",
+                                t.Errorf("Min(%v) = %v, %v; want %v, %v",
                                 tt.input, result, err, tt.expectedVal, tt.expectedErr)
                         } else if err!=nil && err.Error()!=tt.expectedErr.Error(){
-                                t.Errorf("Max(%v) = %v, %v; want %v, %v",
+                                t.Errorf("Min(%v) = %v, %v; want %v, %v",
                                 tt.input, result, err, tt.expectedVal, tt.expectedErr)
                         }
                         //Finally we check if the expected value is what we wanted
                         if result!=tt.expectedVal {
-                                t.Errorf("Max(%v) = %v, %v; want %v, %v",
+                                t.Errorf("Min(%v) = %v, %v; want %v, %v",
                                 tt.input, result, err, tt.expectedVal, tt.expectedErr)
+                        }
+                })
+        }
+}
+
+func TestMultiplication(t *testing.T){
+	tests := []struct{
+                name            string
+                num1           	string
+		num2		string
+                expected        string
+        }{
+		{"Small Integers", "2", "3", "6"},
+		{"Large Integer", "999999999999999999999999999999999999999999999999999999999999999999999999999999999", "1000000000000000000000000000000000000000000000000000000000000000000000000000000000", "999999999999999999999999999999999999999999999999999999999999999999999999999999999000000000000000000000000000000000000000000000000000000000000000000000000000000000"},
+		{"Zero", "150", "0", "0"},
+		{"One Empty", "", "5", "0"},
+		{"Both Empty", "", "", "0"},
+        }
+
+        for _, tt := range tests{
+                t.Run(tt.name, func(t *testing.T){
+                        result := Multiplication(tt.num1, tt.num2)
+                        if result != tt.expected{
+                                t.Errorf("Multiplication(%v, %v) = %v; want %v", tt.num1, tt.num2, result, tt.expected)
                         }
                 })
         }

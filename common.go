@@ -1,4 +1,4 @@
-package common 
+package common
 
 import("math"; "strconv"; "errors")
 
@@ -110,6 +110,39 @@ func BubbleSort[N Number](arr []N) []N{
 		}
 	}
 	return arr
+}
+
+func CompareAMoreThanB(A string, B string) (bool, error){ //This is A *STRICTLY* more than B
+	var lengthA int = len(A)
+	var lengthB int = len(B)
+	if lengthA==0 && lengthB==0{
+		err := errors.New("CompareAMoreThanB: Cannot compare two empty strings")
+		return false, err
+	}
+
+	if lengthA>lengthB{
+		return true, nil
+	} else if lengthB>lengthA{
+		return false, nil
+	} else {
+		var index int = 0
+		for A[index]==B[index]{
+			index+=1
+		}
+		a, errorA := strconv.Atoi(string(A[index]))
+		b, errorB := strconv.Atoi(string(B[index]))
+		if errorA!=nil{
+			return false, errorA
+		}
+		if errorB!=nil{
+			return false, errorB
+		}
+		if a>b{
+			return true, nil
+		} else {
+			return false, nil
+		}
+	}
 }
 
 func Count[G Generic](arr []G, countValue G) int{
