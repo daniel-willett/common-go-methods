@@ -112,7 +112,17 @@ func BubbleSort[N Number](arr []N) []N{
 	return arr
 }
 
+//DEPENDS ON: IsNumber
 func CompareAMoreThanB(A string, B string) (bool, error){ //This is A *STRICTLY* more than B
+	if IsNumber(A)==False{
+		err := fmt.Errorf("%v is not a valid number in String form", A)
+		return false, err
+	}
+	if IsNumber(B)==False{
+		err := fmt.Errorf("%v is not a valid number in String form", B)
+		return false, err
+	}
+
 	var lengthA int = len(A)
 	var lengthB int = len(B)
 	if lengthA==0 && lengthB==0{
@@ -232,6 +242,10 @@ func InsertionSort[N Number](arr []N) []N{
 		i += 1
 	}
 	return arr
+}
+
+func IsNumber(n string) bool{
+	
 }
 
 //DEPENDS ON: Reverse
@@ -494,9 +508,6 @@ func Multiplication(num1 string, num2 string) string{
 	return result
 	
 }
-
-
-
 
 func NumOfDivs[I Integer](x I) int{
 	if x==0 {
