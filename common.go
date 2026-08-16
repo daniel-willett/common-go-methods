@@ -1,6 +1,6 @@
 package common
 
-import("math"; "strconv"; "errors")
+import("math"; "strconv"; "errors"; "fmt")
 
 type SignedNum interface{
 	~int | ~int8 | ~int16 | ~int32 | ~int64 | ~float32 | ~float64
@@ -114,11 +114,11 @@ func BubbleSort[N Number](arr []N) []N{
 
 //DEPENDS ON: IsNumber
 func CompareAMoreThanB(A string, B string) (bool, error){ //This is A *STRICTLY* more than B
-	if IsNumber(A)==False{
+	if IsNumber(A)==false{
 		err := fmt.Errorf("%v is not a valid number in String form", A)
 		return false, err
 	}
-	if IsNumber(B)==False{
+	if IsNumber(B)==false{
 		err := fmt.Errorf("%v is not a valid number in String form", B)
 		return false, err
 	}
@@ -245,7 +245,14 @@ func InsertionSort[N Number](arr []N) []N{
 }
 
 func IsNumber(n string) bool{
-	
+	var length int = len(n)
+	for i:=0; i<length; i++{
+		_, err := strconv.Atoi(string(n[i]))
+		if err!=nil{
+			return false
+		}
+	}
+	return true
 }
 
 //DEPENDS ON: Reverse
@@ -470,8 +477,11 @@ func Min[N Number](arr []N) (N, error){
 
 //DEPENDS ON: Addition, Reverse
 func Multiplication(num1 string, num2 string) string{
-	var result string = ""
+	var result string = "0"
 	var partial string = "" 
+	if num1=="0" || num2=="0"{
+		return "0"
+	}
 	var (
 		firstDigit = 0 
 		secondDigit = 0
@@ -506,7 +516,6 @@ func Multiplication(num1 string, num2 string) string{
 		result = Addition(result, partial)
 	}
 	return result
-	
 }
 
 func NumOfDivs[I Integer](x I) int{

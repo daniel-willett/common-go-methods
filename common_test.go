@@ -105,7 +105,7 @@ func TestCompareAMoreThanB(t *testing.T){
 		{"Large Integers - Same Length", "1000000000000000000000000000000000000000000000000000000000000000000000000000000001", "1000000000000000000000000000000000000000000000000000000000000000000000000000000000", true, nil},
 		{"One Empty", "", "300", false, nil},
 		{"Both Empty", "", "", false, errors.New("CompareAMoreThanB: Cannot compare two empty strings")},
-		{"Non-Integers", "5A", "5", false, errors.New("strconv.Atoi: parsing \"A\": invalid syntax")},
+		{"Non-Integers", "5A", "5", false, errors.New("5A is not a valid number in String form")},
         }
 
         for _, tt := range tests{
