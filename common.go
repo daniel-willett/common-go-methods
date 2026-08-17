@@ -30,7 +30,7 @@ func Abs[Num Number](n Num) Num{
 }
 
 //DEPENDS ON: Reverse
-func Addition(num1 string, num2 string) string{
+func Addition(num1 string, num2 string) (string, error){
 	padding := func(smaller string, larger string) string{
 		var smallLen int = len(smaller)
 		var largeLen int = len(larger)
@@ -42,6 +42,14 @@ func Addition(num1 string, num2 string) string{
 		return result
 	}
 
+	if IsNumber(num1)==false{
+		err := fmt.Errorf("%v is not a valid number in String form", num1)
+		return "", err
+	}
+	if IsNumber(num2)==false{
+		err := fmt.Errorf("%v is not a valid number in String form", num2)
+		return "", err
+	}
 	if len(num1)>len(num2){
 		num2 = padding(num2,num1)
 	} else {
@@ -74,7 +82,7 @@ func Addition(num1 string, num2 string) string{
 
 	result = Reverse(result)
 
-	return result
+	return result, nil
 }
 
 func All(arr []bool) bool{
@@ -476,11 +484,19 @@ func Min[N Number](arr []N) (N, error){
 }
 
 //DEPENDS ON: Addition, Reverse
-func Multiplication(num1 string, num2 string) string{
+func Multiplication(num1 string, num2 string) (string, error){
+	if IsNumber(num1)==false{
+		err := fmt.Errorf("%v is not a valid number in String form", num1)
+		return "", err
+	}
+	if IsNumber(num2)==false{
+		err := fmt.Errorf("%v is not a valid number in String form", num2)
+		return "", err
+	}
 	var result string = "0"
 	var partial string = "" 
 	if num1=="0" || num2=="0"{
-		return "0"
+		return "0", nil
 	}
 	var (
 		firstDigit = 0 
@@ -513,9 +529,9 @@ func Multiplication(num1 string, num2 string) string{
 
 		}
 		partial = Reverse(partial)
-		result = Addition(result, partial)
+		result, _ = Addition(result, partial)
 	}
-	return result
+	return result, nil
 }
 
 func NumOfDivs[I Integer](x I) int{

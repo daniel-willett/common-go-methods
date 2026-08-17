@@ -30,23 +30,35 @@ func TestAddition(t *testing.T){
 		name		string
 		x		string
 		y		string
-		expected	string
+		expectedVal	string
+		expectedErr	error
 	}{
-		{"Small Integers", "1", "2", "3"},
-		{"Large Integer", "999999999999999999999999999999999999999999999999999999999999999999999999999999999", "1", "1000000000000000000000000000000000000000000000000000000000000000000000000000000000"},
-		{"Zero", "0", "0", "0"},
-		{"One Empty String", "", "1", "1"},
-		{"Two Empty String", "", "", ""},
+		{"Small Integers", "1", "2", "3", nil},
+		{"Large Integer", "999999999999999999999999999999999999999999999999999999999999999999999999999999999", "1", "1000000000000000000000000000000000000000000000000000000000000000000000000000000000", nil},
+		{"Zero", "0", "0", "0", nil},
+		{"One Empty String", "", "1", "1", nil},
+		{"Two Empty String", "", "", "", nil},
+		{"Non-Numbers", "5A", "5", "", errors.New("5A is not a valid number in String form")},
+		{"Negative Numbers", "-3", "3", "", errors.New("-3 is not a valid number in String form")},
 	}
 
 	for _, tt := range tests{
-		t.Run(tt.name, func(t *testing.T){
-			result := Addition(tt.x,tt.y)
-			if result != tt.expected{
-				t.Errorf("Addition(%v,%v) = %v; want %v", tt.x, tt.y, result, tt.expected)
-			}
-		})
-	}
+                t.Run(tt.name, func(t *testing.T){
+			//Following the way we did it in `TestMin`...
+                        result, err := Addition(tt.x, tt.y)
+			if (err==nil && tt.expectedErr!=nil) || (err!=nil && tt.expectedErr==nil){
+				t.Errorf("Addition(%v, %v) = %v, %v; want %v,\n %v",
+				tt.x, tt.y, result, err, tt.expectedVal, tt.expectedErr)
+			} else if err!=nil && err.Error()!=tt.expectedErr.Error(){
+				t.Errorf("Addition(%v, %v) = %v, %v; want %v,\n %v",
+				tt.x, tt.y, result, err, tt.expectedVal, tt.expectedErr)
+                        }
+                        if result != tt.expectedVal{
+				t.Errorf("Addition(%v, %v) = %v, %v; want %v,\n %v",
+				tt.x, tt.y, result, err, tt.expectedVal, tt.expectedErr)
+                        }
+                })
+        }
 }
 
 func TestAll(t *testing.T){
@@ -105,7 +117,9 @@ func TestCompareAMoreThanB(t *testing.T){
 		{"Large Integers - Same Length", "1000000000000000000000000000000000000000000000000000000000000000000000000000000001", "1000000000000000000000000000000000000000000000000000000000000000000000000000000000", true, nil},
 		{"One Empty", "", "300", false, nil},
 		{"Both Empty", "", "", false, errors.New("CompareAMoreThanB: Cannot compare two empty strings")},
-		{"Non-Integers", "5A", "5", false, errors.New("5A is not a valid number in String form")},
+		{"Non-Numbers", "5A", "5", false, errors.New("5A is not a valid number in String form")},
+		{"Negative Numbers", "-3", "3", false, errors.New("-3 is not a valid number in String form")},
+
         }
 
         for _, tt := range tests{
@@ -236,13 +250,33 @@ func TestInsert(t *testing.T){
         }
 }
 
+func TestIsNumber(t *testing.T){
+        tests := []struct{
+                name            string
+                input		string	
+                expected        bool
+        }{
+		{"Success", "1221", true},
+		{"Failure", "122A", false},
+		{"Negative", "-10", false},
+        }
+
+        for _, tt := range tests{
+                t.Run(tt.name, func(t *testing.T){
+                        result := IsNumber(tt.input)
+                        if result != tt.expected{
+                                t.Errorf("IsNumber(%v) = %v; want %v", tt.input, result, tt.expected)
+                        }
+                })
+        }
+}
+
 func TestIsPalendrome(t *testing.T){
         tests := []struct{
                 name            string
                 input		uint	
                 expected        bool
         }{
-                //Normal cases
 		{"Success", 1221, true},
 		{"Failure", 1245, false},
 		{"One Char", 1, true},
@@ -503,20 +537,33 @@ func TestMultiplication(t *testing.T){
                 name            string
                 num1           	string
 		num2		string
-                expected        string
+                expectedVal	string
+		expectedErr	error
         }{
-		{"Small Integers", "2", "3", "6"},
-		{"Large Integer", "999999999999999999999999999999999999999999999999999999999999999999999999999999999", "1000000000000000000000000000000000000000000000000000000000000000000000000000000000", "999999999999999999999999999999999999999999999999999999999999999999999999999999999000000000000000000000000000000000000000000000000000000000000000000000000000000000"},
-		{"Zero", "150", "0", "0"},
-		{"One Empty", "", "5", "0"},
-		{"Both Empty", "", "", "0"},
+		{"Small Integers", "2", "3", "6", nil},
+		{"Large Integer", "999999999999999999999999999999999999999999999999999999999999999999999999999999999", "1000000000000000000000000000000000000000000000000000000000000000000000000000000000", "999999999999999999999999999999999999999999999999999999999999999999999999999999999000000000000000000000000000000000000000000000000000000000000000000000000000000000", nil},
+		{"Zero", "150", "0", "0", nil},
+		{"One Empty", "", "5", "0", nil},
+		{"Both Empty", "", "", "0", nil},
+		{"Non-Numbers", "5A", "5", "", errors.New("5A is not a valid number in String form")},
+		{"Negative Numbers", "-3", "3", "", errors.New("-3 is not a valid number in String form")},
+
         }
 
-        for _, tt := range tests{
+	for _, tt := range tests{
                 t.Run(tt.name, func(t *testing.T){
-                        result := Multiplication(tt.num1, tt.num2)
-                        if result != tt.expected{
-                                t.Errorf("Multiplication(%v, %v) = %v; want %v", tt.num1, tt.num2, result, tt.expected)
+			//Following the way we did it in `TestMin`...
+                        result, err := Multiplication(tt.num1, tt.num2)
+			if (err==nil && tt.expectedErr!=nil) || (err!=nil && tt.expectedErr==nil){
+				t.Errorf("Multiplication(%v, %v) = %v, %v; want %v,\n %v",
+				tt.num1, tt.num2, result, err, tt.expectedVal, tt.expectedErr)
+			} else if err!=nil && err.Error()!=tt.expectedErr.Error(){
+				t.Errorf("Multiplication(%v, %v) = %v, %v; want %v,\n %v",
+				tt.num1, tt.num2, result, err, tt.expectedVal, tt.expectedErr)
+                        }
+                        if result != tt.expectedVal{
+				t.Errorf("Multiplication(%v, %v) = %v, %v; want %v,\n %v",
+				tt.num1, tt.num2, result, err, tt.expectedVal, tt.expectedErr)
                         }
                 })
         }
