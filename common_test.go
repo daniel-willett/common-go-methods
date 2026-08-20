@@ -589,6 +589,29 @@ func TestNumOfDivs(t *testing.T){
         }
 }
 
+func TestPadding(t *testing.T){
+        tests := []struct{
+                name            string
+                num1		string
+		num2		string
+                expected        string
+        }{
+		{"Same Length", "100", "200", "100"},
+		{"Different Length", "4", "10000", "00004"},
+		{"One Empty", "", "100", "000"},
+		{"Both Empty", "", "", ""},
+        }
+
+        for _, tt := range tests{
+                t.Run(tt.name, func(t *testing.T){
+                        result := Padding(tt.num1, tt.num2)
+                        if result != tt.expected{
+                                t.Errorf("Padding(%v, %v) = %v; want %v", tt.num1, tt.num2, result, tt.expected)
+                        }
+                })
+        }
+}
+
 func TestPop(t *testing.T){
 	tests := []struct{
                 name            string

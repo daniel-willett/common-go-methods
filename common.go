@@ -29,19 +29,8 @@ func Abs[Num Number](n Num) Num{
 	return n
 }
 
-//DEPENDS ON: Reverse
+//DEPENDS ON: Reverse, Padding
 func Addition(num1 string, num2 string) (string, error){
-	padding := func(smaller string, larger string) string{
-		var smallLen int = len(smaller)
-		var largeLen int = len(larger)
-		var result string = ""
-		for i:=1; i<=largeLen-smallLen; i++{
-			result += "0" //Padding of zeros
-		}
-		result += smaller //Append the orignal part to the pad
-		return result
-	}
-
 	if IsNumber(num1)==false{
 		err := fmt.Errorf("%v is not a valid number in String form", num1)
 		return "", err
@@ -51,9 +40,9 @@ func Addition(num1 string, num2 string) (string, error){
 		return "", err
 	}
 	if len(num1)>len(num2){
-		num2 = padding(num2,num1)
+		num2 = Padding(num2,num1)
 	} else {
-		num1 = padding(num1,num2)
+		num1 = Padding(num1,num2)
 	}
 	var result string = ""
 	var (
@@ -553,6 +542,17 @@ func NumOfDivs[I Integer](x I) int{
 	return counter
 }
 
+func Padding(smaller string, larger string) string{
+	var smallLen int = len(smaller)
+	var largeLen int = len(larger)
+	var result string = ""
+	for i:=1; i<=largeLen-smallLen; i++{
+		result += "0" //Padding of zeros
+	}
+	result += smaller //Append the orignal part to the pad
+	return result
+}
+
 func Pop[G Generic](arr []G, pos int) ([]G, G){
 	result := []G{}
 	var n int = len(arr)
@@ -650,8 +650,14 @@ func Subtraction(num1 string, num2 string) (string, error){
 	if num1==num2{
 		return "0", nil
 	}
-	if val, _ := CompareAMoreThanB(num1,num2); val==False{
+	if val, _ := CompareAMoreThanB(num1,num2); val==false{ 
+		//If num1 !<= num2 we swap the inputs
 		return Subtraction(num2,num1)
+	} //So we have (num1, num2) as (larger, smaller) (respectively)
+	
+	var result string = ""
+	for i:=len(num2)-1;i>=0;i--{
+
 	}
 }
 
