@@ -646,6 +646,15 @@ func Split(text string, pattern string) []string{
 	return result
 }
 
+func Subtraction(num1 string, num2 string) (string, error){
+	if num1==num2{
+		return "0", nil
+	}
+	if val, _ := CompareAMoreThanB(num1,num2); val==False{
+		return Subtraction(num2,num1)
+	}
+}
+
 //DEPENDS ON: Upper, Lower
 func SwapCase(text string) string{
 	//normal XOR upper XOR lower = swapcase
