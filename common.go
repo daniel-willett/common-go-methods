@@ -29,7 +29,7 @@ func Abs[Num Number](n Num) Num{
 	return n
 }
 
-//DEPENDS ON: Reverse, Padding
+//DEPENDS ON: Reverse, Padding, IsNumber
 func Addition(num1 string, num2 string) (string, error){
 	if IsNumber(num1)==false{
 		err := fmt.Errorf("%v is not a valid number in String form", num1)
@@ -472,7 +472,7 @@ func Min[N Number](arr []N) (N, error){
 	return smallest, nil
 }
 
-//DEPENDS ON: Addition, Reverse
+//DEPENDS ON: Addition, Reverse, IsNumber
 func Multiplication(num1 string, num2 string) (string, error){
 	if IsNumber(num1)==false{
 		err := fmt.Errorf("%v is not a valid number in String form", num1)
@@ -646,19 +646,59 @@ func Split(text string, pattern string) []string{
 	return result
 }
 
+//DEPENDS ON: Padding, IsNumber
 func Subtraction(num1 string, num2 string) (string, error){
+	if IsNumber(num1)==false{
+		err := fmt.Errorf("%v is not a valid number in String form", num1)
+		return "", err
+	}
+	if IsNumber(num2)==false{
+		err := fmt.Errorf("%v is not a valid number in String form", num2)
+		return "", err
+	}
+	
 	if num1==num2{
 		return "0", nil
 	}
-	if val, _ := CompareAMoreThanB(num1,num2); val==false{ 
-		//If num1 !<= num2 we swap the inputs
-		return Subtraction(num2,num1)
+	
+	if num1MoreThanNum2, _ := CompareAMoreThanB(num1,num2); num1MoreThanNum2==false{
+		//If num1 <= num2  we swap the inputs and make the result negative
+		positiveRes, _ := Subtraction(num2,num1)
+		positiveRes = "-" + positiveRes
+		return positiveRes, nil
 	} //So we have (num1, num2) as (larger, smaller) (respectively)
 	
+	num2 = Padding(num2, num1)
 	var result string = ""
+	var (
+		first = 0
+		second = 0
+		val = 0
+	)
 	for i:=len(num2)-1;i>=0;i--{
-
+		first, _ = strconv.Atoi(string(num1[i]))
+		second, _ = strconv.Atoi(string(num2[i]))
+		val = first - second
+		
+		if val<0{
+			
+			var zeroIndex int = 1
+			for string(num1[i-zeroIndex])=="0"{
+				//num1[i-zeroIndex] = '9'
+				num1 = num1[0:i-zeroIndex] + "9" + num1[i-zeroIndex+1:len(num1)]
+				zeroIndex += 1
+			}
+			
+			//num1[i-zeroIndex] -= 1
+			sub, _ := strconv.Atoi("1"+string(num1[i]))
+			num1 = num1[0:i-zeroIndex] + strconv.Itoa(sub-1) + num1[i-zeroIndex+1:len(num1)]
+			val += 10
+			
+		}
+		
+		result += strconv.Itoa(val)
 	}
+	return Reverse(result), nil
 }
 
 //DEPENDS ON: Upper, Lower

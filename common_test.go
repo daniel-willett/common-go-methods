@@ -758,6 +758,59 @@ func TestSplit(t *testing.T){
         }
 }
 
+
+
+
+func TestSubtraction(t *testing.T){
+	tests := []struct{
+		name		string
+		num1		string
+		num2		string
+		expectedVal	string
+		expectedErr	error
+	}{
+		{"Normal Mode", "3", "2", "1", nil},
+		{"Negative Result", "2", "3", "-1", nil},
+		{"Same Value", "100", "100", "0", nil},
+		{"Carrying", "1000", "1", "999", nil},
+		{"Reverse Carrying", "1", "1000", "-999", nil},
+	}
+
+	for _, tt := range tests{
+                t.Run(tt.name, func(t *testing.T){
+			//Following the way we did it in `TestMin`...
+                        result, err := Subtraction(tt.num1, tt.num2)
+			if (err==nil && tt.expectedErr!=nil) || (err!=nil && tt.expectedErr==nil){
+				t.Errorf("Subtraction(%v, %v) = %v, %v; want %v,\n %v",
+				tt.num1, tt.num2, result, err, tt.expectedVal, tt.expectedErr)
+			} else if err!=nil && err.Error()!=tt.expectedErr.Error(){
+				t.Errorf("Subtraction(%v, %v) = %v, %v; want %v,\n %v",
+				tt.num1, tt.num2, result, err, tt.expectedVal, tt.expectedErr)
+                        }
+			if result != tt.expectedVal{
+				t.Errorf("Subtraction(%v, %v) = %v, %v; want %v,\n %v",
+				tt.num1, tt.num2, result, err, tt.expectedVal, tt.expectedErr)
+                        }
+                })
+        }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 func TestSwapCase(t *testing.T){
         tests := []struct{
                 name            string
