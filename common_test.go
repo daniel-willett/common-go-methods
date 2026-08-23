@@ -637,8 +637,6 @@ func TestPop(t *testing.T){
         }
 }
 
-
-
 func TestRemoveLeadingZeros(t *testing.T){
         tests := []struct{
                 name            string
