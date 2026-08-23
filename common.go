@@ -1,6 +1,6 @@
 package common
 
-import("math"; "strconv"; "errors")
+import("math"; "strconv"; "errors"; "fmt")
 
 type SignedNum interface{
 	~int | ~int8 | ~int16 | ~int32 | ~int64 | ~float32 | ~float64
@@ -27,6 +27,51 @@ func Abs[Num Number](n Num) Num{
 		return -n
 	}
 	return n
+}
+
+//DEPENDS ON: Reverse, Padding, IsNumber
+func Addition(num1 string, num2 string) (string, error){
+	if IsNumber(num1)==false{
+		err := fmt.Errorf("%v is not a valid number in String form", num1)
+		return "", err
+	}
+	if IsNumber(num2)==false{
+		err := fmt.Errorf("%v is not a valid number in String form", num2)
+		return "", err
+	}
+	if len(num1)>len(num2){
+		num2 = Padding(num2,num1)
+	} else {
+		num1 = Padding(num1,num2)
+	}
+	var result string = ""
+	var (
+		firstDigit = 0 
+		secondDigit = 0
+		carry = 0
+		units = 0
+		total = 0
+	)
+	for index := len(num1)-1; index>=0; index--{
+		firstDigit, _ = strconv.Atoi(string(num1[index]))
+		secondDigit, _ = strconv.Atoi(string(num2[index]))
+
+		total = firstDigit + secondDigit + carry
+
+		carry = total/10
+		units = total%10
+
+		result += strconv.Itoa(units)
+	}
+	if carry==1{
+		result += "1"
+	}
+
+	//At this point, `result` has been appended to in reverse order so we need to reverse this string
+
+	result = Reverse(result)
+
+	return result, nil
 }
 
 func All(arr []bool) bool{
@@ -62,6 +107,49 @@ func BubbleSort[N Number](arr []N) []N{
 		}
 	}
 	return arr
+}
+
+//DEPENDS ON: IsNumber
+func CompareAMoreThanB(A string, B string) (bool, error){ //This is A *STRICTLY* more than B
+	if IsNumber(A)==false{
+		err := fmt.Errorf("%v is not a valid number in String form", A)
+		return false, err
+	}
+	if IsNumber(B)==false{
+		err := fmt.Errorf("%v is not a valid number in String form", B)
+		return false, err
+	}
+
+	var lengthA int = len(A)
+	var lengthB int = len(B)
+	if lengthA==0 && lengthB==0{
+		err := errors.New("CompareAMoreThanB: Cannot compare two empty strings")
+		return false, err
+	}
+
+	if lengthA>lengthB{
+		return true, nil
+	} else if lengthB>lengthA{
+		return false, nil
+	} else {
+		var index int = 0
+		for A[index]==B[index]{
+			index+=1
+		}
+		a, errorA := strconv.Atoi(string(A[index]))
+		b, errorB := strconv.Atoi(string(B[index]))
+		if errorA!=nil{
+			return false, errorA
+		}
+		if errorB!=nil{
+			return false, errorB
+		}
+		if a>b{
+			return true, nil
+		} else {
+			return false, nil
+		}
+	}
 }
 
 func Count[G Generic](arr []G, countValue G) int{
@@ -151,6 +239,17 @@ func InsertionSort[N Number](arr []N) []N{
 		i += 1
 	}
 	return arr
+}
+
+func IsNumber(n string) bool{
+	var length int = len(n)
+	for i:=0; i<length; i++{
+		_, err := strconv.Atoi(string(n[i]))
+		if err!=nil{
+			return false
+		}
+	}
+	return true
 }
 
 //DEPENDS ON: Reverse
@@ -373,6 +472,57 @@ func Min[N Number](arr []N) (N, error){
 	return smallest, nil
 }
 
+//DEPENDS ON: Addition, Reverse, IsNumber
+func Multiplication(num1 string, num2 string) (string, error){
+	if IsNumber(num1)==false{
+		err := fmt.Errorf("%v is not a valid number in String form", num1)
+		return "", err
+	}
+	if IsNumber(num2)==false{
+		err := fmt.Errorf("%v is not a valid number in String form", num2)
+		return "", err
+	}
+	var result string = "0"
+	var partial string = "" 
+	if num1=="0" || num2=="0"{
+		return "0", nil
+	}
+	var (
+		firstDigit = 0 
+		secondDigit = 0
+		carry = 0
+		units = 0
+		total = 0
+	)
+	for i:=len(num2)-1; i>=0; i--{
+		firstDigit = 0 
+		secondDigit = 0
+		carry = 0
+		units = 0
+		total = 0
+		partial = ""
+		firstDigit, _ = strconv.Atoi(string(num2[i]))
+		for k:=len(num2)-1-i; k>0; k--{
+			partial += "0"
+		}
+		for j:=len(num1)-1; j>=0; j--{
+			secondDigit, _ = strconv.Atoi(string(num1[j]))
+			total = (firstDigit*secondDigit)+carry
+			carry = total/10
+			units = total%10
+			partial += strconv.Itoa(units)
+
+		}
+		if carry!=0{
+			partial += strconv.Itoa(carry)
+
+		}
+		partial = Reverse(partial)
+		result, _ = Addition(result, partial)
+	}
+	return result, nil
+}
+
 func NumOfDivs[I Integer](x I) int{
 	if x==0 {
 		return 1
@@ -390,6 +540,17 @@ func NumOfDivs[I Integer](x I) int{
 		counter -= 1
 	}
 	return counter
+}
+
+func Padding(smaller string, larger string) string{
+	var smallLen int = len(smaller)
+	var largeLen int = len(larger)
+	var result string = ""
+	for i:=1; i<=largeLen-smallLen; i++{
+		result += "0" //Padding of zeros
+	}
+	result += smaller //Append the orignal part to the pad
+	return result
 }
 
 func Pop[G Generic](arr []G, pos int) ([]G, G){
@@ -442,6 +603,18 @@ func QuickSort[N Number](arr []N) []N{
 	return arr
 }
 
+func RemoveLeadingZeros(num string) string{
+	if len(num)==1{
+		return num
+	}
+	var index int = 0
+	for string(num[index])=="0"{
+		index += 1
+	}
+	return num[index:len(num)]
+}
+
+
 //DEPENDS ON: GetIndexOf
 func Replace(text string, pattern string, newPattern string) string{
 	positions := GetIndexOf(text, pattern)
@@ -483,6 +656,56 @@ func Split(text string, pattern string) []string{
 		result = append(result, "")
 	}
 	return result
+}
+
+//DEPENDS ON: Padding, IsNumber, RemoveLeadingZeros
+func Subtraction(num1 string, num2 string) (string, error){
+	if IsNumber(num1)==false{
+		err := fmt.Errorf("%v is not a valid number in String form", num1)
+		return "", err
+	}
+	if IsNumber(num2)==false{
+		err := fmt.Errorf("%v is not a valid number in String form", num2)
+		return "", err
+	}
+	
+	if num1==num2{
+		return "0", nil
+	}
+	
+	if num1MoreThanNum2, _ := CompareAMoreThanB(num1,num2); num1MoreThanNum2==false{
+		//If num1 <= num2  we swap the inputs and make the result negative
+		positiveRes, _ := Subtraction(num2,num1)
+		positiveRes = "-" + positiveRes
+		return positiveRes, nil
+	} //So we have (num1, num2) as (larger, smaller) (respectively)
+	
+	num2 = Padding(num2, num1)
+	var result string = ""
+	var (
+		first = 0
+		second = 0
+		val = 0
+	)
+	for i:=len(num2)-1;i>=0;i--{
+		first, _ = strconv.Atoi(string(num1[i]))
+		second, _ = strconv.Atoi(string(num2[i]))
+		val = first - second
+		if val<0{
+			var zeroIndex int = 1
+			for string(num1[i-zeroIndex])=="0"{
+				num1 = num1[0:i-zeroIndex] + "9" + num1[i-zeroIndex+1:len(num1)]
+				zeroIndex += 1
+			}
+			sub, _ := strconv.Atoi(string(num1[i-zeroIndex]))
+			num1 = num1[0:i-zeroIndex] + strconv.Itoa(sub-1) + num1[i-zeroIndex+1:len(num1)]
+			val += 10
+		}
+		result += strconv.Itoa(val)
+	}
+	result = Reverse(result)
+	result = RemoveLeadingZeros(result)
+	return result, nil
 }
 
 //DEPENDS ON: Upper, Lower

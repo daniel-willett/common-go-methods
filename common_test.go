@@ -25,6 +25,42 @@ func TestAbs(t *testing.T){
 	}
 }
 
+func TestAddition(t *testing.T){
+	tests := []struct{
+		name		string
+		x		string
+		y		string
+		expectedVal	string
+		expectedErr	error
+	}{
+		{"Small Integers", "1", "2", "3", nil},
+		{"Large Integer", "999999999999999999999999999999999999999999999999999999999999999999999999999999999", "1", "1000000000000000000000000000000000000000000000000000000000000000000000000000000000", nil},
+		{"Zero", "0", "0", "0", nil},
+		{"One Empty String", "", "1", "1", nil},
+		{"Two Empty String", "", "", "", nil},
+		{"Non-Numbers", "5A", "5", "", errors.New("5A is not a valid number in String form")},
+		{"Negative Numbers", "-3", "3", "", errors.New("-3 is not a valid number in String form")},
+	}
+
+	for _, tt := range tests{
+                t.Run(tt.name, func(t *testing.T){
+			//Following the way we did it in `TestMin`...
+                        result, err := Addition(tt.x, tt.y)
+			if (err==nil && tt.expectedErr!=nil) || (err!=nil && tt.expectedErr==nil){
+				t.Errorf("Addition(%v, %v) = %v, %v; want %v,\n %v",
+				tt.x, tt.y, result, err, tt.expectedVal, tt.expectedErr)
+			} else if err!=nil && err.Error()!=tt.expectedErr.Error(){
+				t.Errorf("Addition(%v, %v) = %v, %v; want %v,\n %v",
+				tt.x, tt.y, result, err, tt.expectedVal, tt.expectedErr)
+                        }
+                        if result != tt.expectedVal{
+				t.Errorf("Addition(%v, %v) = %v, %v; want %v,\n %v",
+				tt.x, tt.y, result, err, tt.expectedVal, tt.expectedErr)
+                        }
+                })
+        }
+}
+
 func TestAll(t *testing.T){
         tests := []struct{
                 name            string
@@ -64,6 +100,41 @@ func TestAny(t *testing.T){
                         result := Any(tt.input)
                         if result != tt.expected{
                                 t.Errorf("Any(%v) = %v; want %v", tt.input, result, tt.expected)
+                        }
+                })
+        }
+}
+
+func TestCompareAMoreThanB(t *testing.T){
+        tests := []struct{
+                name            string
+                A	        string
+		B		string
+                expectedVal     bool
+		expectedErr	error
+        }{
+		{"Small Integers", "5", "60", false, nil},
+		{"Large Integers - Same Length", "1000000000000000000000000000000000000000000000000000000000000000000000000000000001", "1000000000000000000000000000000000000000000000000000000000000000000000000000000000", true, nil},
+		{"One Empty", "", "300", false, nil},
+		{"Both Empty", "", "", false, errors.New("CompareAMoreThanB: Cannot compare two empty strings")},
+		{"Non-Numbers", "5A", "5", false, errors.New("5A is not a valid number in String form")},
+		{"Negative Numbers", "-3", "3", false, errors.New("-3 is not a valid number in String form")},
+        }
+
+        for _, tt := range tests{
+                t.Run(tt.name, func(t *testing.T){
+			//Following the way we did it in `TestMin`...
+                        result, err := CompareAMoreThanB(tt.A, tt.B)
+			if (err==nil && tt.expectedErr!=nil) || (err!=nil && tt.expectedErr==nil){
+				t.Errorf("CompareAMoreThanB(%v, %v) = %v, %v; want %v,\n %v",
+				tt.A, tt.B, result, err, tt.expectedVal, tt.expectedErr)
+			} else if err!=nil && err.Error()!=tt.expectedErr.Error(){
+				t.Errorf("CompareAMoreThanB(%v, %v) = %v, %v; want %v,\n %v",
+				tt.A, tt.B, result, err, tt.expectedVal, tt.expectedErr)
+                        }
+                        if result != tt.expectedVal{
+				t.Errorf("CompareAMoreThanB(%v, %v) = %v, %v; want %v,\n %v",
+				tt.A, tt.B, result, err, tt.expectedVal, tt.expectedErr)
                         }
                 })
         }
@@ -178,13 +249,33 @@ func TestInsert(t *testing.T){
         }
 }
 
+func TestIsNumber(t *testing.T){
+        tests := []struct{
+                name            string
+                input		string	
+                expected        bool
+        }{
+		{"Success", "1221", true},
+		{"Failure", "122A", false},
+		{"Negative", "-10", false},
+        }
+
+        for _, tt := range tests{
+                t.Run(tt.name, func(t *testing.T){
+                        result := IsNumber(tt.input)
+                        if result != tt.expected{
+                                t.Errorf("IsNumber(%v) = %v; want %v", tt.input, result, tt.expected)
+                        }
+                })
+        }
+}
+
 func TestIsPalendrome(t *testing.T){
         tests := []struct{
                 name            string
                 input		uint	
                 expected        bool
         }{
-                //Normal cases
 		{"Success", 1221, true},
 		{"Failure", 1245, false},
 		{"One Char", 1, true},
@@ -425,16 +516,52 @@ func TestMin(t *testing.T){
                         //So first we check explicitly if they are equal in the nil sense
                         //Should that pass by then we check if they are equal in a non-nil sense
                         if (err==nil && tt.expectedErr!=nil) || (err!=nil && tt.expectedErr==nil){
-                                t.Errorf("Max(%v) = %v, %v; want %v, %v",
+                                t.Errorf("Min(%v) = %v, %v; want %v, %v",
                                 tt.input, result, err, tt.expectedVal, tt.expectedErr)
                         } else if err!=nil && err.Error()!=tt.expectedErr.Error(){
-                                t.Errorf("Max(%v) = %v, %v; want %v, %v",
+                                t.Errorf("Min(%v) = %v, %v; want %v, %v",
                                 tt.input, result, err, tt.expectedVal, tt.expectedErr)
                         }
                         //Finally we check if the expected value is what we wanted
                         if result!=tt.expectedVal {
-                                t.Errorf("Max(%v) = %v, %v; want %v, %v",
+                                t.Errorf("Min(%v) = %v, %v; want %v, %v",
                                 tt.input, result, err, tt.expectedVal, tt.expectedErr)
+                        }
+                })
+        }
+}
+
+func TestMultiplication(t *testing.T){
+	tests := []struct{
+                name            string
+                num1           	string
+		num2		string
+                expectedVal	string
+		expectedErr	error
+        }{
+		{"Small Integers", "2", "3", "6", nil},
+		{"Large Integer", "999999999999999999999999999999999999999999999999999999999999999999999999999999999", "1000000000000000000000000000000000000000000000000000000000000000000000000000000000", "999999999999999999999999999999999999999999999999999999999999999999999999999999999000000000000000000000000000000000000000000000000000000000000000000000000000000000", nil},
+		{"Zero", "150", "0", "0", nil},
+		{"One Empty", "", "5", "0", nil},
+		{"Both Empty", "", "", "0", nil},
+		{"Non-Numbers", "5A", "5", "", errors.New("5A is not a valid number in String form")},
+		{"Negative Numbers", "-3", "3", "", errors.New("-3 is not a valid number in String form")},
+        }
+
+	for _, tt := range tests{
+                t.Run(tt.name, func(t *testing.T){
+			//Following the way we did it in `TestMin`...
+                        result, err := Multiplication(tt.num1, tt.num2)
+			if (err==nil && tt.expectedErr!=nil) || (err!=nil && tt.expectedErr==nil){
+				t.Errorf("Multiplication(%v, %v) = %v, %v; want %v,\n %v",
+				tt.num1, tt.num2, result, err, tt.expectedVal, tt.expectedErr)
+			} else if err!=nil && err.Error()!=tt.expectedErr.Error(){
+				t.Errorf("Multiplication(%v, %v) = %v, %v; want %v,\n %v",
+				tt.num1, tt.num2, result, err, tt.expectedVal, tt.expectedErr)
+                        }
+                        if result != tt.expectedVal{
+				t.Errorf("Multiplication(%v, %v) = %v, %v; want %v,\n %v",
+				tt.num1, tt.num2, result, err, tt.expectedVal, tt.expectedErr)
                         }
                 })
         }
@@ -462,6 +589,29 @@ func TestNumOfDivs(t *testing.T){
         }
 }
 
+func TestPadding(t *testing.T){
+        tests := []struct{
+                name            string
+                num1		string
+		num2		string
+                expected        string
+        }{
+		{"Same Length", "100", "200", "100"},
+		{"Different Length", "4", "10000", "00004"},
+		{"One Empty", "", "100", "000"},
+		{"Both Empty", "", "", ""},
+        }
+
+        for _, tt := range tests{
+                t.Run(tt.name, func(t *testing.T){
+                        result := Padding(tt.num1, tt.num2)
+                        if result != tt.expected{
+                                t.Errorf("Padding(%v, %v) = %v; want %v", tt.num1, tt.num2, result, tt.expected)
+                        }
+                })
+        }
+}
+
 func TestPop(t *testing.T){
 	tests := []struct{
                 name            string
@@ -482,6 +632,28 @@ func TestPop(t *testing.T){
 			if !reflect.DeepEqual(resultArr, tt.expectedArr) || resultVal!=tt.expectedVal{
                                 t.Errorf("Pop(%v, %v) = %v, %v; want %v, %v", 
 				tt.arr, tt.pos, resultArr, resultVal, tt.expectedArr, tt.expectedVal)
+                        }
+                })
+        }
+}
+
+func TestRemoveLeadingZeros(t *testing.T){
+        tests := []struct{
+                name            string
+		text		string
+                expected        string
+        }{
+		//Normal cases
+		{"Zero", "0", "0"},
+		{"Leading Zeros", "00100", "100"},
+		{"No Leading Zeros", "100", "100"},
+        }
+
+        for _, tt := range tests{
+                t.Run(tt.name, func(t *testing.T){
+                        result := RemoveLeadingZeros(tt.text)
+                        if result != tt.expected{
+                                t.Errorf("RemoveLeadingZeros(%v) = %v; want %v", tt.text, result, tt.expected)
                         }
                 })
         }
@@ -603,6 +775,41 @@ func TestSplit(t *testing.T){
                         result := Split(tt.text, tt.pattern)
                         if !reflect.DeepEqual(result, tt.expected){
                                 t.Errorf("Split(%v, %v) = %v; want %v", tt.text, tt.pattern, result, tt.expected)
+                        }
+                })
+        }
+}
+
+func TestSubtraction(t *testing.T){
+	tests := []struct{
+		name		string
+		num1		string
+		num2		string
+		expectedVal	string
+		expectedErr	error
+	}{
+		{"Normal Mode", "3", "2", "1", nil},
+		{"Negative Result", "2", "3", "-1", nil},
+		{"Same Value", "100", "100", "0", nil},
+		{"Carrying", "1000", "5", "995", nil},
+		{"Reverse Carrying", "5", "1000", "-995", nil},
+		{"Zero", "0", "1", "-1", nil},
+	}
+
+	for _, tt := range tests{
+                t.Run(tt.name, func(t *testing.T){
+			//Following the way we did it in `TestMin`...
+                        result, err := Subtraction(tt.num1, tt.num2)
+			if (err==nil && tt.expectedErr!=nil) || (err!=nil && tt.expectedErr==nil){
+				t.Errorf("Subtraction(%v, %v) = %v, %v; want %v,\n %v",
+				tt.num1, tt.num2, result, err, tt.expectedVal, tt.expectedErr)
+			} else if err!=nil && err.Error()!=tt.expectedErr.Error(){
+				t.Errorf("Subtraction(%v, %v) = %v, %v; want %v,\n %v",
+				tt.num1, tt.num2, result, err, tt.expectedVal, tt.expectedErr)
+                        }
+			if result != tt.expectedVal{
+				t.Errorf("Subtraction(%v, %v) = %v, %v; want %v,\n %v",
+				tt.num1, tt.num2, result, err, tt.expectedVal, tt.expectedErr)
                         }
                 })
         }
