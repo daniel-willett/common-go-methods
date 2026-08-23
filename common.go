@@ -603,6 +603,18 @@ func QuickSort[N Number](arr []N) []N{
 	return arr
 }
 
+func RemoveLeadingZeros(num string) string{
+	if len(num)==1{
+		return num
+	}
+	var index int = 0
+	for string(num[index])=="0"{
+		index += 1
+	}
+	return num[index:len(num)]
+}
+
+
 //DEPENDS ON: GetIndexOf
 func Replace(text string, pattern string, newPattern string) string{
 	positions := GetIndexOf(text, pattern)
@@ -679,26 +691,21 @@ func Subtraction(num1 string, num2 string) (string, error){
 		first, _ = strconv.Atoi(string(num1[i]))
 		second, _ = strconv.Atoi(string(num2[i]))
 		val = first - second
-		
 		if val<0{
-			
 			var zeroIndex int = 1
 			for string(num1[i-zeroIndex])=="0"{
-				//num1[i-zeroIndex] = '9'
 				num1 = num1[0:i-zeroIndex] + "9" + num1[i-zeroIndex+1:len(num1)]
 				zeroIndex += 1
 			}
-			
-			//num1[i-zeroIndex] -= 1
-			sub, _ := strconv.Atoi("1"+string(num1[i]))
+			sub, _ := strconv.Atoi(string(num1[i-zeroIndex]))
 			num1 = num1[0:i-zeroIndex] + strconv.Itoa(sub-1) + num1[i-zeroIndex+1:len(num1)]
 			val += 10
-			
 		}
-		
 		result += strconv.Itoa(val)
 	}
-	return Reverse(result), nil
+	result = Reverse(result)
+	result = RemoveLeadingZeros(result)
+	return result, nil
 }
 
 //DEPENDS ON: Upper, Lower

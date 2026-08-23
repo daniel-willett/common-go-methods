@@ -637,6 +637,30 @@ func TestPop(t *testing.T){
         }
 }
 
+
+
+func TestRemoveLeadingZeros(t *testing.T){
+        tests := []struct{
+                name            string
+		text		string
+                expected        string
+        }{
+		//Normal cases
+		{"Zero", "0", "0"},
+		{"Leading Zeros", "00100", "100"},
+		{"No Leading Zeros", "100", "100"},
+        }
+
+        for _, tt := range tests{
+                t.Run(tt.name, func(t *testing.T){
+                        result := RemoveLeadingZeros(tt.text)
+                        if result != tt.expected{
+                                t.Errorf("RemoveLeadingZeros(%v) = %v; want %v", tt.text, result, tt.expected)
+                        }
+                })
+        }
+}
+
 func TestReplace(t *testing.T){
         tests := []struct{
                 name            string
@@ -758,9 +782,6 @@ func TestSplit(t *testing.T){
         }
 }
 
-
-
-
 func TestSubtraction(t *testing.T){
 	tests := []struct{
 		name		string
@@ -772,8 +793,9 @@ func TestSubtraction(t *testing.T){
 		{"Normal Mode", "3", "2", "1", nil},
 		{"Negative Result", "2", "3", "-1", nil},
 		{"Same Value", "100", "100", "0", nil},
-		{"Carrying", "1000", "1", "999", nil},
-		{"Reverse Carrying", "1", "1000", "-999", nil},
+		{"Carrying", "1000", "5", "995", nil},
+		{"Reverse Carrying", "5", "1000", "-995", nil},
+		{"Zero", "0", "1", "-1", nil},
 	}
 
 	for _, tt := range tests{
@@ -794,22 +816,6 @@ func TestSubtraction(t *testing.T){
                 })
         }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 func TestSwapCase(t *testing.T){
         tests := []struct{
