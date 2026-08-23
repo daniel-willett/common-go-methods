@@ -658,7 +658,7 @@ func Split(text string, pattern string) []string{
 	return result
 }
 
-//DEPENDS ON: Padding, IsNumber
+//DEPENDS ON: Padding, IsNumber, RemoveLeadingZeros
 func Subtraction(num1 string, num2 string) (string, error){
 	if IsNumber(num1)==false{
 		err := fmt.Errorf("%v is not a valid number in String form", num1)
