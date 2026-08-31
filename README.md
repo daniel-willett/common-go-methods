@@ -164,6 +164,11 @@ result, error := Addition("123four", "1234")
 // result is "" and error is "123four is not a valid number in String form"
 ```
 
+### Math:
+
+```
+```
+
 ### Arrays/Sclices:
 
 ```
@@ -173,4 +178,14 @@ result := All(arr1)
 arr2 := []bool{true, true, true}
 result := All(arr2)
 // result is true
+```
+
+### String Manipulation:
+
+```
+```
+
+### Networking:
+
+```
 ```
