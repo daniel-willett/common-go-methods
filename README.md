@@ -154,12 +154,18 @@ This takes a `string` input and determines if it is a valid IPv6 address resulti
 
 
 ## Examples
+
+### Big Numbers:
+
 ```
 result, error := Addition("1234", "5678")
-//error is nil and result is "6912"
+// error is nil and result is "6912"
 result, error := Addition("123four", "1234")
 // result is "" and error is "123four is not a valid number in String form"
 ```
+
+### Arrays/Sclices:
+
 ```
 arr1 := []bool{false, true, true}
 result := All(arr1)
