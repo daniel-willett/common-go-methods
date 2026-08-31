@@ -152,3 +152,19 @@ This takes a `string` input and determines if it is a valid IPv4 address resulti
 
 This takes a `string` input and determines if it is a valid IPv6 address resulting in `true` or `false`. This includes IPv4 embeddings.
 
+
+## Examples
+```
+result, error := Addition("1234", "5678")
+//error is nil and result is "6912"
+result, error := Addition("123four", "1234")
+// result is "" and error is "123four is not a valid number in String form"
+```
+```
+arr1 := []bool{false, true, true}
+result := All(arr1)
+// result is false
+arr2 := []bool{true, true, true}
+result := All(arr2)
+// result is true
+```
