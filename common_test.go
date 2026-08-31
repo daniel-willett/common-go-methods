@@ -119,6 +119,7 @@ func TestCompareAMoreThanB(t *testing.T){
 		{"Both Empty", "", "", false, errors.New("CompareAMoreThanB: Cannot compare two empty strings")},
 		{"Non-Numbers", "5A", "5", false, errors.New("5A is not a valid number in String form")},
 		{"Negative Numbers", "-3", "3", false, errors.New("-3 is not a valid number in String form")},
+		{"Same Values", "10", "10", false, nil},
         }
 
         for _, tt := range tests{
