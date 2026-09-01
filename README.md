@@ -22,6 +22,10 @@ If the input is not a valid number then the method will return an error.
 
 Note: Current support is for positive integers only. `Subtraction` can result in a negative integer but does not yet support it back as an input.
 
+### CompareAMoreThanB
+
+This evaluates the mathematical logical computation of `A>B` for inputs `A` and `B` as numerical representation of the `string` inputs.
+
 ### IsNumber
 
 This takes in a `string` representation of a Big Number and returns whether the `string` is valid to represent a number i.e. is it only composed of digits.
@@ -163,29 +167,208 @@ result, error := Addition("1234", "5678")
 result, error := Addition("123four", "1234")
 // result is "" and error is "123four is not a valid number in String form"
 ```
+```
+result, error := CompareAMoreThanB("100", "20")
+// error is nil and result is true
+result, error := CompareAMoreThanB("100", "100")
+// error is nil and result is false
+```
+```
+result := IsNumber("100")
+// result is true
+result := IsNumber("five")
+// result is false
+```
+```
+result, error := Multiplication("4", "12")
+// error is nil and result is "48"
+result, error := Multiplication("four", "12")
+// result is "" and error is "four is not a valid number in String form"
+```
+```
+str1 := "100"
+str2 := "7654321"
+str3 := ""
+
+result := Padding(str1, str2)
+// result is "0000100"
+result := Padding(str3, str2)
+// result is "0000000"
+```
+```
+result := RemoveLeadingZeros("000100")
+// result is "100"
+```
+```
+result, error := Subtraction("50","15")
+// error is nil result is "35"
+result, error := Subtraction("15","50")
+// error is nil result is "-35"
+result, error := Subtraction("-50", "15")
+// result is "" and error is "-50 is not a valid number in String form"
+```
 
 ### Math:
 
 ```
+result = Gcd(15,10)
+// result is 5
+```
+```
+result := IsPalendrome(1000)
+// result is false
+result := IsPalendrome(1001)
+// result is true
+result := IsPalendrome(1)
+// result is true
+```
+```
+result := IsPrime(13)
+// result is true
+result := IsPrime(10)
+// result is false
+```
+```
+result := Lcm(3,7)
+// result is 21
+```
+```
+result := NumOfDivs(13)
+// result is 2
+result := NumOfDivs(20)
+// result is 6 (as 1,2,4,5,10,20 are the divisors)
 ```
 
 ### Arrays/Sclices:
 
 ```
 arr1 := []bool{false, true, true}
+arr2 := []bool{true, true, true}
+arr3 := []bool{false, false , false}
+
 result := All(arr1)
 // result is false
-arr2 := []bool{true, true, true}
 result := All(arr2)
 // result is true
+
+result := Any(arr1)
+// result is true
+result := Any(arr3)
+// result is false
+```
+```
+arr1 := []string{"Hi", "hi", "hI", "HI"}
+arr2 := []int{1,1,1,1,1,2,3,4}
+
+result := count(arr1, "hi")
+// result is 1
+result := count(arr2, 1)
+// result is 5
+```
+```
+arr1 := []string{"a", "b", "c", "e", "f", "g"}
+arr2 := []string{}
+
+result := Insert(arr1, 3, "d")
+// result is []string{"a", "b", "c", "d", "e", "f", "g"}
+result := Insert(arr2, 5, "Hello World")
+// result is []string{"", "", "", "", "", "Hello World"}
+result := Insert(arr1, -4, "w")
+// result is []string{"w","", "", "", "a", "b", "c", "e", "f", "g"}
+```
+```
+arr1 := []string{"Hello", "World"}
+arr2 := []string{"","","",""}
+
+result := Join(arr1, " ")
+// result is "Hello World"
+result := Join(arr2, "Hi")
+// result is "HiHiHi"
+```
+```
+arr1 := []int{1,2,3,4,5,6}
+arr2 := []int{}
+
+result, error := Max(arr1)
+// error is nil and result is 6
+result, error := Max(arr2)
+// result is 0 and error is Max: "Cannot find maximum value of empty array/slice"
+
+result, error := Min(arr1)
+// error is nil and result is 1
+result, error := Min(arr2)
+// result is 0 and error is Max: "Cannot find minimum value of empty array/slice"
+```
+```
+arr1 := []int{20, 30, 40, 100, 200, 300}
+arr2 := []string{"Hello", "World"}
+
+result, val := Pop(arr1, 2)
+// result is []int{20, 30, 100, 200, 300} and val is 40
+result, val := Pop(arr2, -5)
+// result is []string{"Hello", "World"} and val is ""
+```
+
+For all the sorting algorithms:
+```
+arr := []int{9,8,7,6,5,4,3,2,1}
+result := Algorithm(arr)
+// result is []int{1,2,3,4,5,6,7,8,9}
 ```
 
 ### String Manipulation:
 
 ```
+str1 := "Hello World"
+str2 := "aaaaa"
+
+result := GetIndexOf(str1, "l")
+// result is []int{2,3,9}
+result := GetIndexOf(str2, "aa")
+// result is []int{0,2}
+```
+```
+result := Lower("Hello World")
+// result is "hello world"
+```
+```
+str1 := "Hello World"
+str2 := "aaaaa"
+
+result := Replace(str1, "World", "There")
+// result is "Hello There"
+result := Replace(str2, "aa", "b")
+// result is "bba"
+```
+```
+result := Reverse("Hello")
+// result is "olleH"
+```
+```
+result := Split("Hello World", " ")
+// result is []string{"Hello", "World"}
+```
+```
+result := SwapCase("Hello World")
+// result is "hELLO wORLD"
+```
+```
+result := Upper("Hello World")
+// result is "HELLO WORLD"
 ```
 
 ### Networking:
 
 ```
+result := IsValidIPv4("120.10.22.10")
+// result is true
+result := IsValidIPv4("1.1.A.1")
+// result is false
+
+result := IsValidIPv6("::1.2.3.4")
+// result is true
+result := IsValidIPv6("1f5e:8fbe:e550:7a07:4679:14fc:1.2.3.4")
+// result is true
+result := IsValidIPv6("10000:0:0:0:0:0:0:0")
+// result is false
 ```
