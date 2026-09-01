@@ -119,6 +119,7 @@ func TestCompareAMoreThanB(t *testing.T){
 		{"Both Empty", "", "", false, errors.New("CompareAMoreThanB: Cannot compare two empty strings")},
 		{"Non-Numbers", "5A", "5", false, errors.New("5A is not a valid number in String form")},
 		{"Negative Numbers", "-3", "3", false, errors.New("-3 is not a valid number in String form")},
+		{"Same Values", "10", "10", false, nil},
         }
 
         for _, tt := range tests{
@@ -235,8 +236,8 @@ func TestInsert(t *testing.T){
 		{"Empty Array", []string{}, 5, "Hi", []string{"", "", "", "", "", "Hi"}},
 		{"Empty Array & 0 Position", []string{}, 0, "a", []string{"a"}},
 		{"Empty Value", []string{"a", "b", "c"}, 2, "", []string{"a", "b", "", "c"}},
-		{"Position too large", []string{"a", "b", "c"}, 5, "f", []string{"a", "b", "c", "", "", "f"}}, //abcdef
-		{"Position too small", []string{"a", "b", "c"}, -4, "w", []string{"w", "", "", "", "a", "b", "c"}}, //wxyzabc
+		{"Position Too Large", []string{"a", "b", "c"}, 5, "f", []string{"a", "b", "c", "", "", "f"}}, //abcdef
+		{"Position Too Small", []string{"a", "b", "c"}, -4, "w", []string{"w", "", "", "", "a", "b", "c"}}, //wxyzabc
         }
 
         for _, tt := range tests{

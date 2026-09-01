@@ -126,6 +126,10 @@ func CompareAMoreThanB(A string, B string) (bool, error){ //This is A *STRICTLY*
 		err := errors.New("CompareAMoreThanB: Cannot compare two empty strings")
 		return false, err
 	}
+	
+	if A==B{
+		return false, nil
+	}
 
 	if lengthA>lengthB{
 		return true, nil
