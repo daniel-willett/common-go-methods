@@ -166,6 +166,20 @@ func Count[G Generic](arr []G, countValue G) int{
 	return n
 }
 
+func Factorial[I Integer](n I) (I, error){
+        if n<0 {
+                err := errors.New("Factorial: Cannot compute negative values")  
+                return 0, err
+        } else if n==0 {
+                return 1, nil
+        }
+	var counter I = 1
+	for i:=n; i>1; i--{
+		counter *= i
+	}
+	return counter, nil
+}
+
 //DEPENDS ON: Abs
 func Gcd[I Integer](a I, b I) I{
 	var larger, smaller I = 0, 0
