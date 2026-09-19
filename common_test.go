@@ -162,6 +162,35 @@ func TestCount(t *testing.T){
         }
 }
 
+func TestFactorial(t *testing.T){
+	tests := []struct{
+		name		string
+		input		int
+		expectedVal	int
+		expectedErr	error
+	}{
+		{"Normal", 5, 120, nil},
+		{"Zero", 0, 1, nil},
+		{"Negative", -5, 0, errors.New("Factorial: Cannot compute negative values")},
+	}
+	for _, tt := range tests{
+                t.Run(tt.name, func(t *testing.T){
+                        result, err := Factorial(tt.input)
+			if (err==nil && tt.expectedErr!=nil) || (err!=nil && tt.expectedErr==nil){
+				t.Errorf("Factorial(%v) = %v, %v; want %v,\n %v",
+				tt.input, result, err, tt.expectedVal, tt.expectedErr)
+			} else if err!=nil && err.Error()!=tt.expectedErr.Error(){
+				t.Errorf("Factorial(%v) = %v, %v; want %v,\n %v",
+				tt.input, result, err, tt.expectedVal, tt.expectedErr)
+                        }
+                        if result != tt.expectedVal{
+				t.Errorf("Factorial(%v) = %v, %v; want %v,\n %v",
+				tt.input, result, err, tt.expectedVal, tt.expectedErr)
+                        }
+                })
+        }
+
+}
 
 func TestGcd(t *testing.T){
         tests := []struct{

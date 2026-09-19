@@ -45,6 +45,10 @@ This takes an input `string` which should be a number and removes the leading `0
 
 This functions as the absolute value, | |, taking in a `Number` and returning a `Number`.
 
+### Factorial
+
+This finds the factorial, !, of a given `Integer`, returning an `Integer` and `error`.
+
 ### Gcd
 
 This finds the Greatest Common Divisor of two `Integer`s returning the result in the same type (`Integer`)
@@ -209,9 +213,16 @@ result, error := Subtraction("-50", "15")
 ```
 
 ### Math:
-
 ```
-result = Gcd(15,10)
+result := Abs(-10)
+// result is 10
+```
+```
+result, err := Factorial(4)
+// result is 24 and error is nil
+```
+```
+result := Gcd(15,10)
 // result is 5
 ```
 ```
